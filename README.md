@@ -11,19 +11,12 @@ Run `brew bundle install` on MacOS to install project cli tool requirements.
 * [Carte IGN 1999-2006](https://www.ge200.ch/carto/carte-ign-150000-1999-2006)
 * [Plan SITG Actuel](https://www.ge200.ch/carto/plan-sitg-actuel)
 
-Mail 28 septembre
-pre-1920s
-1896: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-90751
-1910: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91084
-1919: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91152
-1930s: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91144
-1940s: 
-1943: https://www.e-rara.ch/gep_r/content/titleinfo/26038907
-1946: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91122
-1946: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91075
-1949: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91162
-1950s: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91160
-1960s:
-1961: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91100
-1965: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91085
-1970s: https://www.e-rara.ch/gep_r/doi/10.3931/e-rara-91086
+### Notes
+* [QGIS Quickstart Video](https://www.youtube.com/watch?v=SovdBaus7pM)
+    * [Quick Map Services Plugin](https://youtu.be/SovdBaus7pM?t=1334)
+    * [Change projection](https://youtu.be/SovdBaus7pM?t=1457)
+* [QGIS Georeferencing](https://www.youtube.com/watch?v=XV62QEk0Cxg)
+
+### Tech Examples
+* [Zoomable web tiles with d3](https://observablehq.com/@d3/zoomable-map-tiles?collection=@d3/d3-tile)
+* [D3 tile demos](https://observablehq.com/collection/@d3/d3-tile)
