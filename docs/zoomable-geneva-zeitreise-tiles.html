@@ -1,34 +1,65 @@
 <!doctype html>
 <notebook theme="air">
-  <title>Zoomable Geneva Zeitreise Tiles</title>
+  <title>Zoomable Geneva Historical Basemaps</title>
   <script id="1" type="text/markdown">
-    # Zoomable Geneva Zeitreise Tiles
+    # Zoomable Geneva Historical Basemaps
 
-    v2 demo: instead of overlaying our own scanned map images, the basemap itself time-travels. [swisstopo](https://www.swisstopo.admin.ch) republishes the entire Swiss national map series — the Siegfried maps and successive national map editions — as the [Zeitreise](https://www.geo.admin.ch/en/maps-data-and-applications/maps-of-switzerland/journey-through-time) WMTS layer: consistent, georeferenced tiles for **every year from 1844 to 2021**. Drag the year slider; pan and zoom are preserved.
+    v2 demo: the basemap itself time-travels. [swisstopo](https://www.swisstopo.admin.ch) serves several [Journey through time](https://www.geo.admin.ch/en/maps-data-and-applications/maps-of-switzerland/journey-through-time) WMTS layers; pick one and drag the year slider — pan and zoom are preserved:
 
-    Tiles © [swisstopo](https://www.swisstopo.admin.ch). Note the layer covers Swiss territory only — the French side of the border stays blank on older editions.
-  </script>
-  <script id="2" type="module" pinned>
-    const year = view(Inputs.range([1844, 2021], {value: 1920, step: 1, label: "Year"}));
+    - **Map editions (Zeitreise)** — the national map series from 1844 (Dufour, then Siegfried, then the modern Landeskarte)
+    - **National map 1:25,000** — the crisp, near-monochrome LK25 editions (Geneva sheet from 1956)
+    - **Aerial imagery (SWISSIMAGE)** — photo mosaics of Geneva from 1932, black & white until the late 1990s
+
+    The **Black & white** toggle applies a grayscale filter to any layer, for a consistent monochrome look across epochs (a native historical B/W map layer does not exist — checked the WMTS capabilities).
+
+    Tiles © [swisstopo](https://www.swisstopo.admin.ch). Coverage is Swiss territory only, and per-year coverage varies by region; the year lists below are pre-filtered to years with actual content at Geneva (`make swisstopo-layers`, `make zeitreise-editions`).
   </script>
   <script id="7" type="module" pinned>
-    // Years in which the map around Geneva actually changed, detected by hashing sample tiles
-    // across all TIME values (`make zeitreise-editions`) — most slider years serve an unchanged map.
+    // Years in which the Zeitreise map around Geneva actually changed, detected by hashing
+    // sample tiles across all TIME values (`make zeitreise-editions`).
     const editions = FileAttachment("data/zeitreise-editions.json").json();
   </script>
+  <script id="10" type="module" pinned>
+    // Per-layer timestamps with verified Geneva coverage (`make swisstopo-layers`).
+    const layersData = FileAttachment("data/swisstopo-layers.json").json();
+  </script>
+  <script id="11" type="module" pinned>
+    const layerOptions = new Map([
+      ["Map editions — Zeitreise (1844–2021)", {
+        id: "ch.swisstopo.zeitreihen", ext: "png", times: editions, time: y => `${y}1231`, maxZoom: 18
+      }],
+      ["National map 1:25,000 (1956–)", {
+        id: "ch.swisstopo.pixelkarte-farbe-pk25.noscale", time: y => `${y}`, maxZoom: 18,
+        ...layersData["ch.swisstopo.pixelkarte-farbe-pk25.noscale"]
+      }],
+      ["Aerial imagery — SWISSIMAGE (1932–)", {
+        id: "ch.swisstopo.swissimage-product", time: y => `${y}`, maxZoom: 20,
+        ...layersData["ch.swisstopo.swissimage-product"]
+      }]
+    ]);
+
+    const layer = view(Inputs.select(layerOptions, {label: "Layer"}));
+  </script>
+  <script id="2" type="module" pinned>
+    const year = view(Inputs.range([1844, 2025], {value: 1920, step: 1, label: "Year"}));
+  </script>
+  <script id="12" type="module" pinned>
+    const bw = view(Inputs.toggle({label: "Black & white"}));
+  </script>
   <script id="8" type="module" pinned>
-    const edition = editions.findLast(e => e <= year) ?? editions[0];
+    // Snap to the latest year with content at or before the slider year.
+    const shownYear = layer.times.findLast(t => t <= year) ?? layer.times[0];
   </script>
   <script id="9" type="text/markdown">
-    Map edition shown: **${edition}**${editions[editions.indexOf(edition) + 1] ? ` — next revision in this area: ${editions[editions.indexOf(edition) + 1]}` : ""} (${editions.length} revisions around Geneva between 1844 and 2021).
+    Shown: **${shownYear}**${layer.times[layer.times.indexOf(shownYear) + 1] ? ` — next ${layer.id === "ch.swisstopo.swissimage-product" ? "imagery" : "revision"}: ${layer.times[layer.times.indexOf(shownYear) + 1]}` : ""} (${layer.times.length} years available for this layer around Geneva).
   </script>
   <script id="3" type="module" pinned>
-    // TIME is snapped to the detected edition, so tile URLs only change when the map actually
-    // does — intermediate slider years are served from the browser cache.
-    const url = (x, y, z) => `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.zeitreihen/default/${edition}1231/3857/${z}/${x}/${y}.png`;
+    // TIME snaps to shownYear, so tile URLs only change when the content actually does —
+    // intermediate slider years are served from the browser cache.
+    const url = (x, y, z) => `https://wmts.geo.admin.ch/1.0.0/${layer.id}/default/${layer.time(shownYear)}/3857/${z}/${x}/${y}.${layer.ext}`;
   </script>
   <script id="4" type="module" pinned>
-    // Persists the map's pan/zoom across cell re-runs (the map cell re-runs on every year change).
+    // Persists the map's pan/zoom across cell re-runs (the map cell re-runs on every change).
     const zoomState = {transform: d3.zoomIdentity};
   </script>
   <script id="5" type="module" pinned>
@@ -47,12 +78,13 @@
           .clampX(false);
 
       const zoom = d3.zoom()
-          .scaleExtent([1 << 17, 1 << 26]) // the Zeitreise tile matrix ends at z18 (256 · 2^18)
+          .scaleExtent([1 << 17, 1 << (8 + layer.maxZoom)]) // the layer's tile matrix ends at maxZoom (256 · 2^z)
           .extent([[0, 0], [width, height]])
           .on("zoom", ({transform}) => zoomed(transform));
 
       let image = svg.append("g")
           .attr("pointer-events", "none")
+          .style("filter", bw ? "grayscale(1)" : null)
           .selectAll("image");
 
       // --- START GENEVA INITIALIZATION ---
@@ -93,6 +125,6 @@
     }
   </script>
   <script id="6" type="text/markdown">
-    Compared to the scanned-overlay approach (see [io-map v2](./io-map-v2)): no georeferencing work, no seams, citywide-to-national coverage at every zoom level, and a cartographically consistent style within each map edition. The candidate role for this layer is the time-driven basemap under the organisation points, with our georeferenced city plans kept as optional detail overlays.
+    Compared to the scanned-overlay approach (see [io-map v2](./io-map-v2)): no georeferencing work, no seams, citywide-to-national coverage at every zoom level, and a cartographically consistent style within each edition. The candidate role for these layers is the time-driven basemap under the organisation points, with our georeferenced city plans kept as optional detail overlays.
   </script>
 </notebook>

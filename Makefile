@@ -25,4 +25,8 @@ geocode-retry: docs/data/io-map-v2.csv scripts/geocode.js
 zeitreise-editions:
 	node scripts/zeitreise-editions.js
 
-.PHONY: dl-maps data geocode geocode-retry zeitreise-editions
+# Refresh per-layer timestamps (with Geneva coverage) for the historical-basemap demo
+swisstopo-layers:
+	node scripts/swisstopo-layers.js
+
+.PHONY: dl-maps data geocode geocode-retry zeitreise-editions swisstopo-layers
