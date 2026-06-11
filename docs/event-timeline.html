@@ -1,0 +1,58 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Event Timeline</title>
+  <script id="1" type="text/markdown">
+    # Event Timeline
+
+    Every change recorded in the dataset, as one circle per event: years on the x axis, organisations on the y axis. Hover a circle for the event name (and the dataset's note, when there is one).
+
+    Labels use the dataset's canonical `nameEN` — the sheet keeps one name per organisation, with renames recorded as `nameChange` events (e.g. Ireland's 1937 *"Eire / Ireland"*).
+  </script>
+  <script id="2" type="module" pinned>
+    const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
+  </script>
+  <script id="3" type="module" pinned>
+    const events = data.filter(d => d.event && d.year);
+  </script>
+  <script id="4" type="module" pinned>
+    const category = view(Inputs.select(
+      ["All", "Permanent Representation", "International Organisation", "Non-governmental Organisation"],
+      {label: "Organisation Category"}
+    ));
+  </script>
+  <script id="5" type="module" pinned>
+    const filteredEvents = events.filter(d =>
+      category === "All" ? true
+      : category === "Non-governmental Organisation" ? (d.filterOrgCategory === "Non-governmental Organisation" || d.filterOrgCategory === "Sub-NGO")
+      : d.filterOrgCategory === category
+    );
+  </script>
+  <script id="6" type="module" pinned>
+    // y domain: organisations ordered by their first recorded event.
+    const organisations = d3.groupSort(filteredEvents, group => d3.min(group, d => d.year), d => d.nameEN);
+  </script>
+  <script id="7" type="module" pinned>
+    Plot.plot({
+      width,
+      height: Math.max(220, organisations.length * 14 + 100),
+      marginLeft: 290,
+      marginTop: 30,
+      x: {label: "Year", tickFormat: "d", grid: true, axis: "top"},
+      y: {domain: organisations, label: null, tickSize: 0},
+      color: {legend: true},
+      marks: [
+        Plot.dot(filteredEvents, {
+          x: "year",
+          y: "nameEN",
+          stroke: "event",
+          r: 4,
+          tip: {format: {x: "d"}},
+          channels: {note: "note1"}
+        })
+      ]
+    })
+  </script>
+  <script id="8" type="text/markdown">
+    ${filteredEvents.length} events across ${organisations.length} organisations. Events recorded in the dataset: \`representativeChange\`, \`addressChange\`, \`nameChange\`, \`closed\`, \`established\`, \`moved\`, \`vacant\`.
+  </script>
+</notebook>
