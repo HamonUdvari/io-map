@@ -1,0 +1,236 @@
+<!doctype html>
+<notebook theme="air">
+  <title>io-map v2</title>
+  <script id="1" type="text/markdown">
+    # io-map v2
+
+    Maps international organisations in Geneva over time (1920–2025), based on the formatted dataset of 10 June 2026: a single sheet combining Permanent Representations (nearly complete), NGOs and IOs (selections), with event-level changes and addresses split into `addressOSM` (geocoding) and `addressInfoboxDisplay` (historical display).
+  </script>
+  <script id="2" type="module" pinned>
+    const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
+  </script>
+  <script id="3" type="module" pinned>
+    const geocode = FileAttachment("data/geocode-v2.json").json();
+  </script>
+  <script id="4" type="module" pinned>
+    const geoData = data.map(d => {
+      const hit = geocode[String(d.addressOSM ?? "").trim()];
+      return {...d, lat: hit?.lat, long: hit?.lon};
+    });
+  </script>
+  <script id="5" type="module" pinned>
+    const category = view(Inputs.select(
+      ["All", "Permanent Representation", "International Organisation", "Non-governmental Organisation"],
+      {label: "Organisation Category"}
+    ));
+  </script>
+  <script id="6" type="module" pinned>
+    const regions = [...new Set(geoData.map(d => d.filterRegion).filter(Boolean))].sort();
+
+    const subFilter = view(
+      category === "Permanent Representation" ? Inputs.select(["All", ...regions], {label: "Region"})
+      : category === "Non-governmental Organisation" ? Inputs.select(["All", "NGOs", "Sub-NGOs"], {label: "NGO type"})
+      : category === "International Organisation" ? Inputs.select(["All", "UN System", "Others"], {label: "IO type"})
+      : Inputs.select(["All"], {label: "Subfilter", disabled: true})
+    );
+  </script>
+  <script id="7" type="module" pinned>
+    const year = view(Inputs.range([minYear, maxYear], {value: minYear, step: 1, label: "Year"}));
+  </script>
+  <script id="8" type="module" pinned>
+    const mapOpacity = view(Inputs.range([0, 1], {value: 0.5, step: 0.1, label: "Map Opacity"}));
+  </script>
+  <script id="9" type="module" pinned>
+    const matchesCategory = d =>
+      category === "All" ? true
+      : category === "Non-governmental Organisation" ? (d.filterOrgCategory === "Non-governmental Organisation" || d.filterOrgCategory === "Sub-NGO")
+      : d.filterOrgCategory === category;
+
+    const matchesSubFilter = d => {
+      if (subFilter === "All") return true;
+      if (category === "Permanent Representation") return d.filterRegion === subFilter;
+      if (category === "Non-governmental Organisation") return subFilter === "Sub-NGOs" ? d.filterOrgCategory === "Sub-NGO" : d.filterOrgCategory === "Non-governmental Organisation";
+      if (category === "International Organisation") return subFilter === "UN System" ? d.filterIOType === "UN System" : !d.filterIOType;
+      return true;
+    };
+  </script>
+  <script id="10" type="module" pinned>
+    // Latest known state per organisation up to the selected year; closed organisations are dropped.
+    const filteredGeoDataByYear = Object.values(
+      geoData
+        .filter(d => d.year && d.year <= year)
+        .filter(matchesCategory)
+        .filter(matchesSubFilter)
+        .reduce((acc, obj) => {
+          const key = obj.nameEN;
+          if (!acc[key] || obj.year > acc[key].year) acc[key] = obj;
+          return acc;
+        }, {})
+    ).filter(d => d.event !== "closed");
+  </script>
+  <script id="11" type="module" pinned>
+    const categoryColor = d =>
+      d.filterOrgCategory === "Permanent Representation" ? "#4269d0"
+      : d.filterOrgCategory === "International Organisation" ? "#efb118"
+      : "#ff725c"; // NGOs and Sub-NGOs
+  </script>
+  <script id="12" type="module" pinned>
+    import {tile as d3tile, tileWrap} from "npm:d3-tile";
+
+    {
+      const width = 928;
+      const height = 500;
+
+      const plotted = filteredGeoDataByYear.filter(d => d.lat != null && d.long != null);
+
+      const svg = d3.create("svg")
+          .attr("viewBox", [0, 0, width, height]);
+
+      const tile = d3tile()
+          .extent([[0, 0], [width, height]])
+          .tileSize(256)
+          .clampX(false);
+
+      const zoom = d3.zoom()
+          .scaleExtent([1 << 17, 1 << 27])
+          .extent([[0, 0], [width, height]])
+          .on("zoom", ({transform}) => zoomed(transform));
+
+      let image = svg.append("g")
+          .attr("pointer-events", "none")
+          .selectAll("image");
+
+      const geneva = [6.1432, 46.2044];
+      const initialScale = 1 << 20;
+
+      const projection = d3.geoMercator()
+        .scale(1 / (2 * Math.PI))
+        .translate([0, 0]);
+
+      const [x0, y0] = projection([currentMap.minLon, currentMap.maxLat]); // upper-left
+      const [x1, y1] = projection([currentMap.maxLon, currentMap.minLat]); // lower-right
+      const oldMapImage = svg.append("image")
+         .attr("xlink:href", currentMap.src)
+         .attr("x", x0)
+         .attr("y", y0)
+         .attr("width", x1 - x0)
+         .attr("height", y1 - y0);
+
+      if (zoomState.transform === d3.zoomIdentity) {
+        const [gx, gy] = projection(geneva);
+
+        zoomState.transform = d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(initialScale)
+          .translate(-gx, -gy);
+      }
+
+      svg.append("g")
+        .attr("fill-opacity", 0.6)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 0.5)
+        .selectAll()
+        .data(plotted)
+        .join("circle")
+        .attr("cx", d => projection([d.long, d.lat])[0])
+        .attr("cy", d => projection([d.long, d.lat])[1])
+        .attr("r", 5)
+        .attr("fill", categoryColor)
+        .append("title")
+        .text(d => `${d.nameEN} (${d.filterOrgCategory})\n${d.addressInfoboxDisplay || d.addressOSM}`);
+
+      svg
+        .call(zoom)
+        .call(zoom.transform, zoomState.transform);
+
+      function zoomed(transform) {
+        zoomState.transform = transform;
+        const tiles = tile(transform);
+
+        image = image.data(tiles, d => d).join("image")
+            .attr("xlink:href", d => url(...tileWrap(d)))
+            .attr("x", ([x]) => (x + tiles.translate[0]) * tiles.scale)
+            .attr("y", ([, y]) => (y + tiles.translate[1]) * tiles.scale)
+            .attr("width", tiles.scale)
+            .attr("height", tiles.scale);
+
+        oldMapImage
+          .attr("transform", `translate(${transform.x}, ${transform.y}) scale(${transform.k})`)
+          .attr("opacity", mapOpacity);
+
+        svg.selectAll("circle")
+          .attr("cx", d => transform.applyX(projection([d.long, d.lat])[0]))
+          .attr("cy", d => transform.applyY(projection([d.long, d.lat])[1]));
+      }
+
+      display(svg.node());
+    }
+  </script>
+  <script id="13" type="text/markdown">
+    Showing **${filteredGeoDataByYear.filter(d => d.lat != null).length}** organisations in ${year} (${filteredGeoDataByYear.filter(d => d.lat == null).length} matching entries lack geocoded coordinates).
+  </script>
+  <script id="14" type="module">
+    Inputs.table(filteredGeoDataByYear)
+  </script>
+  <script id="15" type="module" pinned>
+    const url = (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.tile.osm.org/${z}/${x}/${y}.png`;
+  </script>
+  <script id="16" type="module" pinned>
+    const attachments = {
+      "1919": FileAttachment("data/1919_modified_4000.png"),
+      "1943": FileAttachment("data/1943_modified_4000.png"),
+      "1965": FileAttachment("data/1965_modified_4000.png")
+    };
+  </script>
+  <script id="17" type="module" pinned>
+    const oldMaps = [
+      {
+        "year": 1965,
+        "minLon": 6.0472218,
+        "maxLon": 6.2254268,
+        "minLat": 46.1429987,
+        "maxLat": 46.2574794,
+        "src": await attachments["1965"].url()
+      },
+      {
+        "year": 1919,
+        "minLon": 6.0693738,
+        "maxLon": 6.2127322,
+        "minLat": 46.1450489,
+        "maxLat": 46.245437,
+        "src": await attachments["1919"].url()
+      },
+      {
+        "year": 1943,
+        "minLon": 6.0679409,
+        "maxLon": 6.2186536,
+        "minLat": 46.1504696,
+        "maxLat": 46.2536292,
+        "src": await attachments["1943"].url()
+      }
+    ];
+  </script>
+  <script id="18" type="module" pinned>
+    const currentMap = oldMaps.toSorted((a, b) => a.year - b.year).filter(d => d.year <= year).at(-1) ?? oldMaps.toSorted((a, b) => a.year - b.year)[0];
+  </script>
+  <script id="19" type="module" pinned>
+    // Persists the map's pan/zoom across cell re-runs.
+    const zoomState = {transform: d3.zoomIdentity};
+  </script>
+  <script id="20" type="module" pinned>
+    const yearsExtent = d3.extent(geoData.map(d => d.year).filter(Boolean));
+    const minYear = yearsExtent[0];
+    const maxYear = yearsExtent[1];
+  </script>
+  <script id="21" type="text/markdown">
+    ## Data pipeline
+
+    The dataset is prepared offline and committed to the repository:
+
+    ```sh
+    make data   # xlsx -> docs/data/io-map-v2.csv -> docs/data/geocode-v2.json (Nominatim, cached)
+    ```
+
+    Unresolved addresses are listed in `geocode-misses.csv` at the repository root; hand-corrections to `geocode-v2.json` survive re-runs (cached keys are never re-fetched).
+  </script>
+</notebook>

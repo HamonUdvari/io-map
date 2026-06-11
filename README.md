@@ -13,6 +13,22 @@ npm run preview   # live preview at http://localhost:5173
 npm run build     # static site in docs/.observable/dist
 ```
 
+Pushes to `main` deploy the built site to GitHub Pages via `.github/workflows/deploy.yml`.
+
+### v2 data pipeline
+
+The v2 notebook uses the partners' formatted dataset (single-sheet xlsx). The pipeline runs offline; its outputs are committed:
+
+```sh
+make data   # xlsx -> docs/data/io-map-v2.csv -> docs/data/geocode-v2.json (Nominatim, 1 req/s, cached)
+```
+
+Set `XLSX=path/to/file.xlsx` to point at a newer dataset export. Unresolved addresses land in `geocode-misses.csv`; hand-corrections to `docs/data/geocode-v2.json` survive re-runs (cached keys are never re-fetched).
+
+* `docs/io-map-v2.html` – **current**: new dataset (1920–2025), category/sub-filters, year slider, historical overlays
+
+### v1 proof of concept (archive)
+
 * `docs/index.html` – landing page linking all experiments
 * `docs/io-map.html` – main notebook: historical map overlays + organizations by year
 * `docs/zoomable-geneva-map-tiles.html` – d3-tile + d3-zoom basics

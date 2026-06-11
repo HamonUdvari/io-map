@@ -1,0 +1,2634 @@
+{
+  "5, Avenue Alfred Bertrand": {
+    "lat": 46.1935729,
+    "lon": 6.1551558,
+    "displayName": "5, Avenue Alfred-Bertrand, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "23, Avenue de Beau-Séjour": {
+    "lat": 46.1906512,
+    "lon": 6.1505357,
+    "displayName": "23, Avenue de Beau-Séjour, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Rue Crespin": {
+    "lat": 46.1951941,
+    "lon": 6.1597784,
+    "displayName": "20, Rue Crespin, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Chemin des Hauts-Cornillons, Chambésy, Pregny-Chambésy": {
+    "lat": 46.2410308,
+    "lon": 6.1450308,
+    "displayName": "4, Chemin des Hauts-Cornillons, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "63, Rue de Lausanne": {
+    "lat": 46.2152719,
+    "lon": 6.1466227,
+    "displayName": "Consulat Général de la République du Kosovo à Genève, 63, Rue de Lausanne, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "46, Avenue Blanc": {
+    "lat": 46.2214192,
+    "lon": 6.1486525,
+    "displayName": "Centre Ophtalmologique de Rive, 46, Avenue Blanc, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Quai du Mont-Blanc": {
+    "lat": 46.2071823,
+    "lon": 6.1478158,
+    "displayName": "1, Quai du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Route de Florissant": {
+    "lat": 46.1963449,
+    "lon": 6.1555045,
+    "displayName": "11, Route de Florissant, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, rue Lefort": null,
+  "8, Route de Malagnou": {
+    "lat": 46.1983197,
+    "lon": 6.157636,
+    "displayName": "8, Route de Malagnou, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Collonges-Bellerive": null,
+  "32, Rue du Môle": {
+    "lat": 46.2130431,
+    "lon": 6.147496,
+    "displayName": "32, Rue du Môle, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Abraham-Gevray": {
+    "lat": 46.2108774,
+    "lon": 6.1497831,
+    "displayName": "Rue Abraham-Gevray, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Voltaire": {
+    "lat": 46.2076819,
+    "lon": 6.1385244,
+    "displayName": "8, Rue Voltaire, Les Délices, Saint-Jean et Charmilles, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "44, Rue de Lausanne": {
+    "lat": 46.2138171,
+    "lon": 6.1460309,
+    "displayName": "44, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "308, Route de Lausanne, Rives-du-Lac, Bellevue": {
+    "lat": 46.252018,
+    "lon": 6.1518702,
+    "displayName": "Mission permanente de la République algérienne démocratique et populaire, 308, Route de Lausanne, Rives-du-Lac, Bellevue, Genève, 1293, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1-3, Rue de Chantepoulet": {
+    "lat": 46.2077896,
+    "lon": 6.145098,
+    "displayName": "Plaza, 1-3, Rue de Chantepoulet, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "109, Route de Chêne": {
+    "lat": 46.1999908,
+    "lon": 6.1654357,
+    "displayName": "Route de Chêne, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "45-47, Rue de Lausanne": {
+    "lat": 46.2140409,
+    "lon": 6.1459714,
+    "displayName": "Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Rue du Valais": {
+    "lat": 46.2172603,
+    "lon": 6.145977,
+    "displayName": "9, Rue du Valais, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Avenue de Champel": {
+    "lat": 46.19565,
+    "lon": 6.1507561,
+    "displayName": "Avenue de Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "30, Rue de Contamines": {
+    "lat": 46.1952277,
+    "lon": 6.1550934,
+    "displayName": "30, Rue de Contamines, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Route de Florissant": {
+    "lat": 46.1964142,
+    "lon": 6.1545076,
+    "displayName": "8, Route de Florissant, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Quai du Général-Guisan": {
+    "lat": 46.2033852,
+    "lon": 6.1521052,
+    "displayName": "Hôtel Métropole, 34, Quai du Général-Guisan, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue du Vieux-Collège": {
+    "lat": 46.2016197,
+    "lon": 6.1509114,
+    "displayName": "8, Rue du Vieux-Collège, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue de Chantepoulet": {
+    "lat": 46.20792,
+    "lon": 6.1452872,
+    "displayName": "3, Rue de Chantepoulet, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "93, Rue de la Servette": {
+    "lat": 46.2132194,
+    "lon": 6.1301604,
+    "displayName": "Stay Kooook, 93, Rue de la Servette, Grottes et Saint-Gervais, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "110, Avenue Louis-Casaï, Cointrin, Meyrin": {
+    "lat": 46.2245081,
+    "lon": 6.1079331,
+    "displayName": "Avenue Louis-Casaï, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Route de l'Aéroport": {
+    "lat": 46.2290965,
+    "lon": 6.1057736,
+    "displayName": "10, Route de l'Aéroport, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "64, Route de Troinex": {
+    "lat": 46.166914,
+    "lon": 6.1455431,
+    "displayName": "Route de Troinex, Troinex, Genève, 1256, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Avenue du Mail": {
+    "lat": 46.1958008,
+    "lon": 6.1408824,
+    "displayName": "28, Avenue du Mail, Jonction, La Cluse, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "41, Quai Wilson": {
+    "lat": 46.2130993,
+    "lon": 6.1521349,
+    "displayName": "41, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "254, Route de Lausanne": {
+    "lat": 46.238442,
+    "lon": 6.1493936,
+    "displayName": "254, Route de Lausanne, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "56-58, Rue de Moillebeau": {
+    "lat": 46.2230804,
+    "lon": 6.1283674,
+    "displayName": "Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "56, Rue de Moillebeau": {
+    "lat": 46.2225217,
+    "lon": 6.130719,
+    "displayName": "56, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin des Fins": {
+    "lat": 46.226224,
+    "lon": 6.1239799,
+    "displayName": "2, Chemin des Fins, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue de Lausanne": {
+    "lat": 46.2107671,
+    "lon": 6.1443377,
+    "displayName": "Hôtel Warwick, 14, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Nant d'Aisy, Corsier": {
+    "lat": 46.2622862,
+    "lon": 6.2295231,
+    "displayName": "Nant d'Aisy, Corsier (GE), Genève, 1246, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Chemin du Château-de-Bellerive": {
+    "lat": 46.2540477,
+    "lon": 6.2040242,
+    "displayName": "1, Chemin du Château-de-Bellerive, Saint-Maurice, Vésenaz, Collonge-Bellerive, Genève, 1245, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Chemin de l'Impératrice": {
+    "lat": 46.2282714,
+    "lon": 6.1472896,
+    "displayName": "Chemin de l'Impératrice, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue de Varembé": {
+    "lat": 46.2206748,
+    "lon": 6.139029,
+    "displayName": "3, Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9-11, Rue de Varembé": {
+    "lat": 46.2207132,
+    "lon": 6.1387382,
+    "displayName": "Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "67, Rue de Lausanne": {
+    "lat": 46.2159396,
+    "lon": 6.1471376,
+    "displayName": "67, Rue de Lausanne, Sécheron, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "31, Chemin William Barbey, Chambésy,": {
+    "lat": 46.2409144,
+    "lon": 6.1487452,
+    "displayName": "Chemin Wiliam-Barbey, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Rue Henri-Veyrassat": {
+    "lat": 46.2126293,
+    "lon": 6.1302622,
+    "displayName": "EMS Les Lauriers, 5;7, Rue Henri-Veyrassat, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "65, Rue de Lausanne": {
+    "lat": 46.2155376,
+    "lon": 6.1468168,
+    "displayName": "65, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18a, Chemin François-Lehmann": {
+    "lat": 46.2300977,
+    "lon": 6.1225255,
+    "displayName": "18a, Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8-14, Avenue de la Paix": {
+    "lat": 46.2257055,
+    "lon": 6.1408064,
+    "displayName": "Palais des Nations, 8 - 14, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1-3, Rue de Varembé": {
+    "lat": 46.2207132,
+    "lon": 6.1387382,
+    "displayName": "Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "58, Rue de Moillebeau": {
+    "lat": 46.2226434,
+    "lon": 6.1309477,
+    "displayName": "58, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Route de Pré-Bois, Cointrin": {
+    "lat": 46.22567,
+    "lon": 6.1018132,
+    "displayName": "Dukascopy Bank, 20, Route de Pré-Bois, Cointrin, Meyrin, Genève, 1215, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Chemin Gilbert-Trolliet, Moillebeau": {
+    "lat": 46.2191416,
+    "lon": 6.1238688,
+    "displayName": "3, Chemin Gilbert-Trolliet, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Pedro-Meylan": {
+    "lat": 46.1956205,
+    "lon": 6.1637918,
+    "displayName": "Consulat de Grèce, 1, Rue Pedro-Meylan, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17-19, Chemin du Champ d'Anier": {
+    "lat": 46.224456,
+    "lon": 6.1231427,
+    "displayName": "Chemin du Champ-d'Anier, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Avenue de la Paix": {
+    "lat": 46.2236586,
+    "lon": 6.1476674,
+    "displayName": "5, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Avenue de la Paix": {
+    "lat": 46.2233985,
+    "lon": 6.1379221,
+    "displayName": "Avenue de la Paix, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Avenue de France": {
+    "lat": 46.2193628,
+    "lon": 6.1482884,
+    "displayName": "6, Avenue de France, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "47, Avenue Blanc": {
+    "lat": 46.2209797,
+    "lon": 6.1477213,
+    "displayName": "47, Avenue Blanc, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Avenue de Champel": {
+    "lat": 46.1911014,
+    "lon": 6.1531538,
+    "displayName": "26, Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13bis, Avenue de Miremont": {
+    "lat": 46.1907091,
+    "lon": 6.1552808,
+    "displayName": "13bis, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue de l'Ancien-Port": {
+    "lat": 46.2123296,
+    "lon": 6.1501818,
+    "displayName": "14, Rue de l'Ancien-Port, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Avenue Sainte-Cécile, Meyrin": {
+    "lat": 46.2340549,
+    "lon": 6.0842763,
+    "displayName": "15, Avenue Sainte-Cécile, Mategnin, Meyrin, Genève, 1217, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Route de Ferney": {
+    "lat": 46.2238846,
+    "lon": 6.1342599,
+    "displayName": "11, Route de Ferney, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "54, Chemin des Coudriers": {
+    "lat": 46.2259629,
+    "lon": 6.1216091,
+    "displayName": "54, Chemin des Coudriers, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Chemin de la Tourelle": {
+    "lat": 46.2234393,
+    "lon": 6.1252233,
+    "displayName": "16, Chemin de la Tourelle, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "19, Chemin des Crêts": {
+    "lat": 46.2211727,
+    "lon": 6.1254939,
+    "displayName": "19, Chemin des Crêts, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Place Isaac-Mercier": {
+    "lat": 46.2064491,
+    "lon": 6.1400736,
+    "displayName": "3, Place Isaac-Mercier, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Rue du Valais": {
+    "lat": 46.2170633,
+    "lon": 6.1462619,
+    "displayName": "7, Rue du Valais, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7bis, Rue du Valais": {
+    "lat": 46.2171366,
+    "lon": 6.1461499,
+    "displayName": "7bis, Rue du Valais, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "139, Rue de Lausanne": {
+    "lat": 46.2226023,
+    "lon": 6.1488022,
+    "displayName": "139, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "22bis, Rue Lamartine": {
+    "lat": 46.2111305,
+    "lon": 6.1289168,
+    "displayName": "22bis, Rue Lamartine, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "80, Rue de Lausanne": {
+    "lat": 46.2164485,
+    "lon": 6.1478988,
+    "displayName": "80, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "35, Quai Wilson": {
+    "lat": 46.2118845,
+    "lon": 6.1524625,
+    "displayName": "35, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue du Temple": {
+    "lat": 46.2057193,
+    "lon": 6.1416054,
+    "displayName": "1, Rue du Temple, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Rue Antoine-Carteret": {
+    "lat": 46.2131638,
+    "lon": 6.1343658,
+    "displayName": "Rue Antoine-Carteret, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17B, L'Ancienne Route": {
+    "lat": 46.2320569,
+    "lon": 6.1279029,
+    "displayName": "L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Route de Pré-Bois": {
+    "lat": 46.22567,
+    "lon": 6.1018132,
+    "displayName": "Dukascopy Bank, 20, Route de Pré-Bois, Cointrin, Meyrin, Genève, 1215, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Michel-Chauvet": {
+    "lat": 46.1980293,
+    "lon": 6.1567953,
+    "displayName": "8, Rue Michel-Chauvet, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Rue du 31-Décembre": {
+    "lat": 46.2045475,
+    "lon": 6.1588534,
+    "displayName": "15, Rue du 31-Décembre, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Avenue de Miremont": {
+    "lat": 46.191821,
+    "lon": 6.1537653,
+    "displayName": "1, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "39, Quai Wilson": {
+    "lat": 46.2128221,
+    "lon": 6.1522094,
+    "displayName": "39, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "45, Rue Philippe-Plantamour": {
+    "lat": 46.2121163,
+    "lon": 6.1515981,
+    "displayName": "45, Rue Philippe-Plantamour, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Rue Docteur-Alfred-Vincent": {
+    "lat": 46.2097295,
+    "lon": 6.1492842,
+    "displayName": "7, Rue Docteur-Alfred-Vincent, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Henri-Spiess": null,
+  "12, Avenue de l'Amandolier, Villereuse": {
+    "lat": 46.1988415,
+    "lon": 6.1672475,
+    "displayName": "12, Avenue de l'Amandolier, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Rue Crespin": {
+    "lat": 46.1952131,
+    "lon": 6.1591598,
+    "displayName": "12, Rue Crespin, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "21, Chemin de la Paumière": {
+    "lat": 46.1896773,
+    "lon": 6.175595,
+    "displayName": "21, Chemin de la Paumière, Grange-Canal, Chêne-Bougeries, Genève, 1231, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Chemin des Crêts-de-Pregny": {
+    "lat": 46.2336001,
+    "lon": 6.1315279,
+    "displayName": "Mission Permanente de la Bulgarie, 16, Chemin des Crêts-de-Pregny, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Rue de Lausanne": {
+    "lat": 46.2114679,
+    "lon": 6.1446076,
+    "displayName": "20, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Rue Jean-Charles-Amat, Pâquis": {
+    "lat": 46.2150938,
+    "lon": 6.1469826,
+    "displayName": "Cité Séniors, 28, Rue Jean-Charles-Amat, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Butini": {
+    "lat": 46.2154297,
+    "lon": 6.149445,
+    "displayName": "3, Rue Butini, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Rue du Fort-Barreau": {
+    "lat": 46.2114007,
+    "lon": 6.140794,
+    "displayName": "13, Rue du Fort-Barreau, Les Grottes, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue Dancet": {
+    "lat": 46.1935389,
+    "lon": 6.1424671,
+    "displayName": "11, Rue Dancet, La Roseraie, Plainpalais, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "143, Avenue d'Aïre": {
+    "lat": 46.2074579,
+    "lon": 6.1232364,
+    "displayName": "Avenue d'Aïre, Les Charmilles, Les Ouches, Saint-Jean et Charmilles, Genève, 1203, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "50, Chemin de Valérie": {
+    "lat": 46.2478268,
+    "lon": 6.1375051,
+    "displayName": "50, Chemin de Valérie, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6-8, Rue du Nant": {
+    "lat": 46.2019371,
+    "lon": 6.1597433,
+    "displayName": "Rue du Nant, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue du Nant": {
+    "lat": 46.2019083,
+    "lon": 6.1600905,
+    "displayName": "6, Rue du Nant, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Quai du Mont-Blanc": {
+    "lat": 46.2108647,
+    "lon": 6.1518915,
+    "displayName": "25, Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "41, Quai du Mont-Blanc": {
+    "lat": 46.2107846,
+    "lon": 6.151996,
+    "displayName": "Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Chemin de l'Impératrice, Pregny, Pregny-Chambésy": {
+    "lat": 46.2287111,
+    "lon": 6.1460107,
+    "displayName": "Chemin de l'Impératrice, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8 - 14, Avenue de la Paix": {
+    "lat": 46.2257055,
+    "lon": 6.1408064,
+    "displayName": "Palais des Nations, 8 - 14, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Parc du Château-Banquet": {
+    "lat": 46.2175705,
+    "lon": 6.1497582,
+    "displayName": "Ambassade, Mission Permanente d'Arménie, 16, Parc du Château-Banquet, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Avenue De-Budé": {
+    "lat": 46.2259971,
+    "lon": 6.1309156,
+    "displayName": "8, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10A, Avenue De-Budé": {
+    "lat": 46.2257073,
+    "lon": 6.1309223,
+    "displayName": "Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue du Pré-de-la-Bichette, Moillebeau": {
+    "lat": 46.220514,
+    "lon": 6.1355287,
+    "displayName": "Consulado Geral do Brasil, 1, Rue du Pré-de-la-Bichette, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Avenue de l'Ariana": {
+    "lat": 46.2254753,
+    "lon": 6.1350115,
+    "displayName": "Mission permanente du Canada, 5, Avenue de l'Ariana, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "22, Rue des Asters": {
+    "lat": 46.2150268,
+    "lon": 6.1327476,
+    "displayName": "22, Rue des Asters, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue d'Italie": {
+    "lat": 46.2014481,
+    "lon": 6.1520461,
+    "displayName": "11, Rue d'Italie, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Route de Colovrex": {
+    "lat": 46.2352127,
+    "lon": 6.1258553,
+    "displayName": "16, Route de Colovrex, Octagon, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Rue du Marché": {
+    "lat": 46.2034531,
+    "lon": 6.1463336,
+    "displayName": "Läderach, 5, Rue du Marché (Rues-Basses), Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Chemin de Bellefontaine": {
+    "lat": 46.2163917,
+    "lon": 6.1783662,
+    "displayName": "15, Chemin de Bellefontaine, Cologny, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue Robert-de-Traz, Florissant": {
+    "lat": 46.1932872,
+    "lon": 6.1643547,
+    "displayName": "10, Rue Robert-de-Traz, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "74, Rue de Montchoisy": {
+    "lat": 46.2050728,
+    "lon": 6.1639567,
+    "displayName": "74, Rue de Montchoisy, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4bis, Avenue de Miremont": {
+    "lat": 46.1910437,
+    "lon": 6.1542835,
+    "displayName": "Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Avenue Peschier": {
+    "lat": 46.1925317,
+    "lon": 6.1558307,
+    "displayName": "12, Avenue Peschier, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Emile-Yung": {
+    "lat": 46.1957105,
+    "lon": 6.1502029,
+    "displayName": "Cabinet Dr Eric F. DEJEU, 1, Rue Emile-Yung, La Cluse, Plainpalais, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "61, Rue du Rhône": {
+    "lat": 46.2029582,
+    "lon": 6.1536329,
+    "displayName": "61, Rue du Rhône, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Avenue Krieg": {
+    "lat": 46.195198,
+    "lon": 6.1610347,
+    "displayName": "34, Avenue Krieg, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue Docteur-Alfred-Vincent": {
+    "lat": 46.2102005,
+    "lon": 6.1481739,
+    "displayName": "14, Rue Docteur-Alfred-Vincent, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "68-70, Rue Rothschild": {
+    "lat": 46.2148968,
+    "lon": 6.1489621,
+    "displayName": "Rue Rothschild, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Quai du Mont-Blanc": {
+    "lat": 46.209642,
+    "lon": 6.1503103,
+    "displayName": "Hôtel d'Angleterre, 17, Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "83, Rue des Eaux-Vives": {
+    "lat": 46.2068254,
+    "lon": 6.1619438,
+    "displayName": "83, Rue des Eaux-Vives, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "55, Route de Chêne": {
+    "lat": 46.2000968,
+    "lon": 6.1726064,
+    "displayName": "55, Route de Chêne, Frontenex, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue Sigismond-Thalberg": {
+    "lat": 46.209652,
+    "lon": 6.1468356,
+    "displayName": "6, Rue Sigismond-Thalberg, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Rue Charles-Galland": {
+    "lat": 46.1978735,
+    "lon": 6.1537924,
+    "displayName": "18, Rue Charles-Galland, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Place de Chateaubriand, Pâquis": {
+    "lat": 46.2155951,
+    "lon": 6.1504763,
+    "displayName": "Place de Chateaubriand, Pâquis, Genève, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "75, Rue de Lyon": {
+    "lat": 46.2081877,
+    "lon": 6.1260443,
+    "displayName": "75, Rue de Lyon, Les Charmilles, Les Délices, Saint-Jean et Charmilles, Genève, 1203, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Chemin de Surville, Petit-Lancy": {
+    "lat": 46.1921732,
+    "lon": 6.125634,
+    "displayName": "11, Chemin de Surville, Petit-Lancy, Lancy, Genève, 1200, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Boulevard Helvétique": {
+    "lat": 46.2007102,
+    "lon": 6.1540533,
+    "displayName": "17, Boulevard Helvétique, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Quai du Mont-Blanc": {
+    "lat": 46.207615,
+    "lon": 6.1482951,
+    "displayName": "7, Quai du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Quai Turrettini, Saint-Gervais": {
+    "lat": 46.2058148,
+    "lon": 6.1409769,
+    "displayName": "Mandarin Oriental, 1, Quai Turrettini, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "29, Quai du Mont-Blanc": {
+    "lat": 46.2112241,
+    "lon": 6.1522915,
+    "displayName": "29, Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "29, Chemin du Foron, Moillesulaz, Mon Idée, Thônex": {
+    "lat": 46.1952496,
+    "lon": 6.2110605,
+    "displayName": "29, Chemin du Foron, Moillesulaz, Mon Idée, Thônex, Genève, 1226, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Avenue de Sécheron": {
+    "lat": 46.2203552,
+    "lon": 6.1486599,
+    "displayName": "7, Avenue de Sécheron, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Rue Du-Roveray": {
+    "lat": 46.2050296,
+    "lon": 6.1591375,
+    "displayName": "16, Rue Du-Roveray, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "149C, Route de Ferney": {
+    "lat": 46.2283403,
+    "lon": 6.1263092,
+    "displayName": "149c, Route de Ferney, Le Grand-Saconnex, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Avenue du Lignon": {
+    "lat": 46.2012018,
+    "lon": 6.0927092,
+    "displayName": "10, Avenue du Lignon, Le Lignon, Châtelaine, Vernier, Genève, 1219, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "118, Rue du Rhône": {
+    "lat": 46.2024864,
+    "lon": 6.1547429,
+    "displayName": "118, Rue du Rhône, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin Thury": {
+    "lat": 46.1927786,
+    "lon": 6.151986,
+    "displayName": "2, Chemin Thury, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Plateau de Champel": {
+    "lat": 46.1929293,
+    "lon": 6.1540583,
+    "displayName": "Plateau de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Plateau de Champel": {
+    "lat": 46.193088,
+    "lon": 6.1544664,
+    "displayName": "20, Plateau de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Route d'Aire-la-Ville, Aire-la-Ville": {
+    "lat": 46.1911924,
+    "lon": 6.0489108,
+    "displayName": "Route d'Aire-la-Ville, Aire-la-Ville, Genève, 1288, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Rue Marignac": {
+    "lat": 46.1957565,
+    "lon": 6.154318,
+    "displayName": "13, Rue Marignac, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Rue de Vermont": {
+    "lat": 46.215629,
+    "lon": 6.1337543,
+    "displayName": "9, Rue de Vermont, Grottes et Saint-Gervais, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "89, Rue de la Servette": {
+    "lat": 46.2131627,
+    "lon": 6.1303004,
+    "displayName": "89c, Rue de la Servette, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue Butini": {
+    "lat": 46.2157083,
+    "lon": 6.1485604,
+    "displayName": "11, Rue Butini, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Route de Sauverny, Versoix": {
+    "lat": 46.2828672,
+    "lon": 6.1654474,
+    "displayName": "1, Route de Sauverny, Versoix, Genève, 1290, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Route de Ferney": {
+    "lat": 46.2225456,
+    "lon": 6.137491,
+    "displayName": "Route de Ferney, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Place de la Fusterie": {
+    "lat": 46.2036526,
+    "lon": 6.1453895,
+    "displayName": "16, Place de la Fusterie, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Rue Docteur-Alfred-Vincent": {
+    "lat": 46.2094282,
+    "lon": 6.1500661,
+    "displayName": "2, Rue Docteur-Alfred-Vincent, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Avenue de la Grenade": {
+    "lat": 46.2061263,
+    "lon": 6.1601141,
+    "displayName": "6, Avenue de la Grenade, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "46, Quai Gustave-Ador": {
+    "lat": 46.2068299,
+    "lon": 6.1609433,
+    "displayName": "Maison Royale, 46, Quai Gustave-Ador, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Avenue Théodore-Flournoy": {
+    "lat": 46.2046507,
+    "lon": 6.1641959,
+    "displayName": "3, Avenue Théodore-Flournoy, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "44, Rue des Pâquis": {
+    "lat": 46.2134852,
+    "lon": 6.1506195,
+    "displayName": "44, Rue des Pâquis, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "51, Rue de Lausanne": {
+    "lat": 46.2143363,
+    "lon": 6.1459661,
+    "displayName": "51, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Quai Ernest-Ansermet": {
+    "lat": 46.1940225,
+    "lon": 6.1394803,
+    "displayName": "6, Quai Ernest-Ansermet, Jonction, La Cluse, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27, Avenue Pictet-de-Rochemont": {
+    "lat": 46.2005816,
+    "lon": 6.1622044,
+    "displayName": "27, Avenue Pictet-de-Rochemont, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Route de Pregny": {
+    "lat": 46.2418182,
+    "lon": 6.1436601,
+    "displayName": "Route de Pregny, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Rue de Vermont": {
+    "lat": 46.2186603,
+    "lon": 6.1377998,
+    "displayName": "34, Rue de Vermont, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "39, Rue Rothschild": {
+    "lat": 46.2149505,
+    "lon": 6.1486441,
+    "displayName": "39, Rue Rothschild, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "72, Rue de Lausanne": {
+    "lat": 46.2157498,
+    "lon": 6.1474179,
+    "displayName": "72, Rue de Lausanne, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "149H, Route de Ferney": {
+    "lat": 46.2278692,
+    "lon": 6.1257311,
+    "displayName": "149h, Route de Ferney, Le Grand-Saconnex, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "36, Rue de Lausanne": {
+    "lat": 46.2130884,
+    "lon": 6.1455271,
+    "displayName": "36, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "100, Chemin de Valérie": {
+    "lat": 46.2501534,
+    "lon": 6.139968,
+    "displayName": "Mission permanente de Cuba, 100, Chemin de Valérie, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Chemin François-Lehmann": {
+    "lat": 46.2312124,
+    "lon": 6.1207259,
+    "displayName": "34, Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "39, Quai du Mont-Blanc": {
+    "lat": 46.2107846,
+    "lon": 6.151996,
+    "displayName": "Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue Jean-Jaquet": {
+    "lat": 46.2130855,
+    "lon": 6.1510446,
+    "displayName": "14, Rue Jean-Jaquet, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Avenue de Champel": {
+    "lat": 46.1912185,
+    "lon": 6.1531949,
+    "displayName": "24, Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "70, Chemin des Hauts-Crêts": {
+    "lat": 46.2153648,
+    "lon": 6.1872031,
+    "displayName": "70, Chemin des Hauts-Crêts, Cologny, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27bis, Chemin des Bougeries": {
+    "lat": 46.186046,
+    "lon": 6.1800824,
+    "displayName": "Chemin des Bougeries, Conches, Chêne-Bougeries, Genève, 1231, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin des Crettets": {
+    "lat": 46.1880139,
+    "lon": 6.1802656,
+    "displayName": "5, Chemin des Crettets, Chêne-Bougeries, Genève, 1231, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, L'Ancienne-Route": {
+    "lat": 46.2316592,
+    "lon": 6.1273843,
+    "displayName": "Mission permanente de la République slovaque, 9, L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, L'Ancienne Route": {
+    "lat": 46.2318441,
+    "lon": 6.1276619,
+    "displayName": "7, L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Chemin Camille-Vidart": {
+    "lat": 46.2344734,
+    "lon": 6.1317262,
+    "displayName": "Mission permanente de la République tchèque, 17, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "49, Rue de Moillebeau": {
+    "lat": 46.2215426,
+    "lon": 6.1296438,
+    "displayName": "Consulat Honoraire d'Allemagne, 49, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue Émilie-Gourd": {
+    "lat": 46.1976569,
+    "lon": 6.1526187,
+    "displayName": "6, Rue Emilie-Gourd, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Route de Pregny": {
+    "lat": 46.2280824,
+    "lon": 6.1385051,
+    "displayName": "Route de Pregny, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Rue de Vermont, Quartier des Nations": {
+    "lat": 46.2181639,
+    "lon": 6.1373083,
+    "displayName": "28, Rue de Vermont, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27, Chemin de la Paumière": {
+    "lat": 46.1892778,
+    "lon": 6.1744486,
+    "displayName": "27, Chemin de la Paumière, Grange-Canal, Chêne-Bougeries, Genève, 1231, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "59, Rue du Grand-Pré": {
+    "lat": 46.2154444,
+    "lon": 6.131689,
+    "displayName": "59, Rue du Grand-Pré, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Rue Charles-Bonnet": {
+    "lat": 46.1975822,
+    "lon": 6.1505881,
+    "displayName": "2, Rue Charles-Bonnet, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Route de Frontenex": {
+    "lat": 46.2015983,
+    "lon": 6.1617916,
+    "displayName": "Route de Frontenex, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Avenue Dumas": {
+    "lat": 46.1923502,
+    "lon": 6.1542528,
+    "displayName": "2, Avenue Dumas, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "116, Chemin De-La-Montagne, Chêne-Bougeries": {
+    "lat": 46.2036904,
+    "lon": 6.2010532,
+    "displayName": "116, Chemin De-La-Montagne, Chêne-Bougeries, Genève, 1224, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "54, Rue Liotard": {
+    "lat": 46.2124124,
+    "lon": 6.1296145,
+    "displayName": "54, Rue Liotard, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Avenue Eugène-Pittard": {
+    "lat": 46.1924475,
+    "lon": 6.1615042,
+    "displayName": "7, Avenue Eugène-Pittard, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "36, Boulevard Helvétique": {
+    "lat": 46.2020509,
+    "lon": 6.1551891,
+    "displayName": "36, Boulevard Helvétique, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue François-Bellot": {
+    "lat": 46.1983562,
+    "lon": 6.1523329,
+    "displayName": "10, Rue François-Bellot, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Rue Michel-Chauvet": {
+    "lat": 46.1984259,
+    "lon": 6.15647,
+    "displayName": "2, Rue Michel-Chauvet, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue de Contamines": {
+    "lat": 46.1980089,
+    "lon": 6.157499,
+    "displayName": "6, Rue de Contamines, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Rue de Lausanne": {
+    "lat": 46.2112845,
+    "lon": 6.144506,
+    "displayName": "18, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "82, Rue du Rhône": {
+    "lat": 46.2036271,
+    "lon": 6.1496312,
+    "displayName": "82, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Place des Eaux-Vives": {
+    "lat": 46.2026306,
+    "lon": 6.1560291,
+    "displayName": "La Plancha, 2, Place des Eaux-Vives, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "49, Avenue Blanc": {
+    "lat": 46.2212556,
+    "lon": 6.1477093,
+    "displayName": "Ambassade, Mission permanente de l'Islande, 49, Avenue Blanc, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Rue de la Corraterie": {
+    "lat": 46.2022399,
+    "lon": 6.1434548,
+    "displayName": "24, Rue de la Corraterie, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Rue de la Confédération": {
+    "lat": 46.2038192,
+    "lon": 6.1443928,
+    "displayName": "5, Rue de la Confédération (Rues-Basses), Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "32, Rue de Berne": {
+    "lat": 46.2109143,
+    "lon": 6.1465115,
+    "displayName": "32, Rue de Berne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue de la Corraterie": {
+    "lat": 46.2034122,
+    "lon": 6.1428659,
+    "displayName": "Papeterie Brachard, 10, Rue de la Corraterie, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Avenue Gaspard-Vallette": {
+    "lat": 46.1950407,
+    "lon": 6.1567754,
+    "displayName": "7, Avenue Gaspard-Vallette, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28A, Chemin du Petit-Saconnex": {
+    "lat": 46.2227168,
+    "lon": 6.1328111,
+    "displayName": "28a, Chemin du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "54, Rue de Moillebeau": {
+    "lat": 46.222394,
+    "lon": 6.1305574,
+    "displayName": "54, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "37-39, Rue de Vermont": {
+    "lat": 46.2182974,
+    "lon": 6.1370181,
+    "displayName": "Rue de Vermont, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin Camille-Vidart": {
+    "lat": 46.2194084,
+    "lon": 6.1380131,
+    "displayName": "2, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue De-Candolle": {
+    "lat": 46.1983064,
+    "lon": 6.1446227,
+    "displayName": "14, Rue De-Candolle, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Rue des Vollandes": {
+    "lat": 46.2059937,
+    "lon": 6.1592381,
+    "displayName": "2, Rue des Vollandes, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Place Claparède": {
+    "lat": 46.1962229,
+    "lon": 6.1496669,
+    "displayName": "7, Place Claparède, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue Charles-Bonnet": {
+    "lat": 46.1966054,
+    "lon": 6.1519951,
+    "displayName": "14, Rue Charles-Bonnet, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Avenue Pictet-de-Rochemont": {
+    "lat": 46.2021701,
+    "lon": 6.1574834,
+    "displayName": "8, Avenue Pictet-de-Rochemont, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue de Contamines": {
+    "lat": 46.1975485,
+    "lon": 6.1579174,
+    "displayName": "3, Rue de Contamines, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "102, Rue de Lausanne": {
+    "lat": 46.2111618,
+    "lon": 6.144195,
+    "displayName": "Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin Malombré": {
+    "lat": 46.1959816,
+    "lon": 6.1526442,
+    "displayName": "5, Chemin Malombré, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Avenue De-Budé": {
+    "lat": 46.2246461,
+    "lon": 6.1317587,
+    "displayName": "11, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "149A, Route de Ferney": {
+    "lat": 46.2285094,
+    "lon": 6.1266027,
+    "displayName": "149a, Route de Ferney, Le Grand-Saconnex, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue du Pré-de-la-Bichette": {
+    "lat": 46.220514,
+    "lon": 6.1355287,
+    "displayName": "Consulado Geral do Brasil, 1, Rue du Pré-de-la-Bichette, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "143, Rue de Lausanne": {
+    "lat": 46.2230282,
+    "lon": 6.1486006,
+    "displayName": "143, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "36, Route de Pregny": {
+    "lat": 46.2379333,
+    "lon": 6.1429284,
+    "displayName": "Mission permanente de la France auprès de l'ONU, 36, Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Rue Daubin": {
+    "lat": 46.2077943,
+    "lon": 6.1301384,
+    "displayName": "33, Rue Daubin, Saint-Jean, Les Délices, Saint-Jean et Charmilles, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Charles-Humbert": {
+    "lat": 46.2001456,
+    "lon": 6.1381667,
+    "displayName": "8, Rue Charles-Humbert, Jonction, Coulouvrenière, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Chemin François-Lehmann": {
+    "lat": 46.2296781,
+    "lon": 6.1226343,
+    "displayName": "Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Rue Pestalozzi": {
+    "lat": 46.216151,
+    "lon": 6.1297409,
+    "displayName": "7, Rue Pestalozzi, Moillebeau, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "80, Avenue Louis-Casaï": {
+    "lat": 46.225487,
+    "lon": 6.1062793,
+    "displayName": "Tamoil, 80, Avenue Louis-Casaï, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "56, Rue de Lausanne": {
+    "lat": 46.2147524,
+    "lon": 6.1466936,
+    "displayName": "56, Rue de Lausanne, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Avenue De-Budé": {
+    "lat": 46.2247354,
+    "lon": 6.131904,
+    "displayName": "13, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7bis, Rue Henri-Veyrassat": {
+    "lat": 46.2126946,
+    "lon": 6.1305676,
+    "displayName": "7bis, Rue Henri-Veyrassat, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "232-234, Route de Lausanne, Chambésy": {
+    "lat": 46.2442894,
+    "lon": 6.1517505,
+    "displayName": "Route de Lausanne, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "30, Rue du Rhône": {
+    "lat": 46.2044519,
+    "lon": 6.14587,
+    "displayName": "30, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Richard-Wagner": {
+    "lat": 46.2173602,
+    "lon": 6.1423195,
+    "displayName": "1, Rue Richard-Wagner, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue du Mont-de-Sion": {
+    "lat": 46.197326,
+    "lon": 6.153586,
+    "displayName": "6, Rue du Mont-de-Sion, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "94, Rue de Lausanne": {
+    "lat": 46.2176683,
+    "lon": 6.1483826,
+    "displayName": "94, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28D, Chemin du Petit-Saconnex": {
+    "lat": 46.2230469,
+    "lon": 6.1304992,
+    "displayName": "Chemin du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28C, Chemin du Petit-Saconnex": {
+    "lat": 46.2228902,
+    "lon": 6.1330114,
+    "displayName": "28c, Chemin du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue Crespin": {
+    "lat": 46.1953908,
+    "lon": 6.1593218,
+    "displayName": "10, Rue Crespin, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Boulevard des Philosophes": {
+    "lat": 46.1962829,
+    "lon": 6.1493048,
+    "displayName": "28, Boulevard des Philosophes, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "44, Boulevard des Tranchées": {
+    "lat": 46.1980185,
+    "lon": 6.155316,
+    "displayName": "44, Boulevard des Tranchées, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Quai des Bergues": {
+    "lat": 46.2070338,
+    "lon": 6.1469866,
+    "displayName": "Four Seasons Hôtel des Bergues, 33, Quai des Bergues, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Plateau de Frontenex": {
+    "lat": 46.2060017,
+    "lon": 6.1749552,
+    "displayName": "9, Plateau de Frontenex, Cologny, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "56, Route de Florissant": {
+    "lat": 46.1933065,
+    "lon": 6.1612764,
+    "displayName": "COOP, 56, Route de Florissant, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "42, Avenue Krieg": {
+    "lat": 46.1946527,
+    "lon": 6.1613079,
+    "displayName": "42, Avenue Krieg, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Avenue de Miremont, Champel": {
+    "lat": 46.191821,
+    "lon": 6.1537653,
+    "displayName": "1, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3 bis b. Rue du Vieux-Billard": {
+    "lat": 46.2004509,
+    "lon": 6.1384795,
+    "displayName": "Rue du Vieux-Billard, Jonction, Coulouvrenière, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Place de la Métropole": {
+    "lat": 46.2035377,
+    "lon": 6.1513981,
+    "displayName": "2, Place de la Métropole, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27, Rue Pierre-Fatio": {
+    "lat": 46.2022225,
+    "lon": 6.1535494,
+    "displayName": "Rue Pierre-Fatio, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Boulevard Emile-Jaques-Dalcroze": {
+    "lat": 46.2005412,
+    "lon": 6.1532074,
+    "displayName": "7, Boulevard Emile-Jaques-Dalcroze, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Pedro-Meylan": {
+    "lat": 46.1955032,
+    "lon": 6.1639905,
+    "displayName": "3, Rue Pedro-Meylan, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Rue Sigismond-Thalberg": {
+    "lat": 46.2094276,
+    "lon": 6.1475365,
+    "displayName": "2, Rue Sigismond-Thalberg, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Place de Saint-Gervais": {
+    "lat": 46.2058748,
+    "lon": 6.1423999,
+    "displayName": "1, Place de Saint-Gervais, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Avenue Louis Casaï": {
+    "lat": 46.2193788,
+    "lon": 6.1151938,
+    "displayName": "Regus Office, 18, Avenue Louis-Casaï, Le Bouchet, Châtelaine, Vernier, Genève, 1220, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Rue Robert-Céard": {
+    "lat": 46.2029354,
+    "lon": 6.1487995,
+    "displayName": "13, Rue Robert-Céard, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "21, Chemin de Sous-Bois": {
+    "lat": 46.2230382,
+    "lon": 6.1351359,
+    "displayName": "Chemin de Sous-Bois, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7-9, Rue du Valais": {
+    "lat": 46.2166362,
+    "lon": 6.1417217,
+    "displayName": "Rue du Valais, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue Saint-Léger": {
+    "lat": 46.1972983,
+    "lon": 6.1454505,
+    "displayName": "Rue Saint-Léger, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Boulevard James-Fazy": {
+    "lat": 46.2077472,
+    "lon": 6.1406002,
+    "displayName": "12, Boulevard James-Fazy, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "64, Rue De-Monthoux": {
+    "lat": 46.2116102,
+    "lon": 6.1452436,
+    "displayName": "Jame's Pub, 64, Rue De-Monthoux, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Chemin Colladon": {
+    "lat": 46.2234015,
+    "lon": 6.1236092,
+    "displayName": "24, Chemin Colladon, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Chemin du Vengeron": {
+    "lat": 46.2463004,
+    "lon": 6.1477819,
+    "displayName": "16, Chemin du Vengeron, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Chemin de la Tourelle": {
+    "lat": 46.2240669,
+    "lon": 6.1257153,
+    "displayName": "6, Chemin de la Tourelle, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Avenue de Sécheron": {
+    "lat": 46.2207827,
+    "lon": 6.1482082,
+    "displayName": "12, Avenue de Sécheron, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Albert-Gos": {
+    "lat": 46.1887982,
+    "lon": 6.1561633,
+    "displayName": "3, Rue Albert-Gos, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Quai du Cheval-Blanc": {
+    "lat": 46.1909462,
+    "lon": 6.1396408,
+    "displayName": "14, Quai du Cheval-Blanc, Les Vernets, Les Acacias, Genève, 1227, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Route de Meyrin": {
+    "lat": 46.2143348,
+    "lon": 6.1287826,
+    "displayName": "6, Route de Meyrin, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Chemin Taverney": {
+    "lat": 46.2300073,
+    "lon": 6.1196445,
+    "displayName": "13, Chemin Taverney, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Avenue de Miremont": {
+    "lat": 46.1887444,
+    "lon": 6.15714,
+    "displayName": "Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Quai du Mont-Blanc": {
+    "lat": 46.207489,
+    "lon": 6.1481538,
+    "displayName": "5, Quai du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Quai Wilson": {
+    "lat": 46.2118504,
+    "lon": 6.1524724,
+    "displayName": "33, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Jean-Sénebier": {
+    "lat": 46.1976343,
+    "lon": 6.1472666,
+    "displayName": "8, Rue Jean-Sénebier, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Avenue Léon-Gaud": {
+    "lat": 46.1949238,
+    "lon": 6.1554325,
+    "displayName": "12, Avenue Léon-Gaud, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "23, Rue du Vidollet": {
+    "lat": 46.2168009,
+    "lon": 6.1369633,
+    "displayName": "23, Rue du Vidollet, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Rue Firmin-Massot": {
+    "lat": 46.196312,
+    "lon": 6.1511689,
+    "displayName": "4, Rue Firmin-Massot, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "81, Avenue de Champel": {
+    "lat": 46.1886882,
+    "lon": 6.1515704,
+    "displayName": "81, Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Place des Eaux Vives": {
+    "lat": 46.2025721,
+    "lon": 6.1560131,
+    "displayName": "2, Place des Eaux-Vives, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Rue de Saint-Jean": {
+    "lat": 46.203914,
+    "lon": 6.126789,
+    "displayName": "Mission Permanente Indonésie, 16, Rue de Saint-Jean, Saint-Jean, Les Délices, Saint-Jean et Charmilles, Genève, 1203, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Crêts de Champel": {
+    "lat": 46.1855122,
+    "lon": 6.1587548,
+    "displayName": "Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Rue De-Candolle": {
+    "lat": 46.1978906,
+    "lon": 6.145209,
+    "displayName": "20, Rue De-Candolle, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "19, Avenue de Champel": {
+    "lat": 46.19565,
+    "lon": 6.1507561,
+    "displayName": "Avenue de Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "37, Avenue de Miremont": {
+    "lat": 46.1910437,
+    "lon": 6.1542835,
+    "displayName": "Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin de l'Escalade": {
+    "lat": 46.1898043,
+    "lon": 6.1515918,
+    "displayName": "5, Chemin de l'Escalade, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Avenue de Champel": {
+    "lat": 46.1934625,
+    "lon": 6.1529075,
+    "displayName": "25, Avenue de Champel, La Cluse, Plainpalais, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Route de Malagnou": {
+    "lat": 46.1984397,
+    "lon": 6.1568928,
+    "displayName": "Djakovic / Montoro, 2, Route de Malagnou, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Rue Jean-Sénebier": {
+    "lat": 46.1968315,
+    "lon": 6.148449,
+    "displayName": "20, Rue Jean-Sénebier, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27-31, Chemin du Velours": {
+    "lat": 46.1927677,
+    "lon": 6.1712021,
+    "displayName": "Chemin du Velours, Malagnou, Champel, Genève, 1231, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Chemin du Petit-Saconnex": {
+    "lat": 46.2227586,
+    "lon": 6.1327632,
+    "displayName": "28, Chemin du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue Charles-Galland": {
+    "lat": 46.1979914,
+    "lon": 6.1535244,
+    "displayName": "Consulat d'Italie, 14, Rue Charles-Galland, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "40, Rue du Rhône": {
+    "lat": 46.2042987,
+    "lon": 6.1464672,
+    "displayName": "Blancpain SA, 40, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "35, Quai du Mont-Blanc": {
+    "lat": 46.2073798,
+    "lon": 6.1482227,
+    "displayName": "Quai du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "43, Quai Wilson": {
+    "lat": 46.2134314,
+    "lon": 6.1520446,
+    "displayName": "43, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Rue Michel-Chauvet": {
+    "lat": 46.1978164,
+    "lon": 6.1591647,
+    "displayName": "15, Rue Michel-Chauvet, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Rue de l'Athénée": {
+    "lat": 46.1950107,
+    "lon": 6.1535793,
+    "displayName": "Carbonie Demenagement Genève, 34, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17-19, Chemin du Champ-d'Anier": {
+    "lat": 46.224456,
+    "lon": 6.1231427,
+    "displayName": "Chemin du Champ-d'Anier, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "37, Quai Wilson": {
+    "lat": 46.2121073,
+    "lon": 6.1522873,
+    "displayName": "The Woodward, 37, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Hoffmann": {
+    "lat": 46.214073,
+    "lon": 6.12943,
+    "displayName": "Sushi Anzoo, 1, Rue Hoffmann, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Chemin de Bonvent": {
+    "lat": 46.223552,
+    "lon": 6.1120424,
+    "displayName": "9, Chemin de Bonvent, Châtelaine, Vernier, Genève, 1220, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1-3, Avenue de la Paix": {
+    "lat": 46.2234139,
+    "lon": 6.144611,
+    "displayName": "Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Munier-Romilly": {
+    "lat": 46.1979373,
+    "lon": 6.153456,
+    "displayName": "3, Rue Munier-Romilly, Les Tranchées, Cité, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Chemin de l'Impératrice": {
+    "lat": 46.2302102,
+    "lon": 6.1440752,
+    "displayName": "10, Chemin de l'Impératrice, Pâquis, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Avenue du Lignon": {
+    "lat": 46.200856,
+    "lon": 6.0915208,
+    "displayName": "5, Avenue du Lignon, Le Lignon, Châtelaine, Vernier, Genève, 1219, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18-19, Avenue du Lignon": {
+    "lat": 46.2006604,
+    "lon": 6.0930316,
+    "displayName": "Avenue du Lignon, Le Lignon, Châtelaine, Vernier, Genève, 1219, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Chemin de l'Avanchet": {
+    "lat": 46.2237692,
+    "lon": 6.1076385,
+    "displayName": "33, Chemin de l'Avanchet, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "42, Rue de Lausanne": {
+    "lat": 46.2135363,
+    "lon": 6.1459513,
+    "displayName": "Ad gentes, 42, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue Monnier": {
+    "lat": 46.1948831,
+    "lon": 6.1532957,
+    "displayName": "11, Rue Monnier, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "40, Avenue Krieg": {
+    "lat": 46.1948056,
+    "lon": 6.1619039,
+    "displayName": "40, Avenue Krieg, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "60, Rue du Rhône": {
+    "lat": 46.2038375,
+    "lon": 6.148511,
+    "displayName": "Christian Dior, 60, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Avenue De-Budé": {
+    "lat": 46.2260957,
+    "lon": 6.1307823,
+    "displayName": "10, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Chemin des Fins": {
+    "lat": 46.2265501,
+    "lon": 6.1233758,
+    "displayName": "Mission permanente du Japon, 3, Chemin des Fins, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Rue des Pâquis": {
+    "lat": 46.2114104,
+    "lon": 6.1490671,
+    "displayName": "Espresso Club, 25, Rue des Pâquis, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Route de Meyrin": {
+    "lat": 46.2142501,
+    "lon": 6.129007,
+    "displayName": "4, Route de Meyrin, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Place de la Navigation": {
+    "lat": 46.212166,
+    "lon": 6.14986,
+    "displayName": "10, Place de la Navigation, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "81, Rue de Lyon": {
+    "lat": 46.2082766,
+    "lon": 6.1254579,
+    "displayName": "81, Rue de Lyon, Les Charmilles, Les Délices, Saint-Jean et Charmilles, Genève, 1203, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue du Mont-Blanc": {
+    "lat": 46.2073797,
+    "lon": 6.1466442,
+    "displayName": "3, Rue du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Chemin du Prunier": {
+    "lat": 46.2235584,
+    "lon": 6.117391,
+    "displayName": "10, Chemin du Prunier, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "41, Rue de Lausanne": {
+    "lat": 46.213331,
+    "lon": 6.1452442,
+    "displayName": "Hôtel Royal, 41, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin des Mines": {
+    "lat": 46.2232224,
+    "lon": 6.1477304,
+    "displayName": "2, Chemin des Mines, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, La Voie-Creuse": {
+    "lat": 46.2199117,
+    "lon": 6.143235,
+    "displayName": "16, La Voie-Creuse, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Square des Mesmes, Quartier des Nations": {
+    "lat": 46.2196155,
+    "lon": 6.1361575,
+    "displayName": "Square des Mesmes, Quartier des Nations, Petit-Saconnex et Servette, Genève, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Rue de l'Athénée": {
+    "lat": 46.1954081,
+    "lon": 6.1527493,
+    "displayName": "26, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "23, Rue du Rhône": {
+    "lat": 46.2043724,
+    "lon": 6.1468727,
+    "displayName": "23, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Avenue de l'Ariana": {
+    "lat": 46.2243071,
+    "lon": 6.1349208,
+    "displayName": "Consulat général du Koweït, 2, Avenue de l'Ariana, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Avenue de Beau Séjour": {
+    "lat": 46.1922794,
+    "lon": 6.1501926,
+    "displayName": "2, Avenue de Beau-Séjour, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Chemin des Clochettes": {
+    "lat": 46.188542,
+    "lon": 6.1588384,
+    "displayName": "16, Chemin des Clochettes, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "137, Rue de Lausanne": {
+    "lat": 46.2225533,
+    "lon": 6.1488209,
+    "displayName": "137, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Crêts de Champel": {
+    "lat": 46.1855122,
+    "lon": 6.1587548,
+    "displayName": "Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Crêts de Champel": {
+    "lat": 46.1855122,
+    "lon": 6.1587548,
+    "displayName": "Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Place des Eaux-Vives": {
+    "lat": 46.2019134,
+    "lon": 6.155763,
+    "displayName": "Photo Verdaine, 6, Place des Eaux-Vives, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Avenue De-Budé": {
+    "lat": 46.2257998,
+    "lon": 6.1311823,
+    "displayName": "4, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Parc des Mayens": {
+    "lat": 46.2248728,
+    "lon": 6.1185074,
+    "displayName": "28, Parc des Mayens, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "105, Route de Chêne": {
+    "lat": 46.1990395,
+    "lon": 6.1809325,
+    "displayName": "105, Route de Chêne, La Gradelle, Grange-Canal, Chêne-Bougeries, Genève, 1224, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Route de la Côte d'Or, Bassy, Anières": {
+    "lat": 46.2747758,
+    "lon": 6.2272259,
+    "displayName": "1, Route de la Côte d'Or, Bassy, Anières, Genève, 1247, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "50, Rue de Moillebeau": {
+    "lat": 46.2221017,
+    "lon": 6.1301571,
+    "displayName": "50, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Route de Chêne": {
+    "lat": 46.2000965,
+    "lon": 6.1623699,
+    "displayName": "5, Route de Chêne, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Chemin de Champ-Vovan, Genthod": {
+    "lat": 46.2666774,
+    "lon": 6.1560251,
+    "displayName": "10, Chemin de Champ-Vovan, Malagny, Genthod, Genève, 1294, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "22, Chemin François-Lehmann": {
+    "lat": 46.2299507,
+    "lon": 6.1233222,
+    "displayName": "22, Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "319, Route de Lausanne": {
+    "lat": 46.2536951,
+    "lon": 6.1529035,
+    "displayName": "319, Route de Lausanne, Rives-du-Lac, Grands-Bois, Bellevue, Genève, 1293, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "54-56, Rue de Montbrillant": {
+    "lat": 46.220866,
+    "lon": 6.140419,
+    "displayName": "Rue de Montbrillant, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Quai du Mont-Blanc": {
+    "lat": 46.2093766,
+    "lon": 6.1501952,
+    "displayName": "15, Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Route de La-Capite, Cologny": {
+    "lat": 46.218283,
+    "lon": 6.1845596,
+    "displayName": "Mairie de Cologny, 24, Route de La-Capite, Cologny, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "20, Parc du Château-Banquet": {
+    "lat": 46.2178521,
+    "lon": 6.1494601,
+    "displayName": "20, Parc du Château-Banquet, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Avenue du Bouchet": {
+    "lat": 46.2187217,
+    "lon": 6.1222071,
+    "displayName": "18, Avenue du Bouchet, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "82, Route de Valavran, Les Grands-Champs, Grand-Bois, Bellevue": null,
+  "1, Rue de Varembé": {
+    "lat": 46.2211768,
+    "lon": 6.1397034,
+    "displayName": "1, Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28B, Chemin du Petit-Saconnex": {
+    "lat": 46.2225973,
+    "lon": 6.1329416,
+    "displayName": "28b, Chemin du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Chemin de la Rochette": {
+    "lat": 46.2221392,
+    "lon": 6.1334947,
+    "displayName": "13, Chemin de la Rochette, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24A, Rue Lamartine": {
+    "lat": 46.2113299,
+    "lon": 6.129581,
+    "displayName": "24a, Rue Lamartine, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "32, Avenue de Riant Parc": {
+    "lat": 46.2204281,
+    "lon": 6.1203984,
+    "displayName": "32, Avenue de Riant-Parc, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "43, Rue de Lausanne": {
+    "lat": 46.2135298,
+    "lon": 6.1453672,
+    "displayName": "43, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "131-133, Rue de Lausanne": {
+    "lat": 46.2215531,
+    "lon": 6.1492131,
+    "displayName": "Hôtel Mon-Repos, 131-133, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Parc du Château-Banquet": {
+    "lat": 46.2182393,
+    "lon": 6.1488491,
+    "displayName": "26, Parc du Château-Banquet, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "29, Chemin des Voirons, Lancy": {
+    "lat": 46.1936536,
+    "lon": 6.1166362,
+    "displayName": "29, Chemin des Voirons, Petit-Lancy, Lancy, Genève, 1212, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Rue Le-Corbusier": {
+    "lat": 46.1944508,
+    "lon": 6.1670095,
+    "displayName": "10, Rue Le-Corbusier, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Chemin Camille-Vidart": {
+    "lat": 46.2191837,
+    "lon": 6.1367602,
+    "displayName": "7, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Boulevard des Philosophes": {
+    "lat": 46.1963041,
+    "lon": 6.1489171,
+    "displayName": "26, Boulevard des Philosophes, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "87, Rue de Lausanne": {
+    "lat": 46.2175298,
+    "lon": 6.1478876,
+    "displayName": "87, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Avenue Théodore-Flournoy": {
+    "lat": 46.2045159,
+    "lon": 6.1643887,
+    "displayName": "5, Avenue Théodore-Flournoy, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "109, Rue de Lausanne": {
+    "lat": 46.2193796,
+    "lon": 6.1489312,
+    "displayName": "109, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "107, Rue de Lausanne": {
+    "lat": 46.2192461,
+    "lon": 6.148843,
+    "displayName": "107, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Avenue De-Budé": {
+    "lat": 46.2263916,
+    "lon": 6.1303824,
+    "displayName": "16, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8c, Avenue de Miremont": {
+    "lat": 46.1900595,
+    "lon": 6.1543775,
+    "displayName": "8c, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Chemin Puthon, Grange-Canal": {
+    "lat": 46.200031,
+    "lon": 6.1751745,
+    "displayName": "3, Chemin Puthon, Grange-Canal, Chêne-Bougeries, Genève, 1224, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Chemin des Mollies, Bellevue": {
+    "lat": 46.2526961,
+    "lon": 6.1515059,
+    "displayName": "Ambassade, Mission permanente de la Mongolie, 4, Chemin des Mollies, Les Grands-Champs, Grands-Bois, Bellevue, Genève, 1293, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18A, Chemin François-Lehmann": {
+    "lat": 46.2300977,
+    "lon": 6.1225255,
+    "displayName": "18a, Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "29, Rue de la Coulouvrenière": {
+    "lat": 46.2038439,
+    "lon": 6.1384936,
+    "displayName": "La Coulouvrenière, 29, Rue de la Coulouvrenière, Jonction, Coulouvrenière, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "51, Route de Florissant": {
+    "lat": 46.1941861,
+    "lon": 6.160452,
+    "displayName": "Philippe Taillé, 51, Route de Florissant, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Rue Gautier": {
+    "lat": 46.2137291,
+    "lon": 6.1497419,
+    "displayName": "13, Rue Jean-Antoine-Gautier, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue Henri-Frédéric-Amiel": {
+    "lat": 46.2066946,
+    "lon": 6.1328665,
+    "displayName": "1, Rue Henri-Frédéric-Amiel, Saint-Jean, Les Délices, Saint-Jean et Charmilles, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "81, Rue de la Servette": {
+    "lat": 46.212616,
+    "lon": 6.13149,
+    "displayName": "Coop, 81, Rue de la Servette, Les Grottes, Grottes et Saint-Gervais, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Avenue Alfred-Bertrand": {
+    "lat": 46.1945817,
+    "lon": 6.1564314,
+    "displayName": "13, Avenue Alfred-Bertrand, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Chemin des Anémones": {
+    "lat": 46.2132402,
+    "lon": 6.1113656,
+    "displayName": "11, Chemin des Anémones, Le Bouchet, Châtelaine, Vernier, Genève, 1220, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "35, Avenue de Miremont": {
+    "lat": 46.1885073,
+    "lon": 6.1576949,
+    "displayName": "35, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Merle-d’Aubigné": {
+    "lat": 46.2068483,
+    "lon": 6.1615517,
+    "displayName": "3, Rue Merle-d'Aubigné, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue François-Versonnex": {
+    "lat": 46.2032188,
+    "lon": 6.1546933,
+    "displayName": "3, Rue François-Versonnex, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "25, Avenue des Cavaliers, Chêne-Bourgeries": null,
+  "32, Chemin des Colombettes": {
+    "lat": 46.2216609,
+    "lon": 6.1361341,
+    "displayName": "GBI, 32, Chemin des Colombettes, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Avenue Alfred-Bertrand, Florrisant": null,
+  "329, Route de Lausanne, Rives-du-Lac, Grands-Bois, Bellevue": {
+    "lat": 46.2546895,
+    "lon": 6.1543354,
+    "displayName": "Mairie de Bellevue, 329, Route de Lausanne, Rives-du-Lac, Grands-Bois, Bellevue, Genève, 1293, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "32, Avenue Blanc": {
+    "lat": 46.2196939,
+    "lon": 6.1476801,
+    "displayName": "32, Avenue Blanc, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Avenue De-Budé": {
+    "lat": 46.2244674,
+    "lon": 6.131468,
+    "displayName": "7, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "31-35, Avenue De-Budé": {
+    "lat": 46.2257073,
+    "lon": 6.1309223,
+    "displayName": "Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "35, Avenue De-Budé": {
+    "lat": 46.2254829,
+    "lon": 6.1286023,
+    "displayName": "35, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "141, Rue de Lausanne": {
+    "lat": 46.2228257,
+    "lon": 6.1485903,
+    "displayName": "Cytecorp SA, 141, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "220, Route de Ferney": {
+    "lat": 46.2388408,
+    "lon": 6.1237374,
+    "displayName": "Consulat Général du Portugal, 220, Route de Ferney, Octagon, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "36, Rue des Pâquis": {
+    "lat": 46.2132787,
+    "lon": 6.1505216,
+    "displayName": "Union Africaine - Délégation permanente, 36, Rue des Pâquis, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Rue de Champel": {
+    "lat": 46.1954952,
+    "lon": 6.1525471,
+    "displayName": "24, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6bis, Rue Antoine Carteret": {
+    "lat": 46.2112518,
+    "lon": 6.132216,
+    "displayName": "6bis, Rue Antoine-Carteret, Les Grottes, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Chemin du Champ-de-Blé, Pregny": {
+    "lat": 46.2448775,
+    "lon": 6.1496583,
+    "displayName": "Chemin du Champ-de-Blé, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "65bis, Rue de Lyon": {
+    "lat": 46.2082988,
+    "lon": 6.1292329,
+    "displayName": "65bis, Rue de Lyon, Les Charmilles, Les Délices, Saint-Jean et Charmilles, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12-14, Rue du Cendrier": {
+    "lat": 46.2072024,
+    "lon": 6.1448372,
+    "displayName": "Rue du Cendrier, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "96, Route de Vernier": {
+    "lat": 46.211994,
+    "lon": 6.1082849,
+    "displayName": "96, Route de Vernier, Châtelaine, Vernier, Genève, 1219, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Quai du Mont-Blanc": {
+    "lat": 46.2079365,
+    "lon": 6.1484546,
+    "displayName": "The Ritz-Carlton Hotel de la Paix, 11, Quai du Mont-Blanc, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "135, Rue de Lausanne": {
+    "lat": 46.2219202,
+    "lon": 6.1489668,
+    "displayName": "Hotel Eden, 135, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Rue du Général-Dufour": {
+    "lat": 46.2018363,
+    "lon": 6.1411879,
+    "displayName": "12, Rue du Général-Dufour, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "33, Rue de l'Athénée": {
+    "lat": 46.195023,
+    "lon": 6.1545552,
+    "displayName": "33, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Avenue Théodore-Weber": {
+    "lat": 46.1973158,
+    "lon": 6.1636123,
+    "displayName": "34, Avenue Théodore-Weber, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Avenue Calas": {
+    "lat": 46.1895975,
+    "lon": 6.1528851,
+    "displayName": "4, Avenue Calas, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Avenue Krieg": {
+    "lat": 46.1944851,
+    "lon": 6.1630619,
+    "displayName": "13, Avenue Krieg, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "180, Route de La-Capite, Vésenaz": {
+    "lat": 46.2346893,
+    "lon": 6.204005,
+    "displayName": "180, Route de La-Capite, Vésenaz, Choulex, Genève, 1244, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Rue de l'Athénée": {
+    "lat": 46.1954952,
+    "lon": 6.1525471,
+    "displayName": "24, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue de Vermont": {
+    "lat": 46.215533,
+    "lon": 6.1347931,
+    "displayName": "8, Rue de Vermont, Grottes et Saint-Gervais, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Rue Charles-Galland": {
+    "lat": 46.1978453,
+    "lon": 6.1544457,
+    "displayName": "15, Rue Charles-Galland, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "67, Rue du Rhône": {
+    "lat": 46.2025742,
+    "lon": 6.1555774,
+    "displayName": "Molokai Fusion Poke Bar, 67, Rue du Rhône, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "31, Quai du Mont-Blanc": {
+    "lat": 46.2115454,
+    "lon": 6.1525427,
+    "displayName": "Marti Marine, 31, Quai du Mont-Blanc, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Place des Alpes": {
+    "lat": 46.2091442,
+    "lon": 6.1474577,
+    "displayName": "Place des Alpes, Pâquis, Genève, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue de la Cloche": {
+    "lat": 46.2109024,
+    "lon": 6.1509465,
+    "displayName": "Hôtel de la Cloche, 6, Rue de la Cloche, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Rue Jean -Jaquet": {
+    "lat": 46.2129332,
+    "lon": 6.1510309,
+    "displayName": "12, Rue Jean-Jaquet, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "91, Rue de Lausanne": {
+    "lat": 46.2178319,
+    "lon": 6.1479986,
+    "displayName": "91, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "47, Rue Philippe-Plantamour": {
+    "lat": 46.2112491,
+    "lon": 6.1507539,
+    "displayName": "Rue Philippe-Plantamour, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue d'Italie": {
+    "lat": 46.2024175,
+    "lon": 6.1523581,
+    "displayName": "Rue d'Italie, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "71, Avenue Louis-Casaï": {
+    "lat": 46.2240829,
+    "lon": 6.1078644,
+    "displayName": "71, Avenue Louis-Casaï, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Rue Charles-Galland": {
+    "lat": 46.1980647,
+    "lon": 6.1533795,
+    "displayName": "12, Rue Charles-Galland, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Rue Munier-Romilly": {
+    "lat": 46.1977424,
+    "lon": 6.1531423,
+    "displayName": "4, Rue Munier-Romilly, Les Tranchées, Cité, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, L'Ancienne Route": {
+    "lat": 46.2322037,
+    "lon": 6.1269706,
+    "displayName": "Mission permanente de la République de Pologne, 15, L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Chemin de la Gradelle": {
+    "lat": 46.2045368,
+    "lon": 6.1840123,
+    "displayName": "18, Chemin de la Gradelle, Chêne-Bougeries, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Chemin de Plonjon": {
+    "lat": 46.2100341,
+    "lon": 6.1704583,
+    "displayName": "1, Chemin de Plonjon, Frontenex, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Crêts-de-Champel": {
+    "lat": 46.1855122,
+    "lon": 6.1587548,
+    "displayName": "Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "149B, Route de Ferney": {
+    "lat": 46.2284248,
+    "lon": 6.1264554,
+    "displayName": "149b, Route de Ferney, Le Grand-Saconnex, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin du Rivage, Chambésy": {
+    "lat": 46.2377521,
+    "lon": 6.1498107,
+    "displayName": "5, Chemin du Rivage, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Chemin du Régiment-de-Conti, Versoix": {
+    "lat": 46.2755522,
+    "lon": 6.1592173,
+    "displayName": "14, Chemin du Régiment-de-Conti, Versoix, Genève, 1290, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue des Moulins, Saint-Gervais": {
+    "lat": 46.2049629,
+    "lon": 6.1428901,
+    "displayName": "1, Rue des Moulins, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Rue Emile-Yung, La Cluse, Plainpalais": {
+    "lat": 46.1957469,
+    "lon": 6.1496634,
+    "displayName": "4, Rue Emile-Yung, La Cluse, Plainpalais, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "23, Boulevard James-Fazy, Saint-Gervais": {
+    "lat": 46.2093208,
+    "lon": 6.1416369,
+    "displayName": "Hôtel Cornavin, 23, Boulevard James-Fazy, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue Dancet": {
+    "lat": 46.1932695,
+    "lon": 6.1419165,
+    "displayName": "14, Rue Dancet, La Roseraie, Plainpalais, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Chemin de la Perrière, Cologny": {
+    "lat": 46.2270328,
+    "lon": 6.1863802,
+    "displayName": "6, Chemin de la Perrière, Ruth, Cologny, Genève, 1223, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "57, Chemin de Valérie": {
+    "lat": 46.2466156,
+    "lon": 6.1365505,
+    "displayName": "57, Chemin de Valérie, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Rue François-Le-Fort": {
+    "lat": 46.1974336,
+    "lon": 6.1522278,
+    "displayName": "4, Rue François-Le-Fort, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "43, Rue Philippe-Plantamour": {
+    "lat": 46.211975,
+    "lon": 6.1514418,
+    "displayName": "43, Rue Philippe-Plantamour, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue de Cornavin": {
+    "lat": 46.2078142,
+    "lon": 6.1422358,
+    "displayName": "11, Rue de Cornavin, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Pedro-Meylan": {
+    "lat": 46.1942735,
+    "lon": 6.1638933,
+    "displayName": "8, Rue Pedro-Meylan, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "21, Avenue Trembley": {
+    "lat": 46.2190031,
+    "lon": 6.1248197,
+    "displayName": "Avenue Trembley, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Chemin Gilbert-Trolliet": {
+    "lat": 46.2191416,
+    "lon": 6.1238688,
+    "displayName": "3, Chemin Gilbert-Trolliet, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue de la Faucille": {
+    "lat": 46.2112917,
+    "lon": 6.1399271,
+    "displayName": "14, Rue de la Faucille, Les Grottes, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "22A, Rue du Cendrier": {
+    "lat": 46.2073442,
+    "lon": 6.145376,
+    "displayName": "22A, Rue du Cendrier, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "91, Rue de la Servette": {
+    "lat": 46.2123778,
+    "lon": 6.1324943,
+    "displayName": "Rue de la Servette, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "50, Avenue Giuseppe-Motta": {
+    "lat": 46.2200428,
+    "lon": 6.1358122,
+    "displayName": "50, Avenue Giuseppe-Motta, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "263, Route de Lausanne": {
+    "lat": 46.2399561,
+    "lon": 6.1489407,
+    "displayName": "Consulat d'Arabie Saoudite, 263, Route de Lausanne, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Route de Saint-Loup, Versoix": {
+    "lat": 46.2840482,
+    "lon": 6.1481836,
+    "displayName": "Route de Saint-Loup, Ecogia, Versoix, Genève, 1290, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28, Chemin François-Lehmann": {
+    "lat": 46.2311061,
+    "lon": 6.1218193,
+    "displayName": "28, Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "71, Avenue d'Aire": {
+    "lat": 46.2078904,
+    "lon": 6.1251374,
+    "displayName": "Avenue d'Aïre, Les Charmilles, Les Délices, Saint-Jean et Charmilles, Genève, 1203, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "44, Chemin des Coudriers": {
+    "lat": 46.223868,
+    "lon": 6.1209848,
+    "displayName": "44, Chemin des Coudriers, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6bis, Rue Antoine-Carteret": {
+    "lat": 46.2112518,
+    "lon": 6.132216,
+    "displayName": "6bis, Rue Antoine-Carteret, Les Grottes, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, L'Ancienne Route": {
+    "lat": 46.2316592,
+    "lon": 6.1273843,
+    "displayName": "Mission permanente de la République slovaque, 9, L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "147, Rue de Lausanne": {
+    "lat": 46.2234538,
+    "lon": 6.1483925,
+    "displayName": "147, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "70, Rue Schaub": {
+    "lat": 46.2135268,
+    "lon": 6.1326875,
+    "displayName": "Rue Schaub, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Avenue Alice-et-William Favre": {
+    "lat": 46.2049712,
+    "lon": 6.1651106,
+    "displayName": "26, Avenue Alice-et-William-Favre, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "66, Route de Ferney": {
+    "lat": 46.2225456,
+    "lon": 6.137491,
+    "displayName": "Route de Ferney, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "114, Rue du Rhône": {
+    "lat": 46.2026331,
+    "lon": 6.1541154,
+    "displayName": "Orfelis, 114, Rue du Rhône, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "65, Rue du Rhône": {
+    "lat": 46.202763,
+    "lon": 6.1547,
+    "displayName": "65, Rue du Rhône, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Place Claparède": {
+    "lat": 46.1959956,
+    "lon": 6.1500209,
+    "displayName": "3, Place Claparède, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "10, Clos Belmont": {
+    "lat": 46.199712,
+    "lon": 6.1663103,
+    "displayName": "10, Clos Belmont, Villereuse, Eaux-Vives, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Rue Pierre-Fatio": {
+    "lat": 46.2029282,
+    "lon": 6.1542682,
+    "displayName": "11, Rue Pierre-Fatio, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Rue de Chantepoulet": {
+    "lat": 46.2079529,
+    "lon": 6.144899,
+    "displayName": "5, Rue de Chantepoulet, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "53, Avenue Blanc": {
+    "lat": 46.221551,
+    "lon": 6.1482956,
+    "displayName": "53, Avenue Blanc, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "15, Rue du Jeu-de-l'Arc": {
+    "lat": 46.2026344,
+    "lon": 6.1582174,
+    "displayName": "15, Rue du Jeu-de-l'Arc, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "12, Place de Cornavin": {
+    "lat": 46.2095644,
+    "lon": 6.1432863,
+    "displayName": "12, Place de Cornavin, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "34, Chemin des Colombettes": {
+    "lat": 46.22199,
+    "lon": 6.1366635,
+    "displayName": "34, Chemin des Colombettes, Moillebeau, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Chemin Camille-Vidart": {
+    "lat": 46.2192678,
+    "lon": 6.1368844,
+    "displayName": "9, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "91-93, Rue de la Servette": {
+    "lat": 46.2133883,
+    "lon": 6.1300953,
+    "displayName": "Rue de la Servette, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "82, Rue de Lausanne": {
+    "lat": 46.216529,
+    "lon": 6.1485646,
+    "displayName": "82, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "28B, Chemin François-Lehmann": {
+    "lat": 46.2296781,
+    "lon": 6.1226343,
+    "displayName": "Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Rue Gustave Moynier": {
+    "lat": 46.219787,
+    "lon": 6.1483428,
+    "displayName": "5, Rue Gustave Moynier, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "35-37, Rue de Vermont": {
+    "lat": 46.2198687,
+    "lon": 6.1390703,
+    "displayName": "Rue de Vermont, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Avenue Calas, Champel": {
+    "lat": 46.1900364,
+    "lon": 6.1529338,
+    "displayName": "1, Avenue Calas, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue de l'Athénée": {
+    "lat": 46.1977184,
+    "lon": 6.1490152,
+    "displayName": "6, Rue de l'Athénée, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6bis, rue Antoine Carteret": {
+    "lat": 46.2112518,
+    "lon": 6.132216,
+    "displayName": "6bis, Rue Antoine-Carteret, Les Grottes, Grottes et Saint-Gervais, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Rue de l'Orangerie": {
+    "lat": 46.2136601,
+    "lon": 6.1333452,
+    "displayName": "Mission permanente de l'Ukraine, 14, Rue de l'Orangerie, La Servette, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "La Fenêtre, route de Pregny, Genève": {
+    "lat": 46.2299132,
+    "lon": 6.1387229,
+    "displayName": "La Fenêtre, Route de Pregny, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Chemin de l'Impératrice": {
+    "lat": 46.228146,
+    "lon": 6.1462926,
+    "displayName": "Bibliothèque du Jardin botanique de Genève, 1, Chemin de l'Impératrice, Pâquis, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11, Route de Pregny": {
+    "lat": 46.2326141,
+    "lon": 6.1375129,
+    "displayName": "Mission permanente des États-Unis d'Amérique, 11, Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Rue Crespin": {
+    "lat": 46.1950082,
+    "lon": 6.1596047,
+    "displayName": "18, Rue Crespin, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "66, Rue Rothschild": {
+    "lat": 46.2167604,
+    "lon": 6.1460774,
+    "displayName": "66, Rue Rothschild, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Cours de Rive": {
+    "lat": 46.2016402,
+    "lon": 6.1526307,
+    "displayName": "4, Cours de Rive, Rive, Eaux-Vives, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "24, Quai du Général-Guisan": {
+    "lat": 46.2039683,
+    "lon": 6.1498137,
+    "displayName": "24, Quai du Général-Guisan, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "100, Rue du Rhône": {
+    "lat": 46.2030571,
+    "lon": 6.1519538,
+    "displayName": "Roche Bobois, 100, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "56, Rue Moillebeau": {
+    "lat": 46.2225217,
+    "lon": 6.130719,
+    "displayName": "56, Rue de Moillebeau, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "43, Chemin François-Lehmann": {
+    "lat": 46.230956,
+    "lon": 6.1216196,
+    "displayName": "Chemin François-Lehmann, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue du Marché (Rues-Basses)": {
+    "lat": 46.2033277,
+    "lon": 6.1458624,
+    "displayName": "8, Rue du Marché (Rues-Basses), Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7, Avenue Krieg": {
+    "lat": 46.1950342,
+    "lon": 6.1634299,
+    "displayName": "7, Avenue Krieg, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "19, Chemin du Jonc, Cointrin": {
+    "lat": 46.2258263,
+    "lon": 6.1062837,
+    "displayName": "Chemin du Jonc, Cointrin, Meyrin, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "3, Rue Merle-d'Aubigné": {
+    "lat": 46.2068483,
+    "lon": 6.1615517,
+    "displayName": "3, Rue Merle-d'Aubigné, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Rue des Alpes": {
+    "lat": 46.208205,
+    "lon": 6.1480233,
+    "displayName": "AG Assurance Genevoise SA, 5, Rue des Alpes, Saint-Gervais, Grottes et Saint-Gervais, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Route de Florissant": {
+    "lat": 46.1968264,
+    "lon": 6.1540154,
+    "displayName": "1, Route de Florissant, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11bis, Avenue de Champel": {
+    "lat": 46.19565,
+    "lon": 6.1507561,
+    "displayName": "Avenue de Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin Thury": {
+    "lat": 46.1920347,
+    "lon": 6.1510433,
+    "displayName": "5, Chemin Thury, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "32, Rue de l'Athénée": {
+    "lat": 46.1951313,
+    "lon": 6.1533917,
+    "displayName": "32, Rue de l'Athénée, Florissant, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "45A-47A, Rue de Lausanne": {
+    "lat": 46.2140409,
+    "lon": 6.1459714,
+    "displayName": "Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "18, Avenue De-Budé": {
+    "lat": 46.2264903,
+    "lon": 6.1302491,
+    "displayName": "18, Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "250, Chemin du Rivage": {
+    "lat": 46.2379537,
+    "lon": 6.1494662,
+    "displayName": "Eni, 250, Chemin du Rivage, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin du Rivage": {
+    "lat": 46.2377521,
+    "lon": 6.1498107,
+    "displayName": "5, Chemin du Rivage, Pregny, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "21, Chemin de Grange-Canal": {
+    "lat": 46.2010381,
+    "lon": 6.1751391,
+    "displayName": "21, Chemin de Grange-Canal, Grange-Canal, Chêne-Bougeries, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "27, Chemin William-Barbey": {
+    "lat": 46.240806,
+    "lon": 6.1496509,
+    "displayName": "27, Chemin Wiliam-Barbey, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Route de Malagnou": {
+    "lat": 46.1989407,
+    "lon": 6.1595299,
+    "displayName": "17, Route de Malagnou, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "150, Route de Ferney": {
+    "lat": 46.230006,
+    "lon": 6.1286849,
+    "displayName": "Centre international de justice de Genève, 150, Route de Ferney, Le Grand-Saconnex, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "150, Route de ferney": {
+    "lat": 46.230006,
+    "lon": 6.1286849,
+    "displayName": "Centre international de justice de Genève, 150, Route de Ferney, Le Grand-Saconnex, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue du Rhône": {
+    "lat": 46.2044659,
+    "lon": 6.1445928,
+    "displayName": "6, Rue du Rhône, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "13, Cours des Bastions": {
+    "lat": 46.1968739,
+    "lon": 6.1499129,
+    "displayName": "Hugo Dubois Suisse Sàrl, 13, Cours des Bastions, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "51, Quai Wilson": {
+    "lat": 46.2148896,
+    "lon": 6.1510578,
+    "displayName": "Palais Wilson, 51, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17A, L'Ancienne-Route": {
+    "lat": 46.2316541,
+    "lon": 6.1260023,
+    "displayName": "Union Européenne de Radiodiffusion, 17A, L'Ancienne-Route, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8-10, Rue de Hesse": {
+    "lat": 46.2020806,
+    "lon": 6.1406786,
+    "displayName": "Rue de Hesse, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8-10, rue de Hesse": {
+    "lat": 46.2020806,
+    "lon": 6.1406786,
+    "displayName": "Rue de Hesse, Vieille-Ville, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Rue du Prince": {
+    "lat": 46.2025281,
+    "lon": 6.1509683,
+    "displayName": "9, Rue du Prince, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "65, rue de Lausanne": {
+    "lat": 46.2155376,
+    "lon": 6.1468168,
+    "displayName": "65, Rue de Lausanne, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "121, Rue de Lausanne": {
+    "lat": 46.2207951,
+    "lon": 6.1495883,
+    "displayName": "121, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "121, rue de Lausanne": {
+    "lat": 46.2207951,
+    "lon": 6.1495883,
+    "displayName": "121, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "39, Route de Malagnou": {
+    "lat": 46.197107,
+    "lon": 6.1626598,
+    "displayName": "39, Route de Malagnou, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "29, Route de Malagnou": {
+    "lat": 46.1977292,
+    "lon": 6.1611119,
+    "displayName": "29, Route de Malagnou, Florissant, Champel, Genève, 1208, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "1, Rue de la Voie Creuse": null,
+  "8, Rue Charles-Bonnet": {
+    "lat": 46.1974451,
+    "lon": 6.1508047,
+    "displayName": "8, Rue Charles-Bonnet, Vieille-Ville, Les Tranchées, Cité, Genève, 1204, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "41, Rue de Zurich": {
+    "lat": 46.2120535,
+    "lon": 6.145599,
+    "displayName": "41, Rue de Zurich, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Route de Meyrin": {
+    "lat": 46.2144166,
+    "lon": 6.1285565,
+    "displayName": "8, Route de Meyrin, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin de Blandonnet": {
+    "lat": 46.2202619,
+    "lon": 6.0973629,
+    "displayName": "2, Chemin de Blandonnet, Châtelaine, Vernier, Genève, 1216, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "95, Rue de Lausanne": {
+    "lat": 46.2181312,
+    "lon": 6.1481309,
+    "displayName": "95, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Route de Malagnou": {
+    "lat": 46.197459,
+    "lon": 6.1598788,
+    "displayName": "26, Route de Malagnou, Florissant, Champel, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Avenue de Frontenex": {
+    "lat": 46.2017465,
+    "lon": 6.1565791,
+    "displayName": "6, Avenue de Frontenex, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Avenue de Frontenex": {
+    "lat": 46.2017134,
+    "lon": 6.1568025,
+    "displayName": "8, Avenue de Frontenex, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "51, Quai Wilson, Pâquis": {
+    "lat": 46.2148896,
+    "lon": 6.1510578,
+    "displayName": "Palais Wilson, 51, Quai Wilson, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "19, Avenue de la Paix": {
+    "lat": 46.228027,
+    "lon": 6.1363038,
+    "displayName": "Bibliothèque du CICR, 19, Avenue de la Paix, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "154, Rue de Lausanne": {
+    "lat": 46.22426,
+    "lon": 6.1494691,
+    "displayName": "Centre William Rappard, 154, Rue de Lausanne, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "4, Route des Morillons": {
+    "lat": 46.2292,
+    "lon": 6.1343824,
+    "displayName": "Organisation internationale du travail, 4, Route des Morillons, Pâquis, Le Grand-Saconnex, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "9, Cour Saint-Pierre": {
+    "lat": 46.2012797,
+    "lon": 6.147898,
+    "displayName": "Cour Saint-Pierre, Vieille-Ville, Les Tranchées, Cité, Genève, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, rue Munier Romilly": {
+    "lat": 46.1975736,
+    "lon": 6.1533643,
+    "displayName": "8, Rue Munier-Romilly, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "8, Rue Munier-Romilly": {
+    "lat": 46.1975736,
+    "lon": 6.1533643,
+    "displayName": "8, Rue Munier-Romilly, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "26, Avenue de Beau-Séjour": {
+    "lat": 46.1886559,
+    "lon": 6.1498477,
+    "displayName": "26, Avenue de Beau-Séjour, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "40, Rue du 31-Décembre": {
+    "lat": 46.2022412,
+    "lon": 6.1607889,
+    "displayName": "40, Rue du 31-Décembre, Villereuse, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Chemin des Crêts": {
+    "lat": 46.2219206,
+    "lon": 6.1258753,
+    "displayName": "International Federation of Red Cross and Red Crescent Societies - IFRC, 17, Chemin des Crêts, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "2, Chemin de la Tour-de-Champel": {
+    "lat": 46.1885429,
+    "lon": 6.1526285,
+    "displayName": "2, Chemin de la Tour-de-Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Place Claparède": {
+    "lat": 46.1961107,
+    "lon": 6.1498331,
+    "displayName": "5, Place Claparède, Les Tranchées, Cité, Genève, 1205, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "6, Rue Abraham-Constantin": {
+    "lat": 46.1971118,
+    "lon": 6.1527034,
+    "displayName": "6, Rue Abraham-Constantin, Les Tranchées, Cité, Genève, 1206, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "Place du Petit-Saconnex": {
+    "lat": 46.222941,
+    "lon": 6.1276284,
+    "displayName": "Place du Petit-Saconnex, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "5, Chemin du Pommier": {
+    "lat": 46.2271708,
+    "lon": 6.1217728,
+    "displayName": "5, Chemin du Pommier, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "14, Avenue de la Paix": {
+    "lat": 46.2257055,
+    "lon": 6.1408064,
+    "displayName": "Palais des Nations, 8 - 14, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "41, Avenue Giuseppe-Motta": {
+    "lat": 46.2210985,
+    "lon": 6.1358189,
+    "displayName": "PCT, 41, Avenue Giuseppe-Motta, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "7bis, Avenue de la Paix": {
+    "lat": 46.2232525,
+    "lon": 6.1462477,
+    "displayName": "Organisation Météorologique Mondiale, 7 bis, Avenue de la Paix, Sécheron, Pâquis, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "63, Rue des Pâquis": {
+    "lat": 46.2110271,
+    "lon": 6.1489601,
+    "displayName": "Rue des Pâquis, Pâquis, Genève, 1201, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "16, Avenue Trembley": {
+    "lat": 46.2199453,
+    "lon": 6.1231195,
+    "displayName": "Avenue Trembley, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "17, Route des Morillons": {
+    "lat": 46.2316927,
+    "lon": 6.1320312,
+    "displayName": "Organisation internationale pour les Migrations, 17, Route des Morillons, Pâquis, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra"
+  },
+  "11-13, Chemin des Anémones": {
+    "lat": 46.2135875,
+    "lon": 6.1119824,
+    "displayName": "Chemin des Anémones, Le Bouchet, Châtelaine, Vernier, Genève, 1220, Schweiz/Suisse/Svizzera/Svizra"
+  }
+}

@@ -13,6 +13,7 @@
     "@observablehq/notebook-kit": "^2.1.4"
   },
   "devDependencies": {
+    "d3-dsv": "^3.0.1",
     "esbuild": "^0.28.0",
     "playwright-core": "^1.60.0"
   }
