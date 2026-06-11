@@ -1,0 +1,285 @@
+<!doctype html>
+<notebook theme="air">
+  <title>io-map</title>
+  <script id="1" type="text/markdown">
+    # io-map
+  </script>
+  <script id="2" type="module">
+    toc()
+  </script>
+  <script id="3" type="module" pinned>
+    const mapOpacity = view(Inputs.range([0, 1], {value: 0.5, step: 0.1, label: "Map Opacity"}));
+  </script>
+  <script id="4" type="module" pinned>
+    const year = view(Inputs.range([minYear, maxYear], {value: minYear, step: 1, label: "Year"}));
+  </script>
+  <script id="5" type="module" pinned>
+    const options = new Map([
+      ["CartoDB Voyager", (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.basemaps.cartocdn.com/rastertiles/voyager/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Terrain", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_terrain/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Toner", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_toner/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Toner (lite)", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_toner_lite/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Watercolor", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_watercolor/${z}/${x}/${y}.jpg`],
+      ["OSM Mapnik", (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.tile.osm.org/${z}/${x}/${y}.png`],
+      ["Wikimedia Maps", (x, y, z) => `https://maps.wikimedia.org/osm-intl/${z}/${x}/${y}.png`]
+    ]);
+
+    const url = view(Inputs.select(options, {value: options.get("OSM Mapnik")}));
+  </script>
+  <script id="6" type="module" pinned>
+    import {tile as d3tile, tileWrap} from "npm:d3-tile";
+
+    const width = 928;
+    const height = 500;
+
+    const svg = d3.create("svg")
+        .attr("viewBox", [0, 0, width, height]);
+
+    const tile = d3tile()
+        .extent([[0, 0], [width, height]])
+        .tileSize(256)
+        .clampX(false);
+
+    const zoom = d3.zoom()
+        .scaleExtent([1 << 17, 1 << 27])
+        .extent([[0, 0], [width, height]])
+        .on("zoom", ({transform}) => zoomed(transform));
+
+    let image = svg.append("g")
+        .attr("pointer-events", "none")
+        .selectAll("image");
+
+    // --- START GENEVA INITIALIZATION ---
+    const geneva = [6.1432, 46.2044];
+    const initialScale = 1 << 20; // High zoom for city level
+
+    const projection = d3.geoMercator()
+      .scale(1 / (2 * Math.PI))
+      .translate([0, 0]);
+
+    const [x0, y0] = projection([currentMap.minLon, currentMap.maxLat]); // upper-left
+    const [x1, y1] = projection([currentMap.maxLon, currentMap.minLat]); // lower-right
+    let oldMapImage = svg.append("image")
+       .attr("xlink:href", currentMap.src)
+       .attr("x", x0)
+       .attr("y", y0)
+       .attr("width", x1 - x0)
+       .attr("height", y1 - y0);
+
+    if (zoomState.transform === d3.zoomIdentity) {
+      const [gx, gy] = projection(geneva);
+
+      zoomState.transform = d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(initialScale)
+        .translate(-gx, -gy);
+    }
+
+    svg.append("g")
+      .attr("fill", "brown")
+      .attr("fill-opacity", 0.5)
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.5)
+      .selectAll()
+      .data(filteredGeoDataByYear)
+      .join("circle")
+      .attr("cx", d => projection([d.long, d.lat])[0])
+      .attr("cy", d => projection([d.long, d.lat])[1])
+      .attr("r", d => 5)
+      .attr("fill", d => d.type === "NGO" ? "red" : "blue")
+      .append("title")
+      .text(d => d.nameEn);
+
+    svg
+      .call(zoom)
+      .call(zoom.transform, zoomState.transform);
+
+    function zoomed(transform) {
+      zoomState.transform = transform;
+      const tiles = tile(transform);
+
+      image = image.data(tiles, d => d).join("image")
+          .attr("xlink:href", d => url(...tileWrap(d)))
+          .attr("x", ([x]) => (x + tiles.translate[0]) * tiles.scale)
+          .attr("y", ([, y]) => (y + tiles.translate[1]) * tiles.scale)
+          .attr("width", tiles.scale)
+          .attr("height", tiles.scale);
+
+      oldMapImage
+        .attr("transform", `translate(${transform.x}, ${transform.y}) scale(${transform.k})`)
+        .attr("opacity", mapOpacity);
+
+      svg.selectAll("circle")
+        .attr("cx", d => transform.applyX(projection([d.long, d.lat])[0]))
+        .attr("cy", d => transform.applyY(projection([d.long, d.lat])[1]));
+    }
+
+    display(svg.node());
+  </script>
+  <script id="7" type="text/markdown">
+    ## Data
+
+    The raw data is loaded in from Google Sheets for convenience, although it can be any CSV file.
+
+    The data should all be inside a single spreadsheet, so that we can use code to later filter it. For the Proof Of Concept (POC) I have concatenated all the data sources that seemed the most complete from what we have received.
+
+    The initial address data is merged latitude longitude data, which is obtained by a process called geocoding; note that some addresses were not successfully geocoded and are simply ignored in the POC.
+
+    Notes
+    * To handle different data types such as `NGO` or `Permanent Mission` we should simply add new columns for this information
+    * Type specific information like `currentStateName` or `previousStateName` can be left empty for datums (data points) where it is not applicable
+    * Filtering the data here through Observable Plot will affect subsequent visualisations
+  </script>
+  <script id="8" type="module" pinned>
+    const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNFKQyc5D8-92tLAjJzmp1I3zZcpJthMmJcvECnlw_tXTCkLLq0eF_gNsxxBgCQk4sVvymG3gXjHxh/pub?gid=901239480&single=true&output=csv";
+  </script>
+  <script id="9" type="module" pinned>
+    const data = d3.csv(dataUrl, d3.autoType)
+      .catch(() => FileAttachment("data/io-map-data.csv").csv({typed: true}));
+  </script>
+  <script id="10" type="module">
+    Inputs.table(data)
+  </script>
+  <script id="11" type="module" pinned>
+    const geocode = FileAttachment("data/260104-geocode.geojson").json();
+  </script>
+  <script id="12" type="module" pinned>
+    const addressToLongLatEntries = geocode.features.map(d => ([d.properties.Address, {long: d.geometry.coordinates[0], lat: d.geometry.coordinates[1]}]));
+  </script>
+  <script id="13" type="module" pinned>
+    const addressToLongLat = Object.fromEntries(addressToLongLatEntries);
+  </script>
+  <script id="14" type="module" pinned>
+    const geoData = data.map(d => ({...d, lat: addressToLongLat[d.address]?.lat, long: addressToLongLat[d.address]?.long}));
+  </script>
+  <script id="15" type="module">
+    Inputs.table(geoData)
+  </script>
+  <script id="16" type="text/markdown">
+    There are a total of ${geoData.length} entries with ${geoData.filter(d => !d.lat).length} entries missing geocoded coordinates.
+  </script>
+  <script id="17" type="text/markdown">
+    ## Historical Maps
+
+    The historical maps here are georeferenced and resized for the web. From a GeoTif file we convert to a lighter PNG and extract the coordinates of the image to be able to place it on the map.
+  </script>
+  <script id="18" type="module" pinned>
+    const attachments = {
+      "1919": FileAttachment("data/1919_modified_4000.png"),
+      "1943": FileAttachment("data/1943_modified_4000.png"),
+      "1965": FileAttachment("data/1965_modified_4000.png")
+    };
+  </script>
+  <script id="19" type="module" pinned>
+    const oldMaps = [
+      {
+        "year": 1965,
+        "minLon": 6.0472218,
+        "maxLon": 6.2254268,
+        "minLat": 46.1429987,
+        "maxLat": 46.2574794,
+        "src": await attachments["1965"].url()
+      },
+      {
+        "year": 1919,
+        "minLon": 6.0693738,
+        "maxLon": 6.2127322,
+        "minLat": 46.1450489,
+        "maxLat": 46.245437,
+        "src": await attachments["1919"].url()
+      },
+      {
+        "year": 1943,
+        "minLon": 6.0679409,
+        "maxLon": 6.2186536,
+        "minLat": 46.1504696,
+        "maxLat": 46.2536292,
+        "src": await attachments["1943"].url()
+      }
+    ];
+  </script>
+  <script id="20" type="module" pinned>
+    // Persists the map's pan/zoom across cell re-runs (replaces the v1 "mutable zoomTransform").
+    const zoomState = {transform: d3.zoomIdentity};
+  </script>
+  <script id="21" type="module" pinned>
+    const yearsExtent = d3.extent(geoData.map(d => d.year));
+    const minYear = yearsExtent[0];
+    const maxYear = yearsExtent[1];
+  </script>
+  <script id="22" type="module" pinned>
+    const currentMap = oldMaps.toSorted((a, b) => a.year - b.year).filter(d => d.year <= year).at(-1);
+  </script>
+  <script id="23" type="module" pinned>
+    const filteredGeoDataByYear = Object.values(
+      geoData
+        .filter(d => d.year <= year)
+        .reduce((acc, obj) => {
+          const key = obj.nameEn; // use nameEn as unique key
+          // if we don't have this key yet, or this object has a later year than the one we have, replace it
+          if (!acc[key] || obj.year > acc[key].year) {
+            acc[key] = obj;
+          }
+          return acc;
+        }, {})
+    );
+  </script>
+  <script id="24" type="text/markdown">
+    ## Appendix
+  </script>
+  <script id="25" type="module" pinned>
+    // Table of contents, ported from https://observablehq.com/@mbostock/toc
+    function toc(selector = "h1,h2,h3") {
+      return Generators.observe((notify) => {
+        let headings = [];
+
+        function observed() {
+          const h = Array.from(document.querySelectorAll(selector));
+          if (h.length !== headings.length || h.some((h, i) => headings[i] !== h)) {
+            notify(html`<b>Table of Contents</b><ul>${Array.from((headings = h), (h) =>
+              Object.assign(
+                html`<li><a href="#${h.id}">${h.textContent}</a></li>`,
+                {onclick: (e) => (e.preventDefault(), h.scrollIntoView())}
+              )
+            )}</ul>`);
+          }
+        }
+
+        const observer = new MutationObserver(observed);
+        observer.observe(document.body, {childList: true, subtree: true});
+        observed();
+        return () => observer.disconnect();
+      });
+    }
+  </script>
+  <script id="26" type="text/markdown">
+    ### Georeferencing (Aligning images onto the map)
+    1. Plugins - Manage and Install Plugins and install Quick Map Services
+    1. Add a basemap via Web - Quick Map Services – OSM – OSM Standard
+    1. Optionally install OSM Place Search Plugin
+    1. Layer - Georeferencer
+      1. Open Raster
+      2. Add GCP (Ground Control Points), at least 3 for tests, 10 for good results
+      3. Adjust transformation settings: 3857 - WGS 84 Pseudo Mercator, transformation type: polynomial 1, use 0 for transparency when needed
+
+    [Reference tutorial](https://www.youtube.com/watch?v=XV62QEk0Cxg)
+
+    ### CLI commands
+    Convert and downsize GeoTIF to PNG
+    ```sh
+    gdal_translate -of PNG -outsize 4000 0 1943_modified.tif 1943_modified_4000.png
+    ```
+
+    Get GeoTIF wgs84Extent data
+    ```
+    gdalinfo -json 1943_modified.tif | jq '.wgs84Extent.coordinates[0] | {minLon: .[0][0], maxLon: .[2][0], minLat: .[1][1], maxLat: .[0][1]}'
+    ```
+
+    ### Links
+    * [QGIS Quickstart Video](https://www.youtube.com/watch?v=SovdBaus7pM)
+        * [Quick Map Services Plugin](https://youtu.be/SovdBaus7pM?t=1334)
+        * [Change projection](https://youtu.be/SovdBaus7pM?t=1457)
+    * [QGIS Georeferencing](https://www.youtube.com/watch?v=XV62QEk0Cxg)
+    * [QGIS Geocoding](https://www.youtube.com/watch?v=P6BjBsrRLV0)
+  </script>
+</notebook>

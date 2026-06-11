@@ -1,0 +1,90 @@
+<!doctype html>
+<notebook theme="air">
+  <title>io-map experiments</title>
+  <script id="1" type="text/markdown">
+    # io-map
+
+    Interactive maps of historical Geneva: georeferenced map scans and geocoded data of international organizations, rendered with [D3](https://d3js.org) zoomable tiles as [Observable Notebooks 2.0](https://observablehq.com/notebook-kit/).
+
+    <style>
+
+    .previews {
+      display: grid;
+      grid-gap: 0.875rem;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      font: 14px/normal var(--sans-serif);
+      color: var(--theme-foreground);
+      margin: 2rem 0;
+    }
+
+    .previews a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1rem;
+      border: solid 1px var(--theme-foreground-faintest, #e8e8e8);
+      border-radius: 4px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .previews a:hover {
+      border-color: var(--theme-foreground-focus, #148576);
+    }
+
+    .preview-title {
+      font-weight: 600;
+    }
+
+    .preview-description {
+      color: var(--theme-foreground-muted, #65707c);
+    }
+
+    </style>
+  </script>
+  <script id="2" type="text/markdown">
+    ## Experiments
+  </script>
+  <script id="3" type="text/html">
+    <div class="previews">
+      <a href="./io-map">
+        <div class="preview-title">io-map</div>
+        <div class="preview-description">The main notebook: historical map overlays, year/opacity controls, and international organizations plotted on a zoomable map.</div>
+      </a>
+      <a href="./zoomable-geneva-map-tiles">
+        <div class="preview-title">Zoomable Geneva Map Tiles</div>
+        <div class="preview-description">d3-tile + d3-zoom panning and zooming over Geneva raster tiles.</div>
+      </a>
+      <a href="./static-geneva-raster-tiles">
+        <div class="preview-title">Static Geneva Raster Tiles</div>
+        <div class="preview-description">Mercator-projected raster tiles rendered statically.</div>
+      </a>
+      <a href="./static-geneva-raster-tiles-image-overlay">
+        <div class="preview-title">Static Raster Tiles Image Overlay</div>
+        <div class="preview-description">A georeferenced 1943 historical map overlaid on raster tiles with adjustable opacity.</div>
+      </a>
+      <a href="./bubble-map">
+        <div class="preview-title">Bubble Map</div>
+        <div class="preview-description">GeoJSON test points projected onto static tiles to verify the projection.</div>
+      </a>
+      <a href="./zoomable-geneva-bubble-map-tiles">
+        <div class="preview-title">Zoomable Geneva Bubble Map Tiles</div>
+        <div class="preview-description">GeoJSON points that track the map through pan and zoom.</div>
+      </a>
+      <a href="./io-map-notes">
+        <div class="preview-title">io-map notes</div>
+        <div class="preview-description">Georeferencing workflow notes: QGIS, GDAL commands, and TODOs.</div>
+      </a>
+    </div>
+  </script>
+  <script id="4" type="text/markdown">
+    ## About
+
+    These notebooks were migrated from [Observable](https://observablehq.com) v1 notebooks to the open [Notebook Kit](https://observablehq.com/notebook-kit/kit) file format. Run them locally with:
+
+    ```sh
+    npm install
+    npm run preview
+    ```
+  </script>
+</notebook>

@@ -1,0 +1,106 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Bubble Map</title>
+  <script id="1" type="text/markdown">
+    # Bubble Map
+
+    Loads in geojson file with test point coordinates to test correct projection.
+  </script>
+  <script id="2" type="module" pinned>
+    const genevaData = FileAttachment("data/gva-test-data.geojson").json();
+  </script>
+  <script id="3" type="module" pinned>
+    genevaData
+  </script>
+  <script id="4" type="module" pinned>
+    const options = new Map([
+      ["CartoDB Voyager", (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.basemaps.cartocdn.com/rastertiles/voyager/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Terrain", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_terrain/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Toner", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_toner/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Toner (lite)", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_toner_lite/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`],
+      ["Stamen Watercolor", (x, y, z) => `https://tiles.stadiamaps.com/tiles/stamen_watercolor/${z}/${x}/${y}.jpg`],
+      ["OSM Mapnik", (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.tile.osm.org/${z}/${x}/${y}.png`],
+      ["Wikimedia Maps", (x, y, z) => `https://maps.wikimedia.org/osm-intl/${z}/${x}/${y}.png`]
+    ]);
+
+    const url = view(Inputs.select(options, {value: options.get("Stamen Toner (lite)")}));
+  </script>
+  <script id="5" type="module" pinned>
+    {
+      const bubbleData = genevaData.features.map(({properties, geometry}) => ({...properties, x: geometry.coordinates[0], y: geometry.coordinates[1]}));
+
+      // Create the SVG container.
+      const svg = d3.create("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", [0, 0, width, height])
+          .attr("style", "max-width: 100%; height: auto;");
+
+      // load in the images
+      const tiles = tile();
+      const [tx, ty] = tiles.translate;
+      const k = tiles.scale;
+
+      svg.selectAll("image")
+        .data(tiles, d => d.join("-"))
+        .join("image")
+        .attr("xlink:href", d => url(d[0], d[1], d[2]))
+        .attr("x", d => Math.round((d[0] + tx) * k))
+        .attr("y", d => Math.round((d[1] + ty) * k))
+        .attr("width", k)
+        .attr("height", k)
+        .style("outline", "3px solid red");
+
+      // now let's load in the points
+      svg.append("g")
+        .attr("fill", "brown")
+        .attr("fill-opacity", 0.5)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 0.5)
+        .selectAll()
+        .data(bubbleData)
+        .join("circle")
+        .attr("cx", d => projection([d.x, d.y])[0])
+        .attr("cy", d => projection([d.x, d.y])[1])
+        .attr("r", d => 10)
+        .append("title")
+        .text(d => d.name);
+
+      display(svg.node());
+    }
+  </script>
+  <script id="6" type="module" pinned>
+    const map = tile => svg`<svg viewBox="0 0 ${width} ${height}">
+      ${tile().map(([x, y, z], i, {translate: [tx, ty], scale: k}) => svg`
+        <image xlink:href="${url(x, y, z)}" x="${Math.round((x + tx) * k)}" y="${Math.round((y + ty) * k)}" width="${k}" height="${k}" style="outline: 3px solid red;">
+      `)}
+      <circle cx="480" cy="250" r="10" fill="red" />
+    </svg>`;
+  </script>
+  <script id="7" type="module" pinned>
+    const tiles = tile();
+  </script>
+  <script id="8" type="module" pinned>
+    import {tile as d3tile} from "npm:d3-tile";
+
+    const tile = d3tile()
+        .size([width, height])
+        .scale(projection.scale() * 2 * Math.PI)
+        .translate(projection([0, 0]));
+  </script>
+  <script id="9" type="module" pinned>
+    const projection = d3.geoMercator()
+        .center([6.1432, 46.2044])
+        .scale(Math.pow(2, 23) / (2 * Math.PI))
+        .translate([width / 2, height / 2]);
+  </script>
+  <script id="10" type="module" pinned>
+    projection([0, 0])
+  </script>
+  <script id="11" type="module" pinned>
+    const path = d3.geoPath(projection);
+  </script>
+  <script id="12" type="module" pinned>
+    const height = 600;
+  </script>
+</notebook>

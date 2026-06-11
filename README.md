@@ -3,6 +3,26 @@
 ## Setup
 Run `brew bundle install` on MacOS to install project cli tool requirements.
 
+## Notebooks
+
+The interactive maps live in `docs/` as [Observable Notebooks 2.0](https://observablehq.com/notebook-kit/) (migrated from Observable v1 notebooks). Built with [Notebook Kit](https://observablehq.com/notebook-kit/kit).
+
+```sh
+npm install
+npm run preview   # live preview at http://localhost:5173
+npm run build     # static site in docs/.observable/dist
+```
+
+* `docs/index.html` – landing page linking all experiments
+* `docs/io-map.html` – main notebook: historical map overlays + organizations by year
+* `docs/zoomable-geneva-map-tiles.html` – d3-tile + d3-zoom basics
+* `docs/static-geneva-raster-tiles.html` – static Mercator raster tiles
+* `docs/static-geneva-raster-tiles-image-overlay.html` – georeferenced 1943 map overlay
+* `docs/bubble-map.html` – geojson points on static tiles
+* `docs/zoomable-geneva-bubble-map-tiles.html` – geojson points through pan/zoom
+* `docs/io-map-notes.html` – georeferencing workflow notes
+* `docs/data/` – file attachments (geojson, georeferenced PNGs, CSV snapshot of the Google Sheets data)
+
 ## Links
 * [Dropbox](https://www.dropbox.com/scl/fo/pl7eo43xryw1usl79rt72/AChH2c0Gpqk0rr9It6SsPkQ?rlkey=sm1h9nfe7760dpollqzwfe21j&st=xtk30t5i&dl=0)
 * [Reference – Compare two periods](https://www.ge200.ch/carto/comparer-2-epoques)

@@ -3,6 +3,10 @@
 
 georeferencing
 
+# Node / Notebook Kit
+node_modules/
+docs/.observable/
+
 ### macOS ###
 # General
 .DS_Store

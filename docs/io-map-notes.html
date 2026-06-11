@@ -1,0 +1,36 @@
+<!doctype html>
+<notebook theme="air">
+  <title>io-map notes</title>
+  <script id="1" type="text/markdown">
+    # io-map
+  </script>
+  <script id="2" type="text/markdown">
+    ## Georeferencing (Aligning images onto the map)
+    1. Plugins - Manage and Install Plugins and install Quick Map Services
+    1. Add a basemap via Web - Quick Map Services – OSM – OSM Standard
+    1. Optionally install OSM Place Search Plugin
+    1. Layer - Georeferencer
+      1. Open Raster
+      2. Add GCP (Ground Control Points), at least 3 for tests, 10 for good results
+      3. Adjust transformation settings: 3857 - WGS 84 Pseudo Mercator, transformation type: polynomial 1, use 0 for transparency when needed
+
+    [Reference tutorial](https://www.youtube.com/watch?v=XV62QEk0Cxg)
+  </script>
+  <script id="3" type="text/markdown">
+    ## Notes
+
+    Convert and downsize GeoTIF to PNG
+    ```sh
+    gdal_translate -of PNG -outsize 4000 0 1943_modified.tif 1943_modified_4000.png
+    ```
+
+    Get GeoTIF wgs84Extent data
+    ```
+    gdalinfo -json 1943_modified.tif | jq '.wgs84Extent.coordinates[0] | {minLon: .[0][0], maxLon: .[2][0], minLat: .[1][1], maxLat: .[0][1]}'
+    ```
+  </script>
+  <script id="4" type="text/markdown">
+    # TODO
+    ## Optimize GeoTIFF
+  </script>
+</notebook>
