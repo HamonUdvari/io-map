@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Cleans the raw CSV extracted from the partners' xlsx (via in2csv) for use in the v2 notebook.
 // Usage: in2csv --sheet SampleDataset SampleDataset.xlsx | node scripts/clean-data.js > docs/data/io-map-v2.csv
+import {text} from "node:stream/consumers";
 import {csvParse, csvFormat} from "d3-dsv";
 
 // Explicit allowlist (input header → output header); junk columns (u…kk) are dropped.
@@ -50,14 +51,7 @@ function normalize(map, value, column) {
   return value;
 }
 
-const input = await new Promise((resolve) => {
-  let text = "";
-  process.stdin.setEncoding("utf8");
-  process.stdin.on("data", (chunk) => (text += chunk));
-  process.stdin.on("end", () => resolve(text));
-});
-
-const raw = csvParse(input);
+const raw = csvParse(await text(process.stdin));
 
 for (const column of COLUMNS.keys()) {
   if (!raw.columns.includes(column)) {

@@ -24,15 +24,35 @@
       {label: "Organisation Category"}
     ));
   </script>
-  <script id="6" type="module" pinned>
+  <script id="22" type="module" pinned>
     const regions = [...new Set(geoData.map(d => d.filterRegion).filter(Boolean))].sort();
+  </script>
+  <script id="23" type="module" pinned>
+    // Single source of truth for each category's sub-filter: its select options AND its row predicate.
+    const subFilterConfig = new Map([
+      ["Permanent Representation", {
+        label: "Region",
+        options: ["All", ...regions],
+        match: (d, v) => d.filterRegion === v
+      }],
+      ["Non-governmental Organisation", {
+        label: "NGO type",
+        options: ["All", "NGOs", "Sub-NGOs"],
+        match: (d, v) => v === "Sub-NGOs" ? d.filterOrgCategory === "Sub-NGO" : d.filterOrgCategory === "Non-governmental Organisation"
+      }],
+      ["International Organisation", {
+        label: "IO type",
+        options: ["All", "UN System", "Others"],
+        match: (d, v) => v === "UN System" ? d.filterIOType === "UN System" : !d.filterIOType
+      }]
+    ]);
+  </script>
+  <script id="6" type="module" pinned>
+    const config = subFilterConfig.get(category);
 
-    const subFilter = view(
-      category === "Permanent Representation" ? Inputs.select(["All", ...regions], {label: "Region"})
-      : category === "Non-governmental Organisation" ? Inputs.select(["All", "NGOs", "Sub-NGOs"], {label: "NGO type"})
-      : category === "International Organisation" ? Inputs.select(["All", "UN System", "Others"], {label: "IO type"})
-      : Inputs.select(["All"], {label: "Subfilter", disabled: true})
-    );
+    const subFilter = view(config
+      ? Inputs.select(config.options, {label: config.label})
+      : Inputs.select(["All"], {label: "Subfilter", disabled: true}));
   </script>
   <script id="7" type="module" pinned>
     const year = view(Inputs.range([minYear, maxYear], {value: minYear, step: 1, label: "Year"}));
@@ -48,14 +68,14 @@
 
     const matchesSubFilter = d => {
       if (subFilter === "All") return true;
-      if (category === "Permanent Representation") return d.filterRegion === subFilter;
-      if (category === "Non-governmental Organisation") return subFilter === "Sub-NGOs" ? d.filterOrgCategory === "Sub-NGO" : d.filterOrgCategory === "Non-governmental Organisation";
-      if (category === "International Organisation") return subFilter === "UN System" ? d.filterIOType === "UN System" : !d.filterIOType;
-      return true;
+      const config = subFilterConfig.get(category);
+      return config ? config.match(d, subFilter) : true;
     };
   </script>
   <script id="10" type="module" pinned>
-    // Latest known state per organisation up to the selected year; closed organisations are dropped.
+    // Latest known state per organisation up to the selected year. Same-year rows are listed
+    // chronologically in the sheet, so later rows win ties (>=). Organisations whose latest
+    // event is "closed" or "moved" (relocated outside Geneva) are not plotted.
     const filteredGeoDataByYear = Object.values(
       geoData
         .filter(d => d.year && d.year <= year)
@@ -63,10 +83,13 @@
         .filter(matchesSubFilter)
         .reduce((acc, obj) => {
           const key = obj.nameEN;
-          if (!acc[key] || obj.year > acc[key].year) acc[key] = obj;
+          if (!acc[key] || obj.year >= acc[key].year) acc[key] = obj;
           return acc;
         }, {})
-    ).filter(d => d.event !== "closed");
+    ).filter(d => d.event !== "closed" && d.event !== "moved");
+  </script>
+  <script id="24" type="module" pinned>
+    const plotted = filteredGeoDataByYear.filter(d => d.lat != null && d.long != null);
   </script>
   <script id="11" type="module" pinned>
     const categoryColor = d =>
@@ -80,8 +103,6 @@
     {
       const width = 928;
       const height = 500;
-
-      const plotted = filteredGeoDataByYear.filter(d => d.lat != null && d.long != null);
 
       const svg = d3.create("svg")
           .attr("viewBox", [0, 0, width, height]);
@@ -167,7 +188,7 @@
     }
   </script>
   <script id="13" type="text/markdown">
-    Showing **${filteredGeoDataByYear.filter(d => d.lat != null).length}** organisations in ${year} (${filteredGeoDataByYear.filter(d => d.lat == null).length} matching entries lack geocoded coordinates).
+    Showing **${plotted.length}** organisations in ${year} (${filteredGeoDataByYear.length - plotted.length} matching entries lack geocoded coordinates).
   </script>
   <script id="14" type="module">
     Inputs.table(filteredGeoDataByYear)
@@ -176,6 +197,8 @@
     const url = (x, y, z) => `https://${"abc"[Math.abs(x + y) % 3]}.tile.osm.org/${z}/${x}/${y}.png`;
   </script>
   <script id="16" type="module" pinned>
+    // FileAttachment needs literal paths (static analysis), so the files are enumerated here;
+    // the georeferenced bounding boxes live in data/old-maps.json (from gdalinfo, see io-map-notes).
     const attachments = {
       "1919": FileAttachment("data/1919_modified_4000.png"),
       "1943": FileAttachment("data/1943_modified_4000.png"),
@@ -183,35 +206,14 @@
     };
   </script>
   <script id="17" type="module" pinned>
-    const oldMaps = [
-      {
-        "year": 1965,
-        "minLon": 6.0472218,
-        "maxLon": 6.2254268,
-        "minLat": 46.1429987,
-        "maxLat": 46.2574794,
-        "src": await attachments["1965"].url()
-      },
-      {
-        "year": 1919,
-        "minLon": 6.0693738,
-        "maxLon": 6.2127322,
-        "minLat": 46.1450489,
-        "maxLat": 46.245437,
-        "src": await attachments["1919"].url()
-      },
-      {
-        "year": 1943,
-        "minLon": 6.0679409,
-        "maxLon": 6.2186536,
-        "minLat": 46.1504696,
-        "maxLat": 46.2536292,
-        "src": await attachments["1943"].url()
-      }
-    ];
+    const oldMaps = await Promise.all(
+      (await FileAttachment("data/old-maps.json").json())
+        .toSorted((a, b) => a.year - b.year)
+        .map(async d => ({...d, src: await attachments[d.year].url()}))
+    );
   </script>
   <script id="18" type="module" pinned>
-    const currentMap = oldMaps.toSorted((a, b) => a.year - b.year).filter(d => d.year <= year).at(-1) ?? oldMaps.toSorted((a, b) => a.year - b.year)[0];
+    const currentMap = oldMaps.findLast(d => d.year <= year) ?? oldMaps[0];
   </script>
   <script id="19" type="module" pinned>
     // Persists the map's pan/zoom across cell re-runs.

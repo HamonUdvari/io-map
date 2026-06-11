@@ -1,0 +1,26 @@
+[
+  {
+    "year": 1919,
+    "minLon": 6.0693738,
+    "maxLon": 6.2127322,
+    "minLat": 46.1450489,
+    "maxLat": 46.245437,
+    "file": "1919_modified_4000.png"
+  },
+  {
+    "year": 1943,
+    "minLon": 6.0679409,
+    "maxLon": 6.2186536,
+    "minLat": 46.1504696,
+    "maxLat": 46.2536292,
+    "file": "1943_modified_4000.png"
+  },
+  {
+    "year": 1965,
+    "minLon": 6.0472218,
+    "maxLon": 6.2254268,
+    "minLat": 46.1429987,
+    "maxLat": 46.2574794,
+    "file": "1965_modified_4000.png"
+  }
+]

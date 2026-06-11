@@ -3,7 +3,7 @@
 // caching results in docs/data/geocode-v2.json (incremental: cached keys are skipped,
 // so manual corrections to the cache survive re-runs).
 // Usage: node scripts/geocode.js [--retry-failed]
-import {readFileSync, writeFileSync, existsSync} from "node:fs";
+import {readFileSync, writeFileSync, renameSync, existsSync} from "node:fs";
 import {csvParse, csvFormat} from "d3-dsv";
 
 const CSV_PATH = "docs/data/io-map-v2.csv";
@@ -38,6 +38,13 @@ console.log(`geocode: ${addresses.size} unique addresses, ${addresses.size - pen
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Atomic write: never truncate the cache in place, or a crash mid-write would
+// destroy it (including any hand-corrections).
+function writeCache() {
+  writeFileSync(CACHE_PATH + ".tmp", JSON.stringify(cache, null, 2));
+  renameSync(CACHE_PATH + ".tmp", CACHE_PATH);
+}
+
 let fetched = 0;
 for (const address of pending) {
   const {city, country} = addresses.get(address);
@@ -56,12 +63,12 @@ for (const address of pending) {
     continue;
   }
   fetched++;
-  writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2)); // crash-safe incremental writes
+  writeCache(); // crash-safe incremental writes
   if (fetched % 25 === 0) console.log(`geocode: ${fetched}/${pending.length} fetched`);
   await sleep(RATE_LIMIT_MS);
 }
 
-writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2));
+writeCache();
 
 const misses = [...addresses.entries()]
   .filter(([address]) => cache[address] === null)

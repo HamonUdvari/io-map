@@ -1,3 +1,6 @@
+SHELL := /bin/bash -o pipefail
+.DELETE_ON_ERROR:
+
 MAPS_CSV := maps.csv
 XLSX ?= $(HOME)/Downloads/SampleDataset_10June.xlsx
 
@@ -7,12 +10,15 @@ dl-maps:
 	@csvcut -c filename,imageLink $(MAPS_CSV) | csvformat -TE | awk -F'\t' '{print "wget -O assets/"$$1" "$$2}' | bash
 
 # v2 data pipeline: xlsx -> clean CSV -> geocode cache (incremental, 1 req/s against Nominatim)
-data: docs/data/io-map-v2.csv geocode
+data: geocode
 
 docs/data/io-map-v2.csv: $(XLSX) scripts/clean-data.js
 	in2csv --sheet SampleDataset "$(XLSX)" | node scripts/clean-data.js > $@
 
-geocode: scripts/geocode.js
+geocode: docs/data/io-map-v2.csv scripts/geocode.js
 	node scripts/geocode.js
 
-.PHONY: dl-maps data geocode
+geocode-retry: docs/data/io-map-v2.csv scripts/geocode.js
+	node scripts/geocode.js --retry-failed
+
+.PHONY: dl-maps data geocode geocode-retry
