@@ -1,0 +1,86 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Zoomable Geneva Zeitreise Tiles</title>
+  <script id="1" type="text/markdown">
+    # Zoomable Geneva Zeitreise Tiles
+
+    v2 demo: instead of overlaying our own scanned map images, the basemap itself time-travels. [swisstopo](https://www.swisstopo.admin.ch) republishes the entire Swiss national map series — the Siegfried maps and successive national map editions — as the [Zeitreise](https://www.geo.admin.ch/en/maps-data-and-applications/maps-of-switzerland/journey-through-time) WMTS layer: consistent, georeferenced tiles for **every year from 1844 to 2021**. Drag the year slider; pan and zoom are preserved.
+
+    Tiles © [swisstopo](https://www.swisstopo.admin.ch). Note the layer covers Swiss territory only — the French side of the border stays blank on older editions.
+  </script>
+  <script id="2" type="module" pinned>
+    const year = view(Inputs.range([1844, 2021], {value: 1920, step: 1, label: "Year"}));
+  </script>
+  <script id="3" type="module" pinned>
+    // The Zeitreise layer accepts any year as TIME (yyyy1231) and serves the map sheets valid at that date.
+    const url = (x, y, z) => `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.zeitreihen/default/${year}1231/3857/${z}/${x}/${y}.png`;
+  </script>
+  <script id="4" type="module" pinned>
+    // Persists the map's pan/zoom across cell re-runs (the map cell re-runs on every year change).
+    const zoomState = {transform: d3.zoomIdentity};
+  </script>
+  <script id="5" type="module" pinned>
+    import {tile as d3tile, tileWrap} from "npm:d3-tile";
+
+    {
+      const width = 928;
+      const height = 500;
+
+      const svg = d3.create("svg")
+          .attr("viewBox", [0, 0, width, height]);
+
+      const tile = d3tile()
+          .extent([[0, 0], [width, height]])
+          .tileSize(256)
+          .clampX(false);
+
+      const zoom = d3.zoom()
+          .scaleExtent([1 << 17, 1 << 26]) // the Zeitreise tile matrix ends at z18 (256 · 2^18)
+          .extent([[0, 0], [width, height]])
+          .on("zoom", ({transform}) => zoomed(transform));
+
+      let image = svg.append("g")
+          .attr("pointer-events", "none")
+          .selectAll("image");
+
+      // --- START GENEVA INITIALIZATION ---
+      const geneva = [6.1432, 46.2044];
+      const initialScale = 1 << 20; // High zoom for city level
+
+      const projection = d3.geoMercator()
+        .scale(1 / (2 * Math.PI))
+        .translate([0, 0]);
+
+      if (zoomState.transform === d3.zoomIdentity) {
+        const [gx, gy] = projection(geneva);
+
+        zoomState.transform = d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(initialScale)
+          .translate(-gx, -gy);
+      }
+      // --- END GENEVA INITIALIZATION ---
+
+      svg
+        .call(zoom)
+        .call(zoom.transform, zoomState.transform);
+
+      function zoomed(transform) {
+        zoomState.transform = transform;
+        const tiles = tile(transform);
+
+        image = image.data(tiles, d => d).join("image")
+            .attr("xlink:href", d => url(...tileWrap(d)))
+            .attr("x", ([x]) => (x + tiles.translate[0]) * tiles.scale)
+            .attr("y", ([, y]) => (y + tiles.translate[1]) * tiles.scale)
+            .attr("width", tiles.scale)
+            .attr("height", tiles.scale);
+      }
+
+      display(svg.node());
+    }
+  </script>
+  <script id="6" type="text/markdown">
+    Compared to the scanned-overlay approach (see [io-map v2](./io-map-v2)): no georeferencing work, no seams, citywide-to-national coverage at every zoom level, and a cartographically consistent style within each map edition. The candidate role for this layer is the time-driven basemap under the organisation points, with our georeferenced city plans kept as optional detail overlays.
+  </script>
+</notebook>
