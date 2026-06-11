@@ -11,9 +11,21 @@
   <script id="2" type="module" pinned>
     const year = view(Inputs.range([1844, 2021], {value: 1920, step: 1, label: "Year"}));
   </script>
+  <script id="7" type="module" pinned>
+    // Years in which the map around Geneva actually changed, detected by hashing sample tiles
+    // across all TIME values (`make zeitreise-editions`) — most slider years serve an unchanged map.
+    const editions = FileAttachment("data/zeitreise-editions.json").json();
+  </script>
+  <script id="8" type="module" pinned>
+    const edition = editions.findLast(e => e <= year) ?? editions[0];
+  </script>
+  <script id="9" type="text/markdown">
+    Map edition shown: **${edition}**${editions[editions.indexOf(edition) + 1] ? ` — next revision in this area: ${editions[editions.indexOf(edition) + 1]}` : ""} (${editions.length} revisions around Geneva between 1844 and 2021).
+  </script>
   <script id="3" type="module" pinned>
-    // The Zeitreise layer accepts any year as TIME (yyyy1231) and serves the map sheets valid at that date.
-    const url = (x, y, z) => `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.zeitreihen/default/${year}1231/3857/${z}/${x}/${y}.png`;
+    // TIME is snapped to the detected edition, so tile URLs only change when the map actually
+    // does — intermediate slider years are served from the browser cache.
+    const url = (x, y, z) => `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.zeitreihen/default/${edition}1231/3857/${z}/${x}/${y}.png`;
   </script>
   <script id="4" type="module" pinned>
     // Persists the map's pan/zoom across cell re-runs (the map cell re-runs on every year change).

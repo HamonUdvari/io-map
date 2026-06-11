@@ -21,4 +21,8 @@ geocode: docs/data/io-map-v2.csv scripts/geocode.js
 geocode-retry: docs/data/io-map-v2.csv scripts/geocode.js
 	node scripts/geocode.js --retry-failed
 
-.PHONY: dl-maps data geocode geocode-retry
+# Detect the years in which the swisstopo Zeitreise basemap actually changed around Geneva
+zeitreise-editions:
+	node scripts/zeitreise-editions.js
+
+.PHONY: dl-maps data geocode geocode-retry zeitreise-editions
