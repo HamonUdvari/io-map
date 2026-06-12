@@ -4,15 +4,12 @@
   <script id="1" type="text/markdown">
     # Event Timeline
 
-    Every change recorded in the dataset, as one circle per event: years on the x axis, organisations on the y axis. Hover a circle for the event name (and the dataset's note, when there is one).
+    Every change recorded in the dataset, as one circle per event: years on the x axis, organisations on the y axis. Hover a circle for the event name (and the dataset's note, when there is one). Each organisation also gets a **first mention** point at its first appearance in the data (the dataset lists organisations yearly; the first listing usually carries no event), and a darker line spanning each active period — from first mention to closure, restarting if the organisation reopens.
 
     Labels use the dataset's canonical `nameEN` — the sheet keeps one name per organisation, with renames recorded as `nameChange` events (e.g. Ireland's 1937 *"Eire / Ireland"*).
   </script>
   <script id="2" type="module" pinned>
     const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
-  </script>
-  <script id="3" type="module" pinned>
-    const events = data.filter(d => d.event && d.year);
   </script>
   <script id="4" type="module" pinned>
     const category = view(Inputs.select(
@@ -21,15 +18,68 @@
     ));
   </script>
   <script id="5" type="module" pinned>
-    const filteredEvents = events.filter(d =>
+    const filteredData = data.filter(d => d.year).filter(d =>
       category === "All" ? true
       : category === "Non-governmental Organisation" ? (d.filterOrgCategory === "Non-governmental Organisation" || d.filterOrgCategory === "Sub-NGO")
       : d.filterOrgCategory === category
     );
   </script>
+  <script id="3" type="module" pinned>
+    const filteredEvents = filteredData.filter(d => d.event);
+  </script>
+  <script id="9" type="module" pinned>
+    // Each organisation's rows, in chronological order (same-year rows keep sheet order).
+    const byOrganisation = d3.group(d3.sort(filteredData, d => d.year), d => d.nameEN);
+  </script>
+  <script id="10" type="module" pinned>
+    // A synthetic "first mention" point at each organisation's first appearance in the data,
+    // unless that first row already carries an explicit event (e.g. established).
+    const firstMentions = [...byOrganisation.values()]
+      .map(rows => rows[0])
+      .filter(d => !d.event)
+      .map(d => ({...d, event: "first mention"}));
+  </script>
+  <script id="13" type="module" pinned>
+    const timelineEnd = d3.max(filteredData, d => d.year);
+  </script>
+  <script id="14" type="module" pinned>
+    // A row is "documented" when it cites a source (Blue Book code, archive URL, …);
+    // the literal value "no" is the dataset's explicit no-source placeholder.
+    const hasSource = s => Boolean(s) && String(s).trim().toLowerCase() !== "no";
+    const documented = filteredData.filter(d => hasSource(d.source1) || hasSource(d.source2));
+    const unsourced = filteredData.filter(d => !hasSource(d.source1) && !hasSource(d.source2));
+  </script>
+  <script id="15" type="module" pinned>
+    // One shared dataset for the tooltip, so a single tip shows for the nearest point
+    // (separate per-mark tips would overlap where a red dot sits under an event ring).
+    // Each row appears once: as its event, its first mention, or a plain assumed entry.
+    const firstRowSet = new Set([...byOrganisation.values()].map(rows => rows[0]));
+    const tipPoints = [
+      ...firstMentions,
+      ...filteredEvents,
+      ...unsourced.filter(d => !d.event && !firstRowSet.has(d))
+    ];
+  </script>
+  <script id="11" type="module" pinned>
+    // Active periods per organisation: from first mention to closure, restarting if it reopens.
+    // Without a recorded closure, the organisation is assumed active until the end of the timeline.
+    const spans = [...byOrganisation.entries()].flatMap(([nameEN, rows]) => {
+      const out = [];
+      let start = null;
+      for (const row of rows) {
+        if (start === null) start = row.year;
+        if (row.event === "closed") {
+          out.push({nameEN, start, end: row.year});
+          start = null;
+        }
+      }
+      if (start !== null) out.push({nameEN, start, end: timelineEnd});
+      return out;
+    });
+  </script>
   <script id="6" type="module" pinned>
-    // y domain: organisations ordered by their first recorded event.
-    const organisations = d3.groupSort(filteredEvents, group => d3.min(group, d => d.year), d => d.nameEN);
+    // y domain: organisations ordered by their first appearance in the data.
+    const organisations = d3.groupSort(filteredData, group => d3.min(group, d => d.year), d => d.nameEN);
   </script>
   <script id="7" type="module" pinned>
     Plot.plot({
@@ -41,18 +91,33 @@
       y: {domain: organisations, label: null, tickSize: 0},
       color: {legend: true},
       marks: [
-        Plot.dot(filteredEvents, {
+        Plot.ruleY(organisations, {stroke: "#ececec"}),
+        Plot.ruleY(spans, {y: "nameEN", x1: "start", x2: "end", stroke: "#9a9a9a", strokeWidth: 1.5}),
+        Plot.dot(documented, {x: "year", y: "nameEN", fill: "black", r: 1.5}),
+        Plot.dot(unsourced, {x: "year", y: "nameEN", fill: "red", r: 1.5}),
+        Plot.dot([...firstMentions, ...filteredEvents], {
           x: "year",
           y: "nameEN",
           stroke: "event",
-          r: 4,
-          tip: {format: {x: "d"}},
-          channels: {note: "note1"}
-        })
+          r: 4
+        }),
+        Plot.tip(tipPoints, Plot.pointer({
+          x: "year",
+          y: "nameEN",
+          format: {x: "d"},
+          channels: {
+            event: d => d.event || "(yearly entry, assumed)",
+            source: d => {
+              const s = (d.source1 ?? "").trim();
+              return !s ? "(blank)" : s.length > 48 ? s.slice(0, 48) + "…" : s;
+            },
+            note: "note1"
+          }
+        }))
       ]
     })
   </script>
   <script id="8" type="text/markdown">
-    ${filteredEvents.length} events across ${organisations.length} organisations. Events recorded in the dataset: \`representativeChange\`, \`addressChange\`, \`nameChange\`, \`closed\`, \`established\`, \`moved\`, \`vacant\`.
+    ${filteredEvents.length} events across ${organisations.length} organisations (${firstMentions.length} first mentions, ${spans.length} active periods). Every yearly entry is a small dot, ringed when it carries an event: **black** = documented (${documented.length} entries citing a source), <span style="color: red;">**red**</span> = assumed (${unsourced.length} entries with no source — hover them; these cluster in the 1980s–90s, where presence was interpolated between documented years). Events recorded in the dataset: \`representativeChange\`, \`addressChange\`, \`nameChange\`, \`closed\`, \`established\`, \`moved\`, \`vacant\`. Organisations without a recorded closure are assumed active until the end of the timeline (${timelineEnd}).
   </script>
 </notebook>
