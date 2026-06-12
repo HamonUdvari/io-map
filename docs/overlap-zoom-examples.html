@@ -1,0 +1,56 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Overlapping Points — Zoom Examples</title>
+  <script id="1" type="text/markdown">
+    # Overlapping Points — Zoom Examples
+
+    Reference examples for handling co-located organisations on the map (many share one address or building — at the 2025 state, 112 of 223 plotted organisations overlap; the Palais des Nations alone holds 10). These are the candidate pieces of a zoom policy: cluster when zoomed out, group details mid-zoom, explode at building level.
+  </script>
+  <script id="2" type="text/markdown">
+    ## Grouped tips
+
+    [Plot: grouped tips](https://observablehq.com/@observablehq/plot-grouped-tips) *(Observable Plot, official)*
+
+    One tooltip listing **all** points at the hovered location instead of one tip per point. The cheapest win: works at any zoom, no geometry changes, and pairs with every other technique below. Plot is already built into our notebooks.
+  </script>
+  <script id="3" type="text/markdown">
+    ## supercluster
+
+    [Hello supercluster!](https://observablehq.com/@pierreleripoll/hello-supercluster) *(mapbox/supercluster in a notebook)* — [library](https://github.com/mapbox/supercluster)
+
+    The industry-standard zoom-dependent clustering: `getClusters(bbox, zoom)` returns merged clusters for the current view, `getClusterExpansionZoom(id)` tells you when a cluster breaks apart. Fast enough for millions of points; ours is a stroll. For the zoomed-out view.
+  </script>
+  <script id="4" type="text/markdown">
+    ## d3-marker-cluster
+
+    [Hello d3-marker-cluster](https://observablehq.com/@stardisblue/hello-d3-marker-cluster) *(Fati CHEN / @stardisblue)*
+
+    The d3-native clustering referenced in our next-iteration plan (note: the January email cited `@ccnlog/…`; this is the actual notebook). Animated cluster markers with counts, directly compatible with our d3-tile map cells. Compare with supercluster for control over the number of groups.
+  </script>
+  <script id="5" type="text/markdown">
+    ## Spiderfy
+
+    [Hello Overlapping Marker Spiderfier for Leaflet](https://observablehq.com/@stardisblue/hello-overlapping-marker-spiderfier-for-leaflet) *(Fati CHEN / @stardisblue)*
+
+    The building-level endgame: clustering can never split points with **identical** coordinates, so on click the markers fan out around the true location on leader lines. This is what the Palais des Nations needs at maximum zoom.
+  </script>
+  <script id="7" type="text/markdown">
+    ## Dodge (beeswarm)
+
+    [Plot dodge transform](https://observablehq.com/plot/transforms/dodge) *(Observable Plot docs)* — example: [Dodge cars (beeswarm)](https://observablehq.com/@observablehq/plot-dodge-cars)
+
+    Built into Plot: `dodgeY` shifts overlapping dots just enough to not collide while keeping one mark per datum. Good for near-overlaps mid-zoom; at 10-on-one-point it grows a blob, which is where spiderfy takes over.
+  </script>
+  <script id="8" type="text/markdown">
+    ## Jitter
+
+    [Avoiding overlaps in jitter plots](https://observablehq.com/@jtrim-ons/avoiding-overlaps-in-jitter-plots) *(James Trimble — `spacedJitter`)*
+
+    Random offsets to break up stacks. Listed as the baseline to compare against: it's cheap, but it lies about position and reshuffles on every render — for same-building points prefer dodge or spiderfy, which keep a readable link to the true location.
+  </script>
+  <script id="6" type="text/markdown">
+    ---
+
+    The full technique survey (aggregation, displacement, binning, density, …) lives in [`OVERLAP-TECHNIQUES.md`](https://github.com/HamonUdvari/io-map/blob/main/OVERLAP-TECHNIQUES.md) in the repository. Related issues: [#3 marker clustering](https://github.com/HamonUdvari/io-map/issues/3), [#4 building concentrations](https://github.com/HamonUdvari/io-map/issues/4).
+  </script>
+</notebook>

@@ -1,0 +1,209 @@
+<!doctype html>
+<notebook theme="air">
+  <title>InfoBox Content Explorer</title>
+  <script id="1" type="text/markdown">
+    # InfoBox Content Explorer
+
+    Design aid for the InfoBox ([#1](https://github.com/HamonUdvari/io-map/issues/1), [#2](https://github.com/HamonUdvari/io-map/issues/2)): browse every organisation, see exactly what content the InfoBox must hold, and stress-test the layout against the extremes — from Botswana (one row, four fields) to Greece (83 rows, 36 events, 15 addresses, ~1 kB of notes).
+
+    Field order per the partners' spec (10 June 2026 email): name EN/FR; *(NGOs)* sub-organisations with affiliation; `addressInfoboxDisplay` **or else** `addressOSM`; location/building; *(PRs)* representative; notes; sources. Plus the open question of representing changes over years — prototyped here as a decadal event strip.
+
+    <style>
+    /* deliberately unstyled: just a box with a border — the design comes later */
+    .infobox { border: 1px solid #999; padding: 12px; }
+    .sheet { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .sheet figure { margin: 0; width: 360px; }
+    .inventory td, .inventory th { padding: 2px 10px 2px 0; vertical-align: top; }
+    .inventory .status-filled { color: #2e7d32; }
+    .inventory .status-fallback { color: #b75c00; }
+    .inventory .status-empty { color: #bbb; }
+    </style>
+  </script>
+  <script id="2" type="module" pinned>
+    const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
+  </script>
+  <script id="3" type="module" pinned>
+    const byOrganisation = d3.group(d3.sort(data.filter(d => d.year), d => d.year), d => d.nameEN);
+  </script>
+  <script id="4" type="module" pinned>
+    // Curated extremes per category: minimal / median / maximal InfoBox content.
+    const curated = new Map([
+      ["Botswana", "PR · min"],
+      ["Yemen", "PR · median"],
+      ["Greece", "PR · max"],
+      ["Albania", "PR · photos"],
+      ["Afghanistan", "PR · long notes"],
+      ["League of Red Cross and Red Crescent Societies", "IO · min"],
+      ["International Narcotics Control Board (INCB)", "IO · median"],
+      ["Interparliamentary Union (IPU)", "IO · max"],
+      ["CMC: Churches' Action for Health", "NGO · min"],
+      ["The Jewish Agency for Palestine, Permanent Office to the League of Nations", "NGO · median"],
+      ["World Council of Churches (WCC)", "NGO · max"]
+    ]);
+  </script>
+  <script id="5" type="module" pinned>
+    const hasContent = s => Boolean(s) && String(s).trim().toLowerCase() !== "no";
+    const shortCategory = c => c === "Permanent Representation" ? "PR" : c === "International Organisation" ? "IO" : c === "Sub-NGO" ? "Sub-NGO" : "NGO";
+
+    const orgMeta = [...byOrganisation.entries()].map(([name, rows]) => {
+      const fields = ["nameFR", "addressInfoboxDisplay", "addressOSM", "locationBuilding", "representativeName", "note1", "note2", "source1", "source2", "photos"];
+      const filled = new Set();
+      let notes = 0;
+      for (const d of rows) for (const f of fields) if (hasContent(d[f])) { filled.add(f); if (f.startsWith("note")) notes += String(d[f]).length; }
+      return {
+        pick: curated.get(name) ?? "",
+        name,
+        category: shortCategory(rows[0].filterOrgCategory),
+        years: `${rows[0].year}–${rows.at(-1).year}`,
+        rows: rows.length,
+        events: rows.filter(d => d.event).length,
+        fields: filled.size,
+        notes,
+        addresses: new Set(rows.map(d => d.addressOSM).filter(Boolean)).size
+      };
+    });
+  </script>
+  <script id="6" type="module" pinned>
+    const category = view(Inputs.select(["All", "PR", "IO", "NGO"], {label: "Category"}));
+  </script>
+  <script id="7" type="module" pinned>
+    const tableData = d3.sort(
+      orgMeta.filter(d => category === "All" ? true : category === "NGO" ? (d.category === "NGO" || d.category === "Sub-NGO") : d.category === category),
+      d => d.pick === "" ? 1 : 0, // curated picks first
+      d => d.name
+    );
+
+    const selected = view(Inputs.table(tableData, {
+      multiple: false,
+      required: false,
+      value: tableData.find(d => d.pick.endsWith("max")) ?? tableData[0],
+      columns: ["pick", "name", "category", "years", "rows", "events", "fields", "notes", "addresses"],
+      header: {pick: "pick", name: "organisation", rows: "rows", events: "events", fields: "fields filled", notes: "note chars", addresses: "addresses"},
+      width: {name: 280}
+    }));
+  </script>
+  <script id="8" type="module" pinned>
+    const org = selected ?? tableData[0];
+    const orgRows = byOrganisation.get(org.name);
+  </script>
+  <script id="9" type="module" pinned>
+    const year = view(Inputs.select([...new Set(orgRows.map(d => d.year))], {label: "Year", value: orgRows.at(-1).year, format: String}));
+  </script>
+  <script id="11" type="module">
+    infoboxCard(org.name, year)
+  </script>
+  <script id="10" type="module" pinned>
+    // Barebones InfoBox: spec header for the selected year, then the COMPLETE raw history —
+    // every year's non-empty fields as plain text. No styling, no graphics: content first.
+    function infoboxCard(name, atYear) {
+      const rows = byOrganisation.get(name);
+      const row = rows.filter(d => d.year <= atYear).at(-1) ?? rows[0];
+      const address = hasContent(row.addressInfoboxDisplay) ? row.addressInfoboxDisplay : row.addressOSM;
+      const fallback = !hasContent(row.addressInfoboxDisplay) && hasContent(row.addressOSM);
+      const subs = [...new Set(data.filter(d => d.filterAffiliation === name).map(d => d.nameEN))];
+
+      const label = (k, v) => html`<b>${k}:</b> ${v}`;
+      const history = rows.map(d => {
+        const parts = [];
+        if (d.event) parts.push(label("event", d.event));
+        if (hasContent(d.addressInfoboxDisplay)) parts.push(label("display address", d.addressInfoboxDisplay));
+        if (hasContent(d.addressOSM)) parts.push(label("address", d.addressOSM));
+        if (hasContent(d.locationBuilding)) parts.push(label("building", d.locationBuilding));
+        if (hasContent(d.representativeName)) parts.push(label("representative", d.representativeName));
+        if (hasContent(d.representativeGender)) parts.push(label("gender", d.representativeGender));
+        if (hasContent(d.note1)) parts.push(label("note1", d.note1));
+        if (hasContent(d.note2)) parts.push(label("note2", d.note2));
+        if (hasContent(d.source1)) parts.push(label("source1", d.source1));
+        if (hasContent(d.source2)) parts.push(label("source2", d.source2));
+        if (hasContent(d.photos)) parts.push(label("photo", d.photos));
+        return html`<div><b>${d.year}</b> — ${parts.length ? parts.flatMap((p, i) => i ? [" · ", p] : [p]) : "(empty entry)"}</div>`;
+      });
+
+      return html`<div class="infobox">
+        <div><b>${row.nameEN}</b>${hasContent(row.nameFR) && row.nameFR !== row.nameEN ? ` / ${row.nameFR}` : ""} — ${row.filterOrgCategory}</div>
+        ${row.filterOrgCategory === "Sub-NGO" && hasContent(row.filterAffiliation) ? html`<div><b>Affiliation:</b> ${row.filterAffiliation}</div>` : ""}
+        ${subs.length ? html`<div><b>Sub-organisations:</b> ${subs.join(", ")}</div>` : ""}
+        <div><b>Address in ${atYear}:</b> ${address ?? "(none recorded)"}${fallback ? " [fallback from addressOSM]" : ""}</div>
+        ${hasContent(row.locationBuilding) ? html`<div><b>Building:</b> ${row.locationBuilding}</div>` : ""}
+        ${hasContent(row.representativeName) ? html`<div><b>Representative:</b> ${row.representativeName}</div>` : ""}
+        ${hasContent(row.note1) ? html`<div><b>Note:</b> ${row.note1}</div>` : ""}
+        ${hasContent(row.note2) ? html`<div><b>Note 2:</b> ${row.note2}</div>` : ""}
+        ${hasContent(row.source1) ? html`<div><b>Source:</b> ${String(row.source1).trim()}</div>` : ""}
+        ${hasContent(row.source2) ? html`<div><b>Source 2:</b> ${String(row.source2).trim()}</div>` : ""}
+        ${hasContent(row.photos) ? html`<div><b>Photo:</b> <a href=${String(row.photos).trim()} target="_blank">${String(row.photos).trim()}</a></div>` : ""}
+        <hr>
+        <div>History — ${rows.length} entries, ${rows.filter(d => d.event).length} events:</div>
+        ${history}
+      </div>`;
+    }
+
+    // The year whose row carries the most content (filled fields + note length) — used by the
+    // contact sheet so notes/photos actually appear in the at-year header.
+    function richestYear(rows) {
+      const score = d => ["addressInfoboxDisplay", "addressOSM", "locationBuilding", "representativeName", "note1", "note2", "source1", "source2", "photos"]
+        .reduce((n, f) => n + (hasContent(d[f]) ? 1 : 0), 0) + ((d.note1 ?? "").length + (d.note2 ?? "").length) / 100;
+      return rows.reduce((best, d) => score(d) > score(best) ? d : best, rows[0]).year;
+    }
+  </script>
+  <script id="12" type="text/markdown">
+    ## Field inventory — the exhaustive list
+
+    Every field the spec mentions, for the selected organisation and year: what is filled, what falls back, what stays empty. This is the checklist a design must accommodate.
+  </script>
+  <script id="13" type="module" pinned>
+    {
+      const row = orgRows.filter(d => d.year <= year).at(-1) ?? orgRows[0];
+      const subs = [...new Set(data.filter(d => d.filterAffiliation === org.name).map(d => d.nameEN))];
+      const entries = [
+        ["nameEN", row.nameEN],
+        ["nameFR", row.nameFR],
+        ["sub-organisations (NGO)", subs.join(", ")],
+        ["affiliation (Sub-NGO)", row.filterAffiliation],
+        ["addressInfoboxDisplay", row.addressInfoboxDisplay],
+        ["addressOSM (fallback)", row.addressOSM],
+        ["locationBuilding", row.locationBuilding],
+        ["representativeName (PR)", row.representativeName],
+        ["note1", row.note1],
+        ["note2", row.note2],
+        ["source1", row.source1],
+        ["source2", row.source2],
+        ["photos", row.photos],
+        ["events in history", orgRows.filter(d => d.event).map(d => `${d.year} ${d.event}`).join(", ")]
+      ];
+      display(html`<table class="inventory">
+        <thead><tr><th>field</th><th>status</th><th>value</th><th>chars</th></tr></thead>
+        <tbody>${entries.map(([field, value]) => {
+          const v = hasContent(value) ? String(value).trim() : "";
+          const status = v ? (field === "addressOSM (fallback)" && hasContent(row.addressInfoboxDisplay) ? ["unused (display name present)", "status-fallback"] : ["filled", "status-filled"]) : ["empty", "status-empty"];
+          return html`<tr>
+            <td><code>${field}</code></td>
+            <td class=${status[1]}>${v ? (status[0] === "filled" ? "✓ " : "⤷ ") : "∅ "}${status[0]}</td>
+            <td>${v.length > 90 ? v.slice(0, 90) + "…" : v}</td>
+            <td>${v.length || ""}</td>
+          </tr>`;
+        })}</tbody>
+      </table>`);
+    }
+  </script>
+  <script id="14" type="text/markdown">
+    ## Contact sheet — the extremes
+
+    The same card against minimal, median and maximal content per category, plus the photo and long-note cases. Each card is shown at the organisation's richest year, so notes/photos appear in the header. If a layout works for all of these, it works for the dataset.
+  </script>
+  <script id="15" type="module" pinned>
+    html`<div class="sheet">${[...curated.entries()].map(([name, tag]) => {
+      const rows = byOrganisation.get(name);
+      const atYear = richestYear(rows);
+      return html`<figure><figcaption>${tag} — ${rows.length} rows, shown at ${atYear}</figcaption>${infoboxCard(name, atYear)}</figure>`;
+    })}</div>`
+  </script>
+  <script id="16" type="text/markdown">
+    ### Design observations to validate
+
+    - The **max cards** (Greece: 83 entries, IPU: 99) dump pages of history — the design will need progressive disclosure (per-decade grouping? show changes only?).
+    - The **min cards** (Botswana, CMC) are a handful of lines — the design needs to look intentional with that little, not broken.
+    - Yearly entries repeat address/representative; a designed box probably collapses runs of identical values into ranges ("1937–1953: 23, Av. de Beau-Séjour").
+    - Sources mix links and plain citation codes (Blue Book `B1955` etc.) — two render modes needed.
+    - 21 rows carry **photo links**; descriptions and web links arrive in the next dataset update and need a reserved spot.
+  </script>
+</notebook>

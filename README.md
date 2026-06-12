@@ -25,6 +25,8 @@ make data   # xlsx -> docs/data/io-map-v2.csv -> docs/data/geocode-v2.json (Nomi
 
 Set `XLSX=path/to/file.xlsx` to point at a newer dataset export. Unresolved addresses land in `geocode-misses.csv`; hand-corrections to `docs/data/geocode-v2.json` survive re-runs (cached keys are never re-fetched).
 
+Open data questions and assumptions to verify are tracked in [THINGS-TO-CHECK.md](THINGS-TO-CHECK.md).
+
 * `docs/io-map-v2.html` – **current**: new dataset (1920–2025), category/sub-filters, year slider, historical overlays
 
 ### v1 proof of concept (archive)
