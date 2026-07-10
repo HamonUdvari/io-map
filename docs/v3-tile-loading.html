@@ -1,0 +1,142 @@
+<!doctype html>
+<notebook theme="air">
+  <title>v3 — Smooth Tile Loading</title>
+  <script id="1" type="text/markdown">
+    # v3 — Smooth Tile Loading
+
+    The v2 maps swap **all** tiles in one d3 data-join: on every integer zoom step the old
+    tiles vanish before the new ones have finished downloading, so the map flashes the page
+    background. This notebook ports the Leaflet-style **retained tile pyramid** (from the
+    noge7 project) into the shared v3 map system — [`lib/geneva-map.js`](https://github.com/HamonUdvari/io-map/blob/main/docs/lib/geneva-map.js) —
+    which all v3 maps use.
+
+    **Try it:** wheel-zoom fast in and out, drag around Geneva — the pyramid keeps the
+    previous tiles visible until the new ones have loaded. Then switch to *naive* and
+    repeat the same moves to see the flashing this fixes.
+  </script>
+  <script id="2" type="module">
+    const strategy = view(Inputs.radio(["pyramid", "naive"], {value: "pyramid", label: "Tile strategy"}));
+  </script>
+  <script id="3" type="module" pinned>
+    // Persists the view across strategy switches and cell re-runs.
+    const zoomState = {transform: null};
+  </script>
+  <script id="4" type="module">
+    const editions = FileAttachment("data/zeitreise-editions.json").json();
+  </script>
+  <script id="5" type="module">
+    const layersData = FileAttachment("data/swisstopo-layers.json").json();
+  </script>
+  <script id="6" type="module" pinned>
+    import {tile as d3tile, tileWrap} from "npm:d3-tile";
+    import {unitTranslateExtent, GENEVA_BBOX} from "./lib/geneva-map.js";
+
+    // The current v2 behaviour, kept for comparison: a single d3-tile data-join. On every
+    // integer zoom step the join swaps all tiles at once — old ones are removed before the
+    // new ones have loaded. That gap is the flash this notebook is about.
+    function naiveMap({url, transform, width = 928, height = 500, minZoom = 12, maxZoom = 18}) {
+      const svg = d3.create("svg")
+          .attr("viewBox", [0, 0, width, height])
+          .style("width", "100%")
+          .style("height", "auto")
+          .style("display", "block")
+          .style("background", "#e8e8e8");
+
+      const tile = d3tile()
+          .extent([[0, 0], [width, height]])
+          .tileSize(256)
+          .clampX(false);
+
+      let image = svg.append("g")
+          .attr("pointer-events", "none")
+          .style("filter", "grayscale(1)")
+          .selectAll("image");
+      let current = transform;
+      let renderCb = null;
+
+      const zoom = d3.zoom()
+          .scaleExtent([256 * 2 ** minZoom, 256 * 2 ** maxZoom])
+          .translateExtent(unitTranslateExtent(GENEVA_BBOX))
+          .extent([[0, 0], [width, height]])
+          .on("zoom", ({transform: t}) => zoomed(t));
+
+      function zoomed(t) {
+        current = t;
+        const tiles = tile(t);
+        image = image.data(tiles, d => d).join("image")
+            .attr("xlink:href", d => url(...tileWrap(d)))
+            .attr("x", ([x]) => (x + tiles.translate[0]) * tiles.scale)
+            .attr("y", ([, y]) => (y + tiles.translate[1]) * tiles.scale)
+            .attr("width", tiles.scale)
+            .attr("height", tiles.scale);
+        if (renderCb) renderCb({transform: t});
+      }
+
+      svg.call(zoom).call(zoom.transform, current);
+
+      return {
+        node: svg.node(),
+        onRender: cb => { renderCb = cb; cb({transform: current}); }
+      };
+    }
+  </script>
+  <script id="7" type="module" pinned>
+    import {createGenevaMap, basemapForYear, centerTransform, GENEVA} from "./lib/geneva-map.js";
+
+    // Fixed basemap for this demo: the latest national map, black & white, Geneva only —
+    // zoom bottoms out at the agglomeration and panning is clamped to the Geneva region.
+    // The year-switching system has its own notebook (v3 Basemap).
+    const basemap = basemapForYear(2025, {editions, layersData});
+
+    const map = strategy === "pyramid"
+      ? createGenevaMap({transform: zoomState.transform ?? undefined, minZoom: 12, extent: GENEVA_BBOX, bw: true})
+      : naiveMap({url: basemap.url, minZoom: 12,
+                  transform: zoomState.transform ?? centerTransform({center: GENEVA, zoom: 15})});
+
+    if (strategy === "pyramid") map.setLayer(basemap);
+    map.onRender(({transform}) => zoomState.transform = transform);
+
+    display(map.node);
+  </script>
+  <script id="9" type="module">
+    {
+      const readout = document.createElement("code");
+      const update = () => {
+        readout.textContent = map.levels
+          ? map.levels().map(l => `z${l.z}: ${l.loaded + l.errored}/${l.needed}`).join("  ·  ") || "(none)"
+          : "n/a — the naive join keeps no levels";
+      };
+      update();
+      const timer = setInterval(update, 250);
+      invalidation.then(() => clearInterval(timer));
+      display(html`<small>Retained tile levels (loaded/needed): ${readout}</small>`);
+    }
+  </script>
+  <script id="10" type="text/markdown">
+    ## How the pyramid avoids the flash
+
+    One SVG `<g>` per *(basemap time, integer zoom)* level, several retained at once:
+
+    1. **Retained levels** — levels are never wiped on zoom change; every retained level is
+       positioned from the live transform (`tile size = k / 2^z`), so a coarse base simply
+       scales up under the finer one and there is never a gap to the page background.
+    2. **Fade-in on load** — new tiles enter at `opacity: 0` and only fade in (250 ms) once
+       their image has actually loaded; a half-downloaded tile is never visible.
+    3. **Prune after cover** — an old level is removed only when the target level has *all*
+       its needed tiles settled, and only after the fade has finished.
+    4. **Defer during motion** — while a gesture or animated camera move is running nothing
+       is pruned, so coarse levels keep covering the intermediate frames. (Programmatic
+       moves — like clicking a cluster in the Overlapping Points notebook — additionally
+       prefetch their destination tiles before animating.)
+
+    Two fixes over the noge7 original: level removal waits out the last tile's fade (no
+    one-tile pop), and tiles that 404 (outside swisstopo coverage, e.g. the French side of
+    Geneva at some zooms) count as *settled* — they stay invisible but no longer block
+    pruning, which otherwise leaks levels.
+
+    Because levels are keyed by basemap time **and** zoom, changing the year in the other
+    v3 notebooks crossfades between map editions with the same machinery.
+
+    Basemap © [swisstopo](https://www.swisstopo.admin.ch/).
+  </script>
+</notebook>

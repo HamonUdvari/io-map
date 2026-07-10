@@ -42,8 +42,33 @@
 
     </style>
   </script>
+  <script id="7" type="text/markdown">
+    ## Current — v3
+
+    The map system going forward, shared by all maps via `docs/lib/`: a time-aware swisstopo basemap (Zeitreise + national map) with flash-free tile loading, plus the point-interaction strategies on the v2 dataset.
+  </script>
+  <script id="8" type="text/html">
+    <div class="previews">
+      <a href="./v3-basemap">
+        <div class="preview-title">v3 Basemap</div>
+        <div class="preview-description">The settled combination: Zeitreise map editions until 1956, national map 1:25,000 after — switching automatically, black &amp; white by default, crossfading year changes.</div>
+      </a>
+      <a href="./v3-tile-loading">
+        <div class="preview-title">v3 Smooth Tile Loading</div>
+        <div class="preview-description">Leaflet-style retained tile pyramid: zooming, panning and year scrubbing without flashes. Naive vs pyramid comparison with fly-to buttons.</div>
+      </a>
+      <a href="./v3-overlapping-points">
+        <div class="preview-title">v3 Overlapping Points</div>
+        <div class="preview-description">The zoom policy for shared addresses: supercluster when zoomed out, deterministic spread up close, neutral color for mixed clusters, grouped tips.</div>
+      </a>
+      <a href="./v3-nearby-organisations">
+        <div class="preview-title">v3 Nearby Organisations</div>
+        <div class="preview-description">K nearest organisations per point and year with distances — hover tooltips, click-to-pin leader lines and list.</div>
+      </a>
+    </div>
+  </script>
   <script id="2" type="text/markdown">
-    ## Current — v2
+    ## v2 — Previous
 
     Built on the formatted dataset of 10 June 2026: Permanent Representations, NGOs and IOs with event-level changes, split address fields, and filter categories.
   </script>
@@ -55,7 +80,7 @@
       </a>
       <a href="./zoomable-geneva-zeitreise-tiles">
         <div class="preview-title">Historical Basemaps (demo)</div>
-        <div class="preview-description">Time-traveling basemap: swisstopo map editions (1844–), the near-monochrome 1:25k series (1956–), and aerial imagery (1932–), with a black &amp; white toggle.</div>
+        <div class="preview-description">The layer comparison that led to the v3 Basemap: swisstopo map editions (1844–), the 1:25k series (1956–), and aerial imagery (1932–). Superseded by v3 Basemap.</div>
       </a>
       <a href="./event-timeline">
         <div class="preview-title">Event Timeline</div>

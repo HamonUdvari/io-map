@@ -1,0 +1,168 @@
+<!doctype html>
+<notebook theme="air">
+  <title>v3 — Nearby Organisations</title>
+  <script id="1" type="text/markdown">
+    # v3 — Nearby Organisations
+
+    For every organisation plotted in a year, the K nearest other organisations and their
+    distance (haversine, in meters) — the "who is around" piece of the future InfoBox.
+    **Hover** a dot for its nearest list; **click** it to pin the selection, draw the
+    leader lines and fill the list below the map (click the background to clear). All
+    categories count as neighbours; organisations at the very same address appear as
+    *same building · 0 m*.
+  </script>
+  <script id="2" type="module">
+    const year = view(Inputs.range([1920, 2025], {value: 2001, step: 1, label: "Year"}));
+  </script>
+  <script id="3" type="module">
+    const k = view(Inputs.range([1, 10], {value: 5, step: 1, label: "K nearest"}));
+  </script>
+  <script id="4" type="module">
+    const bw = view(Inputs.toggle({label: "Black & white", value: true}));
+  </script>
+  <script id="5" type="module" pinned>
+    import {createGenevaMap, PALAIS_DES_NATIONS} from "./lib/geneva-map.js";
+
+    const map = createGenevaMap({center: PALAIS_DES_NATIONS, zoom: 15, bw: true});
+
+    display(map.node);
+  </script>
+  <script id="6" type="module" pinned>
+    map.setLayer(activeBasemap);
+    map.setBW(bw);
+  </script>
+  <script id="7" type="module" pinned>
+    // Mutable so the side list below reacts to map clicks. Holds the selected nameEN
+    // (not the row): a year change swaps the rows, and a stale selection just clears.
+    const selection = Mutable(null);
+    const setSelection = (name) => selection.value = name;
+  </script>
+  <script id="8" type="module">
+    import {categoryColor, formatDistance} from "./lib/io-data.js";
+
+    {
+      const selected = selection == null ? null : points.find(d => d.nameEN === selection);
+      if (!selected) {
+        display(html`<p style="color: var(--theme-foreground-muted)"><i>Click an organisation on the map to list its nearest neighbours here.</i></p>`);
+      } else {
+        const list = neighbors.get(selected) ?? [];
+        display(html`<div style="font: 14px var(--sans-serif)">
+          <b>${selected.nameEN}</b> (${selected.filterOrgCategory})<br>
+          <i>${selected.addressInfoboxDisplay || selected.addressOSM || ""}</i>
+          <ol style="margin: 0.5em 0 0">${list.map(n => html`<li>
+            <span style="color:${categoryColor(n.point)}">●</span>
+            ${n.point.nameEN} <small>(${n.point.filterOrgCategory})</small>
+            — <b>${n.meters < 1 ? "same building · 0 m" : formatDistance(n.meters)}</b>
+          </li>`)}</ol>
+        </div>`);
+      }
+    }
+  </script>
+  <script id="9" type="module" pinned>
+    import {groupByCoordinate, stackOffsets, categoryColor, formatDistance, escapeHtml} from "./lib/io-data.js";
+
+    {
+      // Same deterministic spread as the overlapping-points notebook, so every
+      // organisation in a shared building is individually hoverable.
+      const stacks = groupByCoordinate(points);
+      const offsetOf = new Map();
+      for (const members of stacks.values()) {
+        const offsets = stackOffsets(members.length, 10);
+        members.forEach((d, i) => offsetOf.set(d, offsets[i]));
+      }
+      const position = (d, project) => {
+        const [x, y] = project([d.long, d.lat]);
+        const [dx, dy] = offsetOf.get(d) ?? [0, 0];
+        return [x + dx, y + dy];
+      };
+
+      const selected = selection == null ? null : points.find(d => d.nameEN === selection);
+      const nearest = selected ? (neighbors.get(selected) ?? []) : [];
+      const nearestSet = new Set(nearest.map(n => n.point));
+
+      const dot = d => `<span style="color:${categoryColor(d)}">●</span>`;
+      const tipFor = d => {
+        const list = neighbors.get(d) ?? [];
+        return `<b>${escapeHtml(d.nameEN)}</b><br>${escapeHtml(d.filterOrgCategory)}`
+          + `<br><i>${escapeHtml(d.addressInfoboxDisplay || d.addressOSM || "")}</i>`
+          + `<hr style="margin:4px 0;border:none;border-top:1px solid #ddd">nearest:<br>`
+          + list.map(n => `${dot(n.point)} ${escapeHtml(n.point.nameEN)} — `
+            + `<b>${n.meters < 1 ? "same building · 0 m" : formatDistance(n.meters)}</b>`).join("<br>")
+          + `<br><i>click to pin</i>`;
+      };
+
+      map.svg.on("click", () => setSelection(null));
+
+      map.setOverlay((g, {project, tooltip}) => {
+        g.selectAll("line.nn")
+          .data(selected ? nearest : [], n => n.point.nameEN)
+          .join("line")
+          .attr("class", "nn")
+          .attr("stroke", "#333")
+          .attr("stroke-width", 1)
+          .attr("stroke-dasharray", "4,3")
+          .attr("x1", () => position(selected, project)[0])
+          .attr("y1", () => position(selected, project)[1])
+          .attr("x2", n => position(n.point, project)[0])
+          .attr("y2", n => position(n.point, project)[1]);
+
+        g.selectAll("circle.org")
+          .data(points, d => d.nameEN)
+          .join("circle")
+          .attr("class", "org")
+          .attr("r", d => d === selected ? 7 : 5)
+          .attr("fill", d => categoryColor(d))
+          .attr("fill-opacity", 0.85)
+          .attr("stroke", d => d === selected ? "#000" : nearestSet.has(d) ? "#333" : "#fff")
+          .attr("stroke-width", d => d === selected || nearestSet.has(d) ? 2 : 1)
+          .style("cursor", "pointer")
+          .attr("cx", d => position(d, project)[0])
+          .attr("cy", d => position(d, project)[1])
+          .on("pointermove", (event, d) => tooltip.show(tipFor(d), event))
+          .on("pointerleave", () => tooltip.hide())
+          .on("click", (event, d) => {
+            event.stopPropagation();
+            setSelection(d.nameEN);
+          });
+      });
+    }
+  </script>
+  <script id="10" type="text/markdown">
+    ## Data
+
+    Latest known state per organisation up to ${String(year)} (**${points.length}**
+    plotted), all categories; distances are computed between geocoded coordinates
+    (haversine), so co-located street addresses give 0 m even when the buildings' entrances
+    differ. Shared logic in
+    [`lib/io-data.js`](https://github.com/HamonUdvari/io-map/blob/main/docs/lib/io-data.js).
+  </script>
+  <script id="11" type="module" pinned>
+    const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
+  </script>
+  <script id="12" type="module" pinned>
+    const geocode = FileAttachment("data/geocode-v2.json").json();
+  </script>
+  <script id="13" type="module" pinned>
+    import {joinGeocode, plottedForYear, nearestNeighbors} from "./lib/io-data.js";
+
+    const geoData = joinGeocode(data, geocode);
+    const points = plottedForYear(geoData, year);
+    const neighbors = nearestNeighbors(points, k);
+  </script>
+  <script id="14" type="module">
+    const editions = FileAttachment("data/zeitreise-editions.json").json();
+  </script>
+  <script id="15" type="module">
+    const layersData = FileAttachment("data/swisstopo-layers.json").json();
+  </script>
+  <script id="16" type="module">
+    import {basemapForYear} from "./lib/geneva-map.js";
+
+    const activeBasemap = basemapForYear(year, {editions, layersData});
+  </script>
+  <script id="17" type="text/markdown">
+    Basemap © [swisstopo](https://www.swisstopo.admin.ch/). Geocoding
+    © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors via
+    [Nominatim](https://nominatim.org/).
+  </script>
+</notebook>

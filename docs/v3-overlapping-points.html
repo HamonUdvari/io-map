@@ -1,0 +1,229 @@
+<!doctype html>
+<notebook theme="air">
+  <title>v3 — Overlapping Points</title>
+  <script id="1" type="text/markdown">
+    # v3 — Overlapping Points
+
+    Many organisations share one address — at the 2001 state, 223 organisations sit on just
+    147 coordinates, and the Palais des Nations alone holds 9. This notebook demoes the v3
+    zoom policy around the Palais des Nations:
+
+    * **zoomed out** — [supercluster](https://github.com/mapbox/supercluster) merges nearby
+      points into count circles; a cluster mixing organisation categories gets the neutral
+      color (single-category clusters keep their category color). Click a cluster to fly
+      into it.
+    * **zoomed in** (at the threshold below) — every organisation is its own dot; identical
+      addresses are spread apart with deterministic
+      [spaced jitter](https://observablehq.com/@jtrim-ons/avoiding-overlaps-in-jitter-plots):
+      a free-flowing cloud around the true location, collision-aware, and stable across
+      renders.
+    * **grouped tips** ([pattern](https://observablehq.com/@observablehq/plot-grouped-tips)) —
+      hovering a cluster or a shared address lists all member names while the count stays
+      under "max names in tip", otherwise a category breakdown.
+
+    Try 1948 for the biggest stack in the data: 13 organisations at the Palais des Nations,
+    mixed across categories.
+  </script>
+  <script id="2" type="module">
+    const year = view(Inputs.range([1920, 2025], {value: 2001, step: 1, label: "Year"}));
+  </script>
+  <script id="3" type="module">
+    const zoomThreshold = view(Inputs.range([12, 18], {value: 16, step: 1, label: "Spread points at zoom"}));
+  </script>
+  <script id="4" type="module">
+    const clusterRadius = view(Inputs.range([20, 120], {value: 40, step: 5, label: "Cluster radius"}));
+  </script>
+  <script id="5" type="module">
+    const jitterRadius = view(Inputs.range([4, 24], {value: 10, step: 1, label: "Spread radius (px)"}));
+  </script>
+  <script id="6" type="module">
+    const maxTipNames = view(Inputs.range([1, 30], {value: 12, step: 1, label: "Max names in tip"}));
+  </script>
+  <script id="7" type="module">
+    const neutralColor = view(Inputs.color({value: "#888888", label: "Mixed-category color"}));
+  </script>
+  <script id="8" type="module">
+    const bw = view(Inputs.toggle({label: "Black & white", value: true}));
+  </script>
+  <script id="9" type="module" pinned>
+    import {createGenevaMap, PALAIS_DES_NATIONS} from "./lib/geneva-map.js";
+
+    const map = createGenevaMap({center: PALAIS_DES_NATIONS, zoom: 14, bw: true});
+
+    display(map.node);
+  </script>
+  <script id="10" type="module" pinned>
+    map.setLayer(activeBasemap);
+    map.setBW(bw);
+  </script>
+  <script id="11" type="module">
+    {
+      const readout = document.createElement("code");
+      map.onRender(({zoomLevel}) => {
+        readout.textContent = `zoom ${zoomLevel.toFixed(2)} — ${zoomLevel < zoomThreshold ? "clusters" : "spread points"}`;
+      });
+      display(html`<small>${readout} · <b>${points.length}</b> organisations in ${String(year)}</small>`);
+    }
+  </script>
+  <script id="12" type="module" pinned>
+    import Supercluster from "npm:supercluster";
+
+    // radius is relative to 512-unit tiles, so the visual radius is about half that in px.
+    // map/reduce carry per-category counts up into the clusters for the color rule.
+    const index = new Supercluster({
+      radius: clusterRadius,
+      maxZoom: 19,
+      minPoints: 2,
+      map: p => ({
+        pr: p.filterOrgCategory === "Permanent Representation" ? 1 : 0,
+        io: p.filterOrgCategory === "International Organisation" ? 1 : 0,
+        ngo: p.filterOrgCategory === "Non-governmental Organisation" || p.filterOrgCategory === "Sub-NGO" ? 1 : 0
+      }),
+      reduce: (acc, p) => {
+        acc.pr += p.pr;
+        acc.io += p.io;
+        acc.ngo += p.ngo;
+      }
+    }).load(features);
+  </script>
+  <script id="13" type="module" pinned>
+    import {groupByCoordinate, stackOffsets, categoryColor, CATEGORY_COLORS, escapeHtml} from "./lib/io-data.js";
+
+    {
+      const stacks = groupByCoordinate(points);
+      const spread = [];
+      for (const members of stacks.values()) {
+        const offsets = stackOffsets(members.length, jitterRadius);
+        members.forEach((d, i) => spread.push({d, members, off: offsets[i]}));
+      }
+
+      const fills = {
+        pr: CATEGORY_COLORS["Permanent Representation"],
+        io: CATEGORY_COLORS["International Organisation"],
+        ngo: CATEGORY_COLORS["Non-governmental Organisation"]
+      };
+      const clusterFill = p => {
+        const present = ["pr", "io", "ngo"].filter(k => p[k] > 0);
+        return present.length === 1 ? fills[present[0]] : neutralColor;
+      };
+      const breakdown = counts => [["PR", counts.pr ?? 0], ["IO", counts.io ?? 0], ["NGO", counts.ngo ?? 0]]
+        .filter(([, n]) => n > 0).map(([label, n]) => `${n} ${label}`).join(" · ");
+      const dot = d => `<span style="color:${categoryColor(d)}">●</span>`;
+      const rule = `<hr style="margin:4px 0;border:none;border-top:1px solid #ddd">`;
+
+      const clusterTip = c => {
+        const p = c.properties;
+        let content = `<b>${p.point_count} organisations</b><br>${breakdown(p)}`;
+        if (p.point_count < maxTipNames) {
+          const leaves = index.getLeaves(p.cluster_id, p.point_count);
+          content += rule + leaves.map(l => `${dot(l.properties)} ${escapeHtml(l.properties.nameEN)}`).join("<br>");
+          const addresses = new Set(leaves.map(l => l.properties.addressOSM));
+          if (addresses.size === 1) content += `<br><i>${escapeHtml(addresses.values().next().value)}</i>`;
+        }
+        return content;
+      };
+
+      const pointTip = (d, members) => {
+        let content = `<b>${escapeHtml(d.nameEN)}</b><br>${escapeHtml(d.filterOrgCategory)}`
+          + `<br><i>${escapeHtml(d.addressInfoboxDisplay || d.addressOSM || "")}</i>`;
+        const others = members.filter(m => m !== d);
+        if (others.length > 0 && members.length < maxTipNames) {
+          content += rule + `same address:<br>` + others.map(m => `${dot(m)} ${escapeHtml(m.nameEN)}`).join("<br>");
+        } else if (others.length > 0) {
+          content += rule + `${others.length} more at this address`;
+        }
+        return content;
+      };
+
+      map.setOverlay((g, {zoomLevel, bbox, project, tooltip}) => {
+        const clustered = zoomLevel < zoomThreshold;
+        const [w, s, e, n] = bbox;
+        const pad = 0.2;
+        const clusters = clustered
+          ? index.getClusters([w - (e - w) * pad, s - (n - s) * pad, e + (e - w) * pad, n + (n - s) * pad],
+                              Math.max(0, Math.floor(zoomLevel)))
+          : [];
+
+        g.selectAll("g.cluster")
+          .data(clusters, c => c.properties.cluster ? `c${c.properties.cluster_id}` : `s${c.properties.nameEN}`)
+          .join(enter => {
+            const gc = enter.append("g").attr("class", "cluster").style("cursor", "pointer");
+            gc.append("circle").attr("stroke", "white").attr("stroke-width", 1).attr("fill-opacity", 0.85);
+            gc.append("text")
+              .attr("text-anchor", "middle").attr("dy", "0.35em")
+              .attr("fill", "white").attr("font-size", 11)
+              .attr("font-family", "var(--sans-serif, sans-serif)")
+              .attr("pointer-events", "none");
+            return gc;
+          })
+          .call(sel => {
+            sel.select("circle")
+              .attr("r", c => c.properties.cluster ? Math.min(28, 8 + 4 * Math.sqrt(c.properties.point_count)) : 5)
+              .attr("fill", c => c.properties.cluster ? clusterFill(c.properties) : categoryColor(c.properties));
+            sel.select("text").text(c => c.properties.cluster ? c.properties.point_count : "");
+          })
+          .attr("transform", c => `translate(${project(c.geometry.coordinates)})`)
+          .on("pointermove", (event, c) => tooltip.show(
+            c.properties.cluster ? clusterTip(c) : pointTip(c.properties, [c.properties]), event))
+          .on("pointerleave", () => tooltip.hide())
+          .on("click", (event, c) => {
+            if (!c.properties.cluster) return;
+            tooltip.hide();
+            map.flyTo({center: c.geometry.coordinates,
+                       zoom: Math.min(index.getClusterExpansionZoom(c.properties.cluster_id), zoomThreshold)});
+          });
+
+        g.selectAll("circle.org")
+          .data(clustered ? [] : spread, o => o.d.nameEN)
+          .join("circle")
+          .attr("class", "org")
+          .attr("r", 5)
+          .attr("fill", o => categoryColor(o.d))
+          .attr("fill-opacity", 0.85)
+          .attr("stroke", "white")
+          .attr("stroke-width", 1)
+          .attr("cx", o => project([o.d.long, o.d.lat])[0] + o.off[0])
+          .attr("cy", o => project([o.d.long, o.d.lat])[1] + o.off[1])
+          .on("pointermove", (event, o) => tooltip.show(pointTip(o.d, o.members), event))
+          .on("pointerleave", () => tooltip.hide());
+      });
+    }
+  </script>
+  <script id="14" type="text/markdown">
+    ## Data
+
+    The io-map v2 dataset: latest known state per organisation up to the selected year
+    (closed/moved organisations drop out), joined with the Nominatim geocode cache — the
+    same logic as the [io-map v2](./io-map-v2) notebook, now shared via
+    [`lib/io-data.js`](https://github.com/HamonUdvari/io-map/blob/main/docs/lib/io-data.js).
+  </script>
+  <script id="15" type="module" pinned>
+    const data = FileAttachment("data/io-map-v2.csv").csv({typed: true});
+  </script>
+  <script id="16" type="module" pinned>
+    const geocode = FileAttachment("data/geocode-v2.json").json();
+  </script>
+  <script id="17" type="module" pinned>
+    import {joinGeocode, plottedForYear, toFeatures} from "./lib/io-data.js";
+
+    const geoData = joinGeocode(data, geocode);
+    const points = plottedForYear(geoData, year);
+    const features = toFeatures(points);
+  </script>
+  <script id="18" type="module">
+    const editions = FileAttachment("data/zeitreise-editions.json").json();
+  </script>
+  <script id="19" type="module">
+    const layersData = FileAttachment("data/swisstopo-layers.json").json();
+  </script>
+  <script id="20" type="module">
+    import {basemapForYear} from "./lib/geneva-map.js";
+
+    const activeBasemap = basemapForYear(year, {editions, layersData});
+  </script>
+  <script id="21" type="text/markdown">
+    Basemap © [swisstopo](https://www.swisstopo.admin.ch/). Geocoding
+    © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors via
+    [Nominatim](https://nominatim.org/).
+  </script>
+</notebook>

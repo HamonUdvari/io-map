@@ -15,6 +15,20 @@ npm run build     # static site in docs/.observable/dist
 
 Pushes to `main` deploy the built site to GitHub Pages via `.github/workflows/deploy.yml`.
 
+### v3 — map system (current)
+
+The shared map system for all maps going forward lives in `docs/lib/`:
+
+* `docs/lib/geneva-map.js` – map factory: auto-switching swisstopo basemap (Zeitreise editions until the national map 1:25,000 starts in 1956) + a retained tile pyramid, so zooming, panning and year changes crossfade instead of flashing; B/W by default
+* `docs/lib/io-data.js` – dataset join/dedup (extracted from io-map-v2), haversine distances, coordinate stacks, deterministic spread offsets
+
+Demo notebooks, one feature each:
+
+* `docs/v3-basemap.html` – the basemap combination and its 1956 cutoff
+* `docs/v3-tile-loading.html` – naive vs retained-pyramid tile loading, fly-to comparison
+* `docs/v3-overlapping-points.html` – supercluster zoomed out, deterministic spread + grouped tips zoomed in, neutral color for mixed clusters (around the Palais des Nations)
+* `docs/v3-nearby-organisations.html` – K nearest organisations with distances per year (hover + click-to-pin)
+
 ### v2 data pipeline
 
 The v2 notebook uses the partners' formatted dataset (single-sheet xlsx). The pipeline runs offline; its outputs are committed:
@@ -27,7 +41,7 @@ Set `XLSX=path/to/file.xlsx` to point at a newer dataset export. Unresolved addr
 
 Open data questions and assumptions to verify are tracked in [THINGS-TO-CHECK.md](THINGS-TO-CHECK.md).
 
-* `docs/io-map-v2.html` – **current**: new dataset (1920–2025), category/sub-filters, year slider, historical overlays
+* `docs/io-map-v2.html` – previous main notebook: new dataset (1920–2025), category/sub-filters, year slider, historical overlays
 
 ### v1 proof of concept (archive)
 

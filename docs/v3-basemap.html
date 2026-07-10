@@ -1,0 +1,65 @@
+<!doctype html>
+<notebook theme="air">
+  <title>v3 — Basemap</title>
+  <script id="1" type="text/markdown">
+    # v3 — Basemap
+
+    **The basemap all v3 maps use.** Two swisstopo layers combined, switching automatically
+    by historical availability: the [Zeitreise](https://www.swisstopo.admin.ch/en/journey-through-time-maps)
+    map editions until the national map 1:25,000 gets its first Geneva sheet (1956), the
+    national map from then on. Black &amp; white is the default rendering; year changes
+    crossfade with the same retained-pyramid machinery as zooming (see the
+    [Smooth Tile Loading](./v3-tile-loading) notebook).
+  </script>
+  <script id="2" type="module">
+    const year = view(Inputs.range([1844, 2026], {value: 1920, step: 1, label: "Year"}));
+  </script>
+  <script id="3" type="module">
+    const bw = view(Inputs.toggle({label: "Black & white", value: true}));
+  </script>
+  <script id="4" type="module" pinned>
+    import {createGenevaMap} from "./lib/geneva-map.js";
+
+    // References nothing year-derived, so it runs once: pan/zoom survives year changes.
+    const map = createGenevaMap({bw: true});
+
+    display(map.node);
+  </script>
+  <script id="5" type="module" pinned>
+    map.setLayer(activeBasemap);
+    map.setBW(bw);
+  </script>
+  <script id="6" type="text/markdown">
+    Shown: **${activeBasemap.label}**, edition **${activeBasemap.shownYear}**
+    ${activeBasemap.times[activeBasemap.times.indexOf(activeBasemap.shownYear) + 1]
+      ? `(next revision: ${activeBasemap.times[activeBasemap.times.indexOf(activeBasemap.shownYear) + 1]})`
+      : `(latest revision)`}
+    — the national map takes over at ${layersData["ch.swisstopo.pixelkarte-farbe-pk25.noscale"].times[0]}.
+  </script>
+  <script id="7" type="text/markdown">
+    ## How the year picks a layer
+
+    `basemapForYear` in [`lib/geneva-map.js`](https://github.com/HamonUdvari/io-map/blob/main/docs/lib/geneva-map.js)
+    snaps the slider year to the latest edition at or before it, so tile URLs only change
+    when the map content actually does — intermediate years are served from the browser
+    cache.
+  </script>
+  <script id="8" type="module" pinned>
+    // Years the Zeitreise composite actually changed around Geneva (via `make zeitreise-editions`).
+    const editions = FileAttachment("data/zeitreise-editions.json").json();
+  </script>
+  <script id="9" type="module" pinned>
+    // Verified per-layer Geneva timestamps (via `make swisstopo-layers`).
+    const layersData = FileAttachment("data/swisstopo-layers.json").json();
+  </script>
+  <script id="10" type="module" pinned>
+    import {basemapForYear} from "./lib/geneva-map.js";
+
+    const activeBasemap = basemapForYear(year, {editions, layersData});
+  </script>
+  <script id="11" type="text/markdown">
+    Basemap © [swisstopo](https://www.swisstopo.admin.ch/) — layers
+    `ch.swisstopo.zeitreihen` and `ch.swisstopo.pixelkarte-farbe-pk25.noscale`
+    ([open government data](https://www.geo.admin.ch/en/general-terms-of-use-fsdi), attribution required).
+  </script>
+</notebook>
