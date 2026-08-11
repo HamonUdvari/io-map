@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build && notebooks build --root docs -- docs/*.html && rm -rf dist/notebooks && cp -R docs/.observable/dist dist/notebooks",
     "preview": "astro preview",
-    "notebooks:preview": "notebooks preview --root docs"
+    "notebooks:preview": "notebooks preview --root docs",
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@observablehq/notebook-kit": "^2.1.4",
@@ -18,10 +19,12 @@
     "d3-tile": "^1.0.0"
   },
   "devDependencies": {
+    "@storybook/html-vite": "^10.5.7",
     "@tailwindcss/vite": "^4.2.1",
     "d3-dsv": "^3.0.1",
     "esbuild": "^0.28.0",
     "playwright-core": "^1.60.0",
+    "storybook": "^10.5.7",
     "tailwindcss": "^4.2.1"
   }
 }
