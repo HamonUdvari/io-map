@@ -79,8 +79,7 @@ export function createGenevaMap({
       .attr("viewBox", [0, 0, width, height])
       .style("width", "100%")
       .style("height", "auto")
-      .style("display", "block")
-      .style("background", "#e8e8e8");
+      .style("display", "block");
   node.appendChild(svg.node());
 
   const gTiles = svg.append("g")

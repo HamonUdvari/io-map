@@ -7,6 +7,10 @@ georeferencing
 node_modules/
 docs/.observable/
 
+# Astro
+dist/
+.astro/
+
 ### macOS ###
 # General
 .DS_Store

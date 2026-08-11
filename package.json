@@ -6,15 +6,22 @@
     "node": ">=20.19"
   },
   "scripts": {
-    "preview": "notebooks preview --root docs",
-    "build": "notebooks build --root docs -- docs/*.html"
+    "dev": "astro dev",
+    "build": "astro build && notebooks build --root docs -- docs/*.html && rm -rf dist/notebooks && cp -R docs/.observable/dist dist/notebooks",
+    "preview": "astro preview",
+    "notebooks:preview": "notebooks preview --root docs"
   },
   "dependencies": {
-    "@observablehq/notebook-kit": "^2.1.4"
+    "@observablehq/notebook-kit": "^2.1.4",
+    "astro": "^5.17.1",
+    "d3": "^7.9.0",
+    "d3-tile": "^1.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
     "d3-dsv": "^3.0.1",
     "esbuild": "^0.28.0",
-    "playwright-core": "^1.60.0"
+    "playwright-core": "^1.60.0",
+    "tailwindcss": "^4.2.1"
   }
 }

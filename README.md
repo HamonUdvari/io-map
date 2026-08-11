@@ -3,17 +3,25 @@
 ## Setup
 Run `brew bundle install` on MacOS to install project cli tool requirements.
 
-## Notebooks
+## Website (main artifact)
 
-The interactive maps live in `docs/` as [Observable Notebooks 2.0](https://observablehq.com/notebook-kit/) (migrated from Observable v1 notebooks). Built with [Notebook Kit](https://observablehq.com/notebook-kit/kit).
+The website is an [Astro](https://astro.build) site at the repo root (Tailwind v4 CSS-first, d3 as the driver, shared state via d3-dispatch signals in `src/lib/state.js`). It reuses the v3 map system from `docs/lib/geneva-map.js` (a vite alias resolves the notebooks' `npm:` imports from node_modules).
 
 ```sh
 npm install
-npm run preview   # live preview at http://localhost:5173
-npm run build     # static site in docs/.observable/dist
+npm run dev       # site at http://localhost:4321/io-map/
+npm run build     # site + notebooks in dist/ (notebooks under dist/notebooks/)
 ```
 
-Pushes to `main` deploy the built site to GitHub Pages via `.github/workflows/deploy.yml`.
+Pushes to `main` deploy `dist/` to GitHub Pages via `.github/workflows/deploy.yml`: the site at `/io-map/`, the notebooks at `/io-map/notebooks/`.
+
+## Notebooks
+
+The map experiments live in `docs/` as [Observable Notebooks 2.0](https://observablehq.com/notebook-kit/) (migrated from Observable v1 notebooks). Built with [Notebook Kit](https://observablehq.com/notebook-kit/kit).
+
+```sh
+npm run notebooks:preview   # live preview at http://localhost:5173
+```
 
 ### v3 — map system (current)
 
