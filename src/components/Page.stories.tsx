@@ -6,11 +6,11 @@ import {MapCanvas} from "./MapCanvas";
 import {FilterPanel} from "./FilterPanel";
 import {TextFilter} from "./TextFilter";
 import {OrgList} from "./OrgList";
-import {DEMO_ORGS} from "./demo-orgs.js";
+import {organisationsIn} from "../lib/orgs.js";
 
-// The whole page in one story: the live d3 map plus the UI, composed exactly like
-// the site — but every signal is story-local, so the Controls panel overrides state
-// (scrub the year!) without touching the site's globals.
+// The whole page in one story: the live d3 map plus the UI on the real dataset,
+// composed exactly like the site — but every signal is story-local, so the Controls
+// panel overrides state: scrubbing the year drives the basemap AND the list.
 function PageView({year: yearValue}: {year: number}) {
   const year = useMemo(() => signal(yearValue), []);
   useEffect(() => {
@@ -18,7 +18,9 @@ function PageView({year: yearValue}: {year: number}) {
   }, [yearValue]);
 
   const query = useSignal("");
-  const items = DEMO_ORGS.filter((d) => d.toLowerCase().includes(query.value.toLowerCase()));
+  const items = organisationsIn(yearValue).filter((d) =>
+    d.toLowerCase().includes(query.value.toLowerCase())
+  );
 
   return (
     <div>
