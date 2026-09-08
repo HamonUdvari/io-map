@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import {MapCanvas} from "../components/MapCanvas";
 ---
 
 <!doctype html>
@@ -9,40 +10,7 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>io-map</title>
   </head>
-  <body>
-    
-    <div class="map-container">
-      <div class="map-overlay"></div>
-      <div id="map" class="map"></div>
-    </div>
-
-    <svg width="0" height="0" aria-hidden="true">
-      <!-- #map-tone: the whole map look in one filter — black & white, then a linear
-           remap inverting the tones: ink (0) → light gray, paper (1) → the dark
-           background. sRGB so the numbers read like CSS lightness values.
-           Tune: intercept = ink lightness, intercept + slope = paper lightness
-           (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)). -->
-      <filter id="map-tone" color-interpolation-filters="sRGB">
-        <feColorMatrix type="saturate" values="0"></feColorMatrix>
-        <feComponentTransfer>
-          <feFuncR type="linear" slope="-0.35" intercept="0.62"></feFuncR>
-          <feFuncG type="linear" slope="-0.35" intercept="0.62"></feFuncG>
-          <feFuncB type="linear" slope="-0.35" intercept="0.62"></feFuncB>
-        </feComponentTransfer>
-      </filter>
-    </svg>
-
-    <script>
-      import {createGenevaMap, basemapForYear} from "../../docs/lib/geneva-map.js";
-      import {year} from "../lib/state.js";
-      import editions from "../../docs/data/zeitreise-editions.json";
-      import layersData from "../../docs/data/swisstopo-layers.json";
-
-      const map = createGenevaMap();
-      document.getElementById("map")!.append(map.node);
-
-      year.on("map", (y) => map.setLayer(basemapForYear(y, {editions, layersData})));
-      map.setLayer(basemapForYear(year.value, {editions, layersData}));
-    </script>
+  <body class="_background">
+    <MapCanvas client:only="preact" />
   </body>
 </html>

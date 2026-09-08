@@ -1,9 +1,11 @@
 import {defineConfig} from "astro/config";
+import preact from "@astrojs/preact";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://hamonudvari.github.io",
   base: "/io-map",
+  integrations: [preact()],
   devToolbar: {enabled: false},
   vite: {
     plugins: [tailwindcss()],

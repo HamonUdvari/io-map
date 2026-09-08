@@ -5,7 +5,14 @@ Run `brew bundle install` on MacOS to install project cli tool requirements.
 
 ## Website (main artifact)
 
-The website is an [Astro](https://astro.build) site at the repo root (Tailwind v4 CSS-first, d3 as the driver, shared state via d3-dispatch signals in `src/lib/state.js`). It reuses the v3 map system from `docs/lib/geneva-map.js` (a vite alias resolves the notebooks' `npm:` imports from node_modules).
+The website is an [Astro](https://astro.build) site at the repo root (Tailwind v4 CSS-first, d3 as the driver). It reuses the v3 map system from `docs/lib/geneva-map.js` (a vite alias resolves the notebooks' `npm:` imports from node_modules).
+
+UI conventions:
+
+* `src/lib/state.js` – shared state as [@preact/signals-core](https://github.com/preactjs/signals) signals; the d3 map subscribes with `effect()`, Preact components re-render automatically
+* `src/components/*.tsx` – presentational Preact components: plain props + callbacks, no signal imports (state binds in islands/stories)
+* `src/components/MapCanvas.tsx` – the single d3 seam: mounts `createGenevaMap` in a ref effect; Preact never touches the map's DOM
+* `npm run storybook` – component workbench (`@storybook/preact-vite`); `Page/Site` composes the live map + UI with story-local signals (the year Control scrubs the basemap)
 
 ```sh
 npm install
