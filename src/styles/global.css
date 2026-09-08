@@ -6,30 +6,18 @@
 }
 
 @layer components {
-
-  .map {
-    /* the Figma passthrough background; also the backdrop while tiles load */
+  .background {
     @apply bg-[hsl(30deg_0%_27%)];
   }
 
-  /* The whole Figma look lives in the #map-tone SVG filter (index.astro): black &
+  /* The whole Figma look lives in the #map-tone SVG filter (MapCanvas.tsx): black &
      white + tone inversion in one pass. Applied to the tile group (an SVG element,
      so it also works in mobile Safari — filter:url() on HTML elements does not),
      and only to the tiles, so point overlays added later stay unfiltered. */
   .map svg > g:first-child {
     @apply [filter:url(#map-tone)];
   }
+}
 
-  .map-overlay {
-    @apply hidden;
-    @apply absolute;
-    @apply w-full h-full;
-    @apply bg-red-500; 
-    @apply z-10;
-    @apply opacity-80;
-    @apply bg-[#ddd];
-    @apply bg-blend-exclusion;
-    @apply pointer-events-none;
-  } 
-
+@layer base {
 }
