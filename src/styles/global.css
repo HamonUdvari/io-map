@@ -362,9 +362,6 @@
   .filter-panel {
   }
 
-  .org-list {
-  }
-
   /* Map marker (Figma “Map Node”). One class set for both worlds: bg- and
      border utilities style HTML markers, fill- and stroke- the d3 SVG circles. */
   .marker {
@@ -403,9 +400,40 @@
     @apply pointer-events-none select-none;
   }
 
-  /* Table / popover rows (Figma “Table - Popover”) */
+  /* Table / popover rows (Figma “Table - Popover”): striped list of
+     dot + name + optional right-side info (distance, relation, …) */
+  .table-list {
+    @apply w-full;
+  }
+
   .table-item {
+    @apply flex items-center gap-2 px-2 py-1.5;
     @apply text-io-base text-io-neutral-950 odd:bg-io-neutral-100 even:bg-io-neutral-50;
+
+    .table-item-dot {
+      /* Figma map-node at 75%; categoryless organisations get the dark dot */
+      @apply size-5 shrink-0 rounded-full bg-io-neutral-950/75;
+
+      &[data-category="pr"] {
+        @apply bg-io-pr-500/75;
+      }
+
+      &[data-category="ngo"] {
+        @apply bg-io-ngo-500/75;
+      }
+
+      &[data-category="io"] {
+        @apply bg-io-io-500/75;
+      }
+    }
+
+    .table-item-name {
+      @apply grow [word-break:break-word];
+    }
+
+    .table-item-right {
+      @apply shrink-0 text-io-sm whitespace-nowrap;
+    }
 
     .table-item-muted {
       @apply text-io-sm text-io-neutral-500;

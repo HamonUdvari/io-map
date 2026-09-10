@@ -5,8 +5,8 @@ import { signal } from "@preact/signals-core";
 import MapCanvas from "./MapCanvas";
 import FilterPanel from "./FilterPanel";
 import TextFilter from "./TextFilter";
-import OrgList from "./OrgList";
-import { organisationsIn } from "../lib/orgs.js";
+import Table from "./Table";
+import { pointsIn, categoryKey } from "../lib/orgs.js";
 
 // The whole page in one story: the live d3 map plus the UI on the real dataset,
 // composed exactly like the site — but every signal is story-local, so the Controls
@@ -18,16 +18,19 @@ function PageView({ year: yearValue }: { year: number }) {
   }, [yearValue]);
 
   const query = useSignal("");
-  const items = organisationsIn(yearValue).filter((d) =>
-    d.toLowerCase().includes(query.value.toLowerCase()),
-  );
+  const items = pointsIn(yearValue)
+    .filter((d: any) =>
+      d.nameEN.toLowerCase().includes(query.value.toLowerCase()),
+    )
+    .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN))
+    .map((d: any) => ({ name: d.nameEN, category: categoryKey(d) }));
 
   return (
     <div>
       <MapCanvas year={year} />
       <FilterPanel title="Organisations">
         <TextFilter value={query.value} onInput={(v) => (query.value = v)} />
-        <OrgList items={items} />
+        <Table items={items} />
       </FilterPanel>
     </div>
   );

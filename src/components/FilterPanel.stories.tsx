@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/preact-vite";
 import { useSignal } from "@preact/signals";
 import FilterPanel from "./FilterPanel";
 import TextFilter from "./TextFilter";
-import OrgList from "./OrgList";
-import { organisationsIn } from "../lib/orgs.js";
+import Table from "./Table";
+import { pointsIn, categoryKey } from "../lib/orgs.js";
 
 const meta = {
   title: "UI/FilterPanel",
@@ -21,13 +21,16 @@ export const WithPlainChildren: Story = {
 // wired through one story-local signal — neither child knows the other.
 function ComposedPanel({ title }: { title: string }) {
   const query = useSignal("");
-  const items = organisationsIn(2025).filter((d) =>
-    d.toLowerCase().includes(query.value.toLowerCase()),
-  );
+  const items = pointsIn(2025)
+    .filter((d: any) =>
+      d.nameEN.toLowerCase().includes(query.value.toLowerCase()),
+    )
+    .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN))
+    .map((d: any) => ({ name: d.nameEN, category: categoryKey(d) }));
   return (
     <FilterPanel title={title}>
       <TextFilter value={query.value} onInput={(v) => (query.value = v)} />
-      <OrgList items={items} />
+      <Table items={items} />
     </FilterPanel>
   );
 }
