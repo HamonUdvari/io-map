@@ -3,6 +3,7 @@ import "../styles/global.css";
 import MapCanvas from "../components/MapCanvas";
 import YearTimeline from "../components/YearTimeline";
 import CategoryFilters from "../components/CategoryFilters";
+import Drawer from "../components/Drawer";
 import Button from "../components/Button";
 ---
 
@@ -23,6 +24,8 @@ import Button from "../components/Button";
       class:list={[
         "col-start-1 col-end-1 row-start-1 row-end-1 z-10",
         "pointer-events-none", // the overlay must not eat map gestures; .nav re-enables
+        "grid h-dvh grid-rows-[auto_1fr]", // nav row + the drawer's (expanded) row; definite height, or 1fr grows to the drawer's content
+        "overflow-clip", // the collapsed drawer hangs below the viewport — no page scroll
       ]}
     >
       <nav class="nav">
@@ -40,6 +43,14 @@ import Button from "../components/Button";
         <YearTimeline client:only="preact" class="nav-timeline" />
         <CategoryFilters client:only="preact" class="nav-filters" />
       </nav>
+
+      <!-- placeholder contents until the org table lands -->
+      <Drawer client:only="preact">
+        <span slot="header">Organisations (44/200)</span>
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div class="table-item p-2">Organisation {i + 1}</div>
+        ))}
+      </Drawer>
     </div>
   </body>
 </html>

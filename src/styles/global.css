@@ -78,6 +78,19 @@
   }
 }
 
+/* registered as lengths so the drawer drag can read them as computed px */
+@property --drawer-peek {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --drawer-half {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 @layer components {
   /* Live page-padding vars step per breakpoint (head-geneve pattern) */
   :root {
@@ -267,6 +280,78 @@
       &[data-category="io"] {
         @apply bg-io-io-500;
       }
+    }
+  }
+
+  /* Organisations drawer (Figma Table-Popover): non-modal bottom sheet, three
+     detents — closed (header peek), half (header + ~5 table rows, the default
+     so mobile shows what is inside), open. The grid places the END state
+     (expanded, filling the row under the nav); the other detents slide down
+     via translate-y. */
+  .drawer {
+    --drawer-peek: calc(var(--spacing) * 12); /* 48px — the header strip */
+    /* TODO(design): half detent — header + about five table rows */
+    --drawer-half: 14rem; /* 224px */
+
+    /* the page overlay is pointer-events-none — re-enable, like .nav */
+    @apply pointer-events-auto;
+    @apply flex min-h-0 flex-col;
+    @apply rounded-t-io-panel bg-io-neutral-50;
+    /* clip slotted children (striped rows) to the rounded corners */
+    @apply overflow-clip;
+    /* max(0px, …): on rows shorter than the detent (landscape phones) the
+       calc goes negative and would lift the sheet over the nav */
+    @apply translate-y-[max(0px,calc(100%-var(--drawer-peek)))];
+    @apply transition-transform duration-300 ease-out motion-reduce:transition-none;
+
+    /* desktop (Figma 47-10512): static panel docked left, always expanded
+       (the component forces the open state), page padding from the edges;
+       it floats free of the viewport edge, so all corners round */
+    @variant desktop {
+      @apply w-full max-w-[24.3125rem] justify-self-start; /* 389px */
+      @apply mb-(--page-py) ml-(--page-px);
+      @apply rounded-io-panel;
+    }
+
+    &[data-state="half"] {
+      @apply translate-y-[max(0px,calc(100%-var(--drawer-half)))];
+    }
+
+    &[data-state="open"] {
+      @apply translate-y-0;
+    }
+
+    /* the header drag writes the translate inline — no easing against the finger */
+    &[data-dragging] {
+      @apply transition-none;
+    }
+
+    .drawer-header {
+      @apply flex h-(--drawer-peek) shrink-0 items-center justify-between gap-2 pl-4;
+      @apply text-io-base font-bold;
+      @apply cursor-grab touch-none select-none active:cursor-grabbing;
+
+      /* desktop: nothing to grab */
+      @variant desktop {
+        @apply cursor-auto active:cursor-auto;
+      }
+    }
+
+    .drawer-arrow {
+      @apply grid h-(--drawer-peek) w-(--drawer-peek) shrink-0 cursor-pointer place-items-center;
+
+      svg {
+        /* quick flip on state change (transition-transform covers rotate in v4) */
+        @apply transition-transform duration-200 ease-out motion-reduce:transition-none;
+      }
+    }
+
+    &[data-state="open"] .drawer-arrow svg {
+      @apply rotate-180;
+    }
+
+    .drawer-content {
+      @apply min-h-0 grow overflow-y-auto overscroll-contain;
     }
   }
 
