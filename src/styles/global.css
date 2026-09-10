@@ -9,36 +9,249 @@
   --font-alpha-mono: "OT Alpha Mono", ui-monospace, monospace;
 
   --font-sans: var(--font-alpha);
+
+  /* Figma tokens; io- prefix avoids Tailwind collisions. Bold text = same size + font-bold. */
+  --text-io-sm-base: 0.75rem; /* 12px */
+  --leading-io-sm-base: normal;
+
+  --text-io-base-base: 1rem; /* 16px */
+  --leading-io-base-base: normal;
+
+  --text-io-lg-base: 1.25rem; /* 20px */
+  --leading-io-lg-base: normal;
+
+  --text-io-title-base: 1.25rem; /* 20px — mobile infobox title */
+  --leading-io-title-base: normal;
+  --text-io-title-tablet: 1rem; /* 16px — tablet/desktop drawn smaller (flagged) */
+  --leading-io-title-tablet: normal;
+  --text-io-title-desktop: 1rem; /* 16px */
+  --leading-io-title-desktop: normal;
+
+  /* 75% variants: use the /75 modifier (bg-io-pr-500/75), not tokens */
+  --color-io-neutral-50: #f8f8f8;
+  --color-io-neutral-100: #ececec; /* missing from the Figma ramp */
+  --color-io-neutral-500: #808080;
+  --color-io-neutral-950: #101010;
+  /* Category colors (Figma: primary/secondary/tertiary, in this order) */
+  --color-io-pr-500: #fdc086; /* Permanent Representations */
+  --color-io-ngo-500: #7fc97f; /* Non-governmental Organisations */
+  --color-io-io-500: #beaed4; /* International Organisations */
+
+  --radius-io-panel: 0.75rem; /* 12px — infobox/panel corners */
+  --radius-io-pill: 1.5rem; /* 24px — nav pills, search, buttons */
+
+  /* Page padding, stepped per breakpoint (all spacing-2 for now — will become
+     calculated values for the full-page scroll). Use as px-(--page-px). */
+  --page-px: calc(var(--spacing) * 2); /* 8px */
+  --page-px-tablet: calc(var(--spacing) * 2); /* 8px */
+  --page-px-desktop: calc(var(--spacing) * 2); /* 8px */
+
+  --page-py: calc(var(--spacing) * 2); /* 8px */
+  --page-py-tablet: calc(var(--spacing) * 2); /* 8px */
+  --page-py-desktop: calc(var(--spacing) * 2); /* 8px */
+
+  --color-primary: var(--color-io-neutral-50);
+  --color-onprimary: var(--color-io-neutral-950);
+}
+
+@utility text-io-sm {
+  @apply text-io-sm-base leading-io-sm-base;
+}
+
+@utility text-io-base {
+  @apply text-io-base-base leading-io-base-base;
+}
+
+@utility text-io-lg {
+  @apply text-io-lg-base leading-io-lg-base;
+}
+
+@utility text-io-title {
+  @apply text-io-title-base leading-io-title-base;
+
+  @variant tablet {
+    @apply text-io-title-tablet leading-io-title-tablet;
+  }
+
+  @variant desktop {
+    @apply text-io-title-desktop leading-io-title-desktop;
+  }
 }
 
 @layer components {
+  /* Live page-padding vars step per breakpoint (head-geneve pattern) */
+  :root {
+    @variant tablet {
+      --page-px: var(--page-px-tablet);
+      --page-py: var(--page-py-tablet);
+    }
+
+    @variant desktop {
+      --page-px: var(--page-px-desktop);
+      --page-py: var(--page-py-desktop);
+    }
+  }
+
   .background {
     @apply bg-[hsl(30deg_0%_27%)];
   }
 
-  /* The whole Figma look lives in the #map-tone SVG filter (MapCanvas.tsx): black &
-     white + tone inversion in one pass. Applied to the tile group (an SVG element,
-     so it also works in mobile Safari — filter:url() on HTML elements does not),
-     and only to the tiles, so point overlays added later stay unfiltered. */
-  .map svg > g:first-child {
-    @apply [filter:url(#map-tone)];
+  .map {
+    /* #map-tone (MapCanvas.tsx) must target an SVG element — mobile Safari can't
+       filter:url() HTML — and tiles only, so overlays stay unfiltered */
+    svg > g:first-child {
+      @apply [filter:url(#map-tone)];
+    }
   }
 
-  .button {
+  /* typography only — filter buttons may differentiate later */
 
+  .button {
+    @apply text-io-base font-bold;
+    @apply bg-primary text-onprimary;
+    @apply p-2;
+    @apply rounded-full;
+    @apply inline-block;
+  }
+
+  /* Base/tablet: buttons row (pushed apart), timeline, filters. Desktop: one row —
+     title | space | timeline · filters | space | lang. Tracks are auto so the
+     buttons stay in charge of their own size; items-start stops vertical stretch. */
+  .nav {
+    @apply grid grid-cols-[auto_auto] items-start justify-between gap-2;
+    grid-template-areas:
+      "title lang"
+      "timeline timeline"
+      "filters filters";
+
+    @variant desktop {
+      @apply grid-cols-[auto_1fr_auto_auto_1fr_auto];
+      grid-template-areas: "title . timeline filters . lang";
+    }
+
+    /* buttons hug their content — grid items otherwise stretch to the track,
+       which the spanning rows inflate on base/tablet */
+    .nav-title {
+      @apply justify-self-start;
+      grid-area: title;
+    }
+
+    .nav-timeline {
+      grid-area: timeline;
+    }
+
+    .nav-filters {
+      grid-area: filters;
+    }
+
+    .nav-lang {
+      @apply justify-self-end;
+      grid-area: lang;
+    }
+  }
+
+  /* Year slider (Figma year-range): pill shell, bold-12 endpoint labels, track
+     line, draggable year thumb (dark pill, bold 16) */
+  .timeline {
+    @apply flex h-10 items-center gap-1 rounded-io-pill bg-io-neutral-50 px-4 py-2;
+    @apply tabular-nums; /* year widths stay constant as digits change */
+
+    span {
+      @apply text-io-sm font-bold;
+    }
+
+    .timeline-track {
+      /* min-w keeps the track usable in auto-sized grid tracks (Figma line: 270px) */
+      @apply relative min-w-[270px] grow cursor-pointer touch-none self-stretch;
+    }
+
+    .timeline-line {
+      @apply absolute top-1/2 h-px w-full bg-io-neutral-500;
+    }
+
+    .timeline-range {
+      /* rail inset by half the thumb width (min-w 3.25em): the center-anchored
+         thumb stops flush at the track edges, native-range style */
+      @apply absolute inset-x-[1.625em] inset-y-0;
+    }
+
+    .timeline-thumb {
+      @apply absolute top-1/2 -translate-x-1/2 -translate-y-1/2;
+      @apply rounded-full bg-io-neutral-950/75 px-1 py-0.5 text-io-neutral-50;
+      @apply text-io-base font-bold whitespace-nowrap;
+      /* trial font lacks tnum — fixed width (widest year + padding) keeps the
+         pill stable until the licensed cut brings real tabular figures */
+      @apply min-w-[3.25em] text-center;
+      @apply cursor-grab select-none active:cursor-grabbing;
+    }
+  }
+
+  .text-filter {
+    @apply text-io-base placeholder:text-io-neutral-500;
+  }
+
+  .filter-panel {
+  }
+
+  .org-list {
+  }
+
+  /* Map marker (Figma “Map Node”). bg-* styles HTML markers; d3 SVG circles need
+     fill from the same primitives. */
+  .marker {
+    @apply rounded-full border border-io-neutral-50 text-io-lg text-io-neutral-50;
+
+    &.marker-pr {
+      @apply bg-io-pr-500 hover:bg-io-pr-500/75;
+    }
+
+    &.marker-ngo {
+      @apply bg-io-ngo-500 hover:bg-io-ngo-500/75;
+    }
+
+    &.marker-io {
+      @apply bg-io-io-500 hover:bg-io-io-500/75;
+    }
+
+    &.marker-cluster {
+      @apply bg-io-neutral-500/75 hover:bg-io-neutral-500;
+    }
+
+    &.marker-neutral {
+      @apply bg-io-neutral-950/75; /* categoryless dark dot (Figma node-single-background) */
+    }
+  }
+
+  /* Table / popover rows (Figma “Table - Popover”) */
+  .table-item {
+    @apply text-io-base text-io-neutral-950 odd:bg-io-neutral-100 even:bg-io-neutral-50;
+
+    .table-item-muted {
+      @apply text-io-sm text-io-neutral-500;
+    }
+  }
+
+  .table-header {
+    @apply bg-io-neutral-50;
   }
 }
 
 @layer base {
-  /* Match Figma's text rendering (pattern from salecharacter.com): grayscale
-     antialiasing instead of macOS subpixel (text otherwise renders heavier than
-     the design), precise glyph metrics, and no faux bold/italic — missing cuts
-     fall back visibly instead of being synthesized. */
+  /* Figma-parity rendering: grayscale antialiasing (macOS subpixel renders heavier
+     than the design), no faux bold/italic */
   * {
     @apply antialiased [text-rendering:geometricPrecision];
   }
 
   html {
     @apply [font-synthesis:none];
+    @apply text-neutral-950;
+  }
+
+  /* TODO(design): replace the focus ring. `outline: auto` reproduces the browser
+     default (the blue ring on Chrome) — declared here so keyboard-focus stays
+     visible for accessibility and the style is override-able in one place. */
+  :focus-visible {
+    outline: auto;
   }
 }

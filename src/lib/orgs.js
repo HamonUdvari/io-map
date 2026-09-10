@@ -3,8 +3,8 @@
 // if bundle size ever matters). Selectors reuse the notebooks' io-data logic so the
 // lists show exactly what the map logic considers active.
 import csvText from "../../docs/data/io-map-v2.csv?raw";
-import {csvParse, autoType} from "d3";
-import {latestStateByYear} from "../../docs/lib/io-data.js";
+import { csvParse, autoType } from "d3";
+import { latestStateByYear } from "../../docs/lib/io-data.js";
 
 export const rows = csvParse(csvText, autoType);
 

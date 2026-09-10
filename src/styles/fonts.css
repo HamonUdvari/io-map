@@ -12,7 +12,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ThinItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ThinItalic.woff2")
+    format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: block;
@@ -20,7 +21,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ExtraLight.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ExtraLight.woff2")
+    format("woff2");
   font-weight: 200;
   font-style: normal;
   font-display: block;
@@ -28,7 +30,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ExtraLightItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-ExtraLightItalic.woff2")
+    format("woff2");
   font-weight: 200;
   font-style: italic;
   font-display: block;
@@ -44,7 +47,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-LightItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-LightItalic.woff2")
+    format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: block;
@@ -60,7 +64,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-BookItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-BookItalic.woff2")
+    format("woff2");
   font-weight: 350;
   font-style: italic;
   font-display: block;
@@ -68,7 +73,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Regular.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Regular.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: block;
@@ -76,7 +82,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-RegularItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-RegularItalic.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: block;
@@ -84,7 +91,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Medium.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Medium.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: block;
@@ -92,7 +100,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-MediumItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-MediumItalic.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: block;
@@ -100,7 +109,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Semibold.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-Semibold.woff2")
+    format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: block;
@@ -108,7 +118,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-SemiboldItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-SemiboldItalic.woff2")
+    format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: block;
@@ -124,7 +135,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-BoldItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-BoldItalic.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: block;
@@ -140,7 +152,8 @@
 
 @font-face {
   font-family: "OT Alpha";
-  src: url("../assets/fonts/OTAlphaUnlicensedTrial-HeavyItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaUnlicensedTrial-HeavyItalic.woff2")
+    format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: block;
@@ -148,7 +161,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Thin.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Thin.woff2")
+    format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: block;
@@ -156,7 +170,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ThinItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ThinItalic.woff2")
+    format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: block;
@@ -164,7 +179,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ExtraLight.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ExtraLight.woff2")
+    format("woff2");
   font-weight: 200;
   font-style: normal;
   font-display: block;
@@ -172,7 +188,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ExtraLightItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-ExtraLightItalic.woff2")
+    format("woff2");
   font-weight: 200;
   font-style: italic;
   font-display: block;
@@ -180,7 +197,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Light.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Light.woff2")
+    format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: block;
@@ -188,7 +206,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-LightItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-LightItalic.woff2")
+    format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: block;
@@ -196,7 +215,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Book.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Book.woff2")
+    format("woff2");
   font-weight: 350;
   font-style: normal;
   font-display: block;
@@ -204,7 +224,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-BookItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-BookItalic.woff2")
+    format("woff2");
   font-weight: 350;
   font-style: italic;
   font-display: block;
@@ -212,7 +233,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Regular.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Regular.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: block;
@@ -220,7 +242,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-RegularItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-RegularItalic.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: block;
@@ -228,7 +251,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Medium.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Medium.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: block;
@@ -236,7 +260,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-MediumItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-MediumItalic.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: block;
@@ -244,7 +269,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Semibold.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Semibold.woff2")
+    format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: block;
@@ -252,7 +278,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-SemiboldItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-SemiboldItalic.woff2")
+    format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: block;
@@ -260,7 +287,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Bold.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Bold.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: block;
@@ -268,7 +296,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-BoldItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-BoldItalic.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: block;
@@ -276,7 +305,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Heavy.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-Heavy.woff2")
+    format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: block;
@@ -284,7 +314,8 @@
 
 @font-face {
   font-family: "OT Alpha Mono";
-  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-HeavyItalic.woff2") format("woff2");
+  src: url("../assets/fonts/OTAlphaMonoUnlicensedTrial-HeavyItalic.woff2")
+    format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: block;

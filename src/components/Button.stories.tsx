@@ -17,5 +17,8 @@ export const Simple: Story = {
 };
 
 export const AsLink: Story = {
-  args: { children: "Open the map", href: "https://example.org" },
+  args: {
+    children: "Mapping Multilateral Geneva",
+    href: "https://example.org",
+  },
 };

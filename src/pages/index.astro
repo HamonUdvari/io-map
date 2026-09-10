@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
-import {MapCanvas} from "../components/MapCanvas";
+import MapCanvas from "../components/MapCanvas";
+import YearTimeline from "../components/YearTimeline";
+import Button from "../components/Button";
 ---
 
 <!doctype html>
@@ -10,7 +12,37 @@ import {MapCanvas} from "../components/MapCanvas";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>io-map</title>
   </head>
-  <body class="_background">
-    <MapCanvas client:only="preact" />
+  <body class="grid grid-cols-1 grid-rows-1">
+    <MapCanvas
+      client:only="preact"
+      class="col-start-1 col-end-1 row-start-1 row-end-1"
+    />
+
+    <div
+      class:list={[
+        "px-(--page-px) py-(--page-py)",
+        "col-start-1 col-end-1 row-start-1 row-end-1 z-10",
+      ]}
+    >
+      <nav class="nav">
+        <h1 class="nav-title inline-block">
+          <Button href="#" class="">
+            {" "}
+            Mapping International Geneva{" "}
+          </Button>
+        </h1>
+
+        <Button href="#" class="nav-lang text-base">
+          FR
+        </Button>
+
+        <YearTimeline client:only="preact" class="nav-timeline" />
+        <div class="nav-filters filters flex flex-row">
+          <div>Permanet Representation</div>
+          <div>Non Governamental Organization</div>
+          <div>International Organisation</div>
+        </div>
+      </nav>
+    </div>
   </body>
 </html>

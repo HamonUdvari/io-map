@@ -1,4 +1,4 @@
-import {defineConfig} from "astro/config";
+import { defineConfig } from "astro/config";
 import preact from "@astrojs/preact";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -6,13 +6,13 @@ export default defineConfig({
   site: "https://hamonudvari.github.io",
   base: "/io-map",
   integrations: [preact()],
-  devToolbar: {enabled: false},
+  devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
     resolve: {
       // notebook-kit's CDN-style imports (npm:d3) resolve from node_modules here,
       // so the docs/lib map modules are shared with the notebooks unchanged.
-      alias: [{find: /^npm:(.*)$/, replacement: "$1"}]
-    }
-  }
+      alias: [{ find: /^npm:(.*)$/, replacement: "$1" }],
+    },
+  },
 });

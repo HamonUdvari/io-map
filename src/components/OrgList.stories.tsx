@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/preact-vite";
-import { OrgList } from "./OrgList";
+import OrgList from "./OrgList";
 import { organisationsIn } from "../lib/orgs.js";
 
 const meta = {
