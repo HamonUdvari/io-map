@@ -121,6 +121,9 @@
      title | space | timeline · filters | space | lang. Tracks are auto so the
      buttons stay in charge of their own size; items-start stops vertical stretch. */
   .nav {
+    /* the page overlay is pointer-events-none so the map stays interactive —
+       re-enable events for the nav and everything in it */
+    @apply pointer-events-auto;
     @apply grid grid-cols-[auto_auto] items-start justify-between gap-2;
     grid-template-areas:
       "title lang"
