@@ -97,6 +97,9 @@
   }
 
   .map {
+    /* fullscreen viewport height; the svg covers it via slice — set in MapCanvas */
+    @apply h-dvh w-full;
+
     /* #map-tone (MapCanvas.tsx) must target an SVG element — mobile Safari can't
        filter:url() HTML — and tiles only, so overlays stay unfiltered */
     svg > g:first-child {

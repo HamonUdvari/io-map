@@ -21,6 +21,11 @@ export default function MapCanvas({
   useEffect(() => {
     const map = createGenevaMap();
     host.current!.append(map.node);
+    // cover, not contain — crops instead of letterboxing; d3-zoom pointer math stays correct via CTM inversion
+    map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
+    map.svg
+      .attr("preserveAspectRatio", "xMidYMid slice")
+      .style("height", "100%");
     const dispose = effect(() =>
       map.setLayer(basemapForYear(year.value, { editions, layersData })),
     );
