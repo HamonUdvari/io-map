@@ -25,18 +25,40 @@ export default function MapCanvas({
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const map = createGenevaMap();
+    // 1:1 rendering: the viewBox matches the host's pixel size, so raster
+    // tiles are fetched for the true extent (no CSS upscaling blur) and the
+    // marker/text sizes mean real screen px, like in the notebooks.
+    const hostSize = () => {
+      const r = host.current!.getBoundingClientRect();
+      return {
+        width: Math.round(r.width) || 928,
+        height: Math.round(r.height) || 500,
+      };
+    };
+    const map = createGenevaMap(hostSize());
     host.current!.append(map.node);
-    // cover, not contain — crops instead of letterboxing; d3-zoom pointer math stays correct via CTM inversion
     map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
     map.svg
-      .attr("preserveAspectRatio", "xMidYMid slice")
+      .attr("preserveAspectRatio", "xMidYMid slice") // inert at 1:1; covers sub-px rounding
       .style("height", "100%");
     const dispose = effect(() =>
       map.setLayer(basemapForYear(year.value, { editions, layersData })),
     );
     const disposeMarkers = attachMarkers(map, { year, categories });
+    // follow host resizes (window, dvh changes, orientation), debounced to the
+    // gesture end so a live drag-resize doesn't refetch tiles per frame
+    let pending: ReturnType<typeof setTimeout>;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(pending);
+      pending = setTimeout(() => {
+        const { width, height } = hostSize();
+        map.resize(width, height);
+      }, 150);
+    });
+    ro.observe(host.current!);
     return () => {
+      ro.disconnect();
+      clearTimeout(pending);
       dispose();
       disposeMarkers();
       map.node.remove();

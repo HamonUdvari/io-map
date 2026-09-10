@@ -261,6 +261,20 @@ export function createGenevaMap({
     setBW(on) {
       gTiles.style("filter", on ? "grayscale(1)" : null);
     },
+    // Retarget the canvas to a new pixel size (e.g. a fullscreen host on window
+    // resize): the viewBox and the tile/zoom extents follow, the geographic
+    // center stays centered, and the render refetches tiles for the new extent.
+    resize(w, h) {
+      const t = current;
+      const dx = (w - width) / 2;
+      const dy = (h - height) / 2;
+      width = w;
+      height = h;
+      svg.attr("viewBox", [0, 0, width, height]);
+      tile.extent([[0, 0], [width, height]]);
+      zoomBehavior.extent([[0, 0], [width, height]]);
+      svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(t.x + dx, t.y + dy).scale(t.k));
+    },
     setOverlay(drawFn) {
       overlayDraw = drawFn;
       overlayDraw(overlay, helpers());
