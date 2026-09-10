@@ -216,6 +216,8 @@
     /* fieldsets refuse to shrink (UA min-inline-size) — scroll instead: the Figma
        component is a "CategorySlider" and partners approved horizontal scroll */
     @apply min-w-0 overflow-x-auto;
+    /* no scrollbar (Tailwind v4.3) — pills bleeding off-screen signal the scroll */
+    @apply scrollbar-none;
     /* full-bleed on base/tablet: the grid row reaches the viewport edges, so
        pills scroll off screen; the padding keeps the first pill on the page
        rhythm. Desktop places the filters mid-row — no bleed, no padding. */
