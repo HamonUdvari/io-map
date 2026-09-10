@@ -7,7 +7,7 @@
 // the io- design tokens — between the two, every styling knob has one home.
 import Supercluster from "supercluster";
 import { effect } from "./state.js";
-import { pointsIn, categoryKey } from "./orgs.js";
+import { pointsIn, categoryKey, nameMatches } from "./orgs.js";
 import {
   groupByCoordinate,
   stackOffsets,
@@ -35,12 +35,13 @@ const clusterClass = (p) => {
 // Subscribes the marker overlay to the signals; returns the dispose function.
 // Rebuilds the cluster index when year/categories change — the overlay then
 // redraws from it on every camera move.
-export function attachMarkers(map, { year, categories }) {
+export function attachMarkers(map, { year, categories, query }) {
   return effect(() => {
     const cats = categories.value;
-    const points = pointsIn(year.value).filter(
-      (d) => cats.length === 0 || cats.includes(categoryKey(d)),
-    );
+    const q = query.value;
+    const points = pointsIn(year.value)
+      .filter((d) => cats.length === 0 || cats.includes(categoryKey(d)))
+      .filter((d) => nameMatches(d, q));
 
     // same-address stacks spread apart with deterministic jitter (spread mode)
     const spread = [];

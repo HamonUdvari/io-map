@@ -5,26 +5,29 @@ import TextFilter from "./TextFilter";
 const meta = {
   title: "UI/TextFilter",
   component: TextFilter,
-  args: { value: "", placeholder: "Filter…", onInput: () => {} },
+  argTypes: {
+    // wired to the story-local signal — hide the dead controls
+    value: { table: { disable: true } },
+    onInput: { table: { disable: true } },
+  },
 } satisfies Meta<typeof TextFilter>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
 // Bound to a local signal so typing works; state stays story-local.
-function Controlled(props: { placeholder?: string }) {
+function Bound({ placeholder }: { placeholder?: string }) {
   const value = useSignal("");
   return (
     <TextFilter
-      {...props}
+      placeholder={placeholder}
       value={value.value}
-      onInput={(v) => (value.value = v)}
+      onInput={(next) => (value.value = next)}
     />
   );
 }
 
 export const Interactive: Story = {
-  render: (args) => <Controlled placeholder={args.placeholder} />,
+  args: { value: "", onInput: () => {}, placeholder: "Filtrer" },
+  render: (args) => <Bound placeholder={args.placeholder} />,
 };

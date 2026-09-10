@@ -3,7 +3,7 @@ import { useSignal } from "@preact/signals";
 import FilterPanel from "./FilterPanel";
 import TextFilter from "./TextFilter";
 import Table from "./Table";
-import { pointsIn, categoryKey } from "../lib/orgs.js";
+import { pointsIn, categoryKey, nameMatches } from "../lib/orgs.js";
 
 const meta = {
   title: "UI/FilterPanel",
@@ -22,9 +22,7 @@ export const WithPlainChildren: Story = {
 function ComposedPanel({ title }: { title: string }) {
   const query = useSignal("");
   const items = pointsIn(2025)
-    .filter((d: any) =>
-      d.nameEN.toLowerCase().includes(query.value.toLowerCase()),
-    )
+    .filter((d: any) => nameMatches(d, query.value))
     .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN))
     .map((d: any) => ({ name: d.nameEN, category: categoryKey(d) }));
   return (

@@ -6,7 +6,7 @@ import MapCanvas from "./MapCanvas";
 import FilterPanel from "./FilterPanel";
 import TextFilter from "./TextFilter";
 import Table from "./Table";
-import { pointsIn, categoryKey } from "../lib/orgs.js";
+import { pointsIn, categoryKey, nameMatches } from "../lib/orgs.js";
 
 // The whole page in one story: the live d3 map plus the UI on the real dataset,
 // composed exactly like the site — but every signal is story-local, so the Controls
@@ -19,9 +19,7 @@ function PageView({ year: yearValue }: { year: number }) {
 
   const query = useSignal("");
   const items = pointsIn(yearValue)
-    .filter((d: any) =>
-      d.nameEN.toLowerCase().includes(query.value.toLowerCase()),
-    )
+    .filter((d: any) => nameMatches(d, query.value))
     .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN))
     .map((d: any) => ({ name: d.nameEN, category: categoryKey(d) }));
 

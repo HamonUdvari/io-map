@@ -355,8 +355,31 @@
     }
   }
 
+  /* Name filter (Figma "Search"): neutral pill, magnifier, muted placeholder */
   .text-filter {
-    @apply text-io-base placeholder:text-io-neutral-500;
+    @apply flex h-10 items-center gap-2 rounded-io-pill bg-io-neutral-50 p-2;
+    @apply cursor-text;
+
+    /* the ring sits on the pill, like the category chips */
+    &:has(input:focus-visible) {
+      outline: auto;
+    }
+
+    .text-filter-icon {
+      @apply shrink-0 text-io-neutral-950;
+    }
+
+    .text-filter-input {
+      @apply w-full min-w-0 grow;
+      @apply text-io-base text-io-neutral-950 placeholder:text-io-neutral-500;
+      @apply focus:outline-none;
+    }
+  }
+
+  /* the filter's slot in the drawer: pinned above the scrolling list, panel
+     background so rows slide under, page-rhythm inset (Figma panel: x=8) */
+  .org-filter {
+    @apply sticky top-0 z-10 bg-io-neutral-50 p-2;
   }
 
   .filter-panel {

@@ -4,6 +4,7 @@ import clsx from "clsx";
 import {
   year as globalYear,
   categories as globalCategories,
+  query as globalQuery,
   mapBbox as globalMapBbox,
 } from "../lib/state.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
@@ -17,11 +18,13 @@ import layersData from "../../docs/data/swisstopo-layers.json";
 export default function MapCanvas({
   year = globalYear,
   categories = globalCategories,
+  query = globalQuery,
   bbox = globalMapBbox,
   class: className,
 }: {
   year?: Signal<number>;
   categories?: Signal<string[]>;
+  query?: Signal<string>;
   /** written by the map: the current viewport as a lon/lat bbox */
   bbox?: Signal<number[] | null>;
   class?: string;
@@ -48,7 +51,7 @@ export default function MapCanvas({
     const dispose = effect(() =>
       map.setLayer(basemapForYear(year.value, { editions, layersData })),
     );
-    const disposeMarkers = attachMarkers(map, { year, categories });
+    const disposeMarkers = attachMarkers(map, { year, categories, query });
     // publish the viewport bbox (debounced past the camera motion) so the
     // org table can mirror what the map shows
     let bboxPending: ReturnType<typeof setTimeout>;
@@ -75,7 +78,7 @@ export default function MapCanvas({
       disposeMarkers();
       map.node.remove();
     };
-  }, [year, categories, bbox]);
+  }, [year, categories, query, bbox]);
 
   return (
     <>

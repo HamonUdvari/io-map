@@ -37,3 +37,15 @@ const CATEGORY_KEYS = {
 export function categoryKey(d) {
   return CATEGORY_KEYS[d.filterOrgCategory] ?? null;
 }
+
+// Case- and accent-insensitive contains ("comite" matches "Comité").
+const fold = (s) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+export function nameMatches(d, query) {
+  const q = fold(query.trim());
+  return q === "" || fold(d.nameEN).includes(q);
+}

@@ -19,3 +19,8 @@ export const categories = signal([]);
 // first renders. Written (debounced) by MapCanvas, read by the org table.
 /** @type {import("@preact/signals").Signal<number[] | null>} */
 export const mapBbox = signal(null);
+
+// Name filter text; "" = no filter. Matching is case- and accent-
+// insensitive (orgs.js nameMatches) — applied by the table and the markers.
+/** @type {import("@preact/signals").Signal<string>} */
+export const query = signal("");
