@@ -12,4 +12,5 @@ export const year = signal(2025);
 // Explicitly selected categories (filter chips). Empty = no filter = show
 // everything — there is deliberately no hide-all state. Consumers apply:
 // categories.value.length === 0 || categories.value.includes(c)
+/** @type {import("@preact/signals").Signal<string[]>} */
 export const categories = signal([]);
