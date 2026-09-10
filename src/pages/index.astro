@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import MapCanvas from "../components/MapCanvas";
 import YearTimeline from "../components/YearTimeline";
+import CategoryFilters from "../components/CategoryFilters";
 import Button from "../components/Button";
 ---
 
@@ -37,11 +38,7 @@ import Button from "../components/Button";
         </Button>
 
         <YearTimeline client:only="preact" class="nav-timeline" />
-        <div class="nav-filters filters flex flex-row">
-          <div>Permanet Representation</div>
-          <div>Non Governamental Organization</div>
-          <div>International Organisation</div>
-        </div>
+        <CategoryFilters client:only="preact" class="nav-filters" />
       </nav>
     </div>
   </body>

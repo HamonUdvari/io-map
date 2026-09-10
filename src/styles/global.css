@@ -161,8 +161,13 @@
     }
 
     .timeline-track {
-      /* min-w keeps the track usable in auto-sized grid tracks (Figma line: 270px) */
-      @apply relative min-w-[270px] grow cursor-pointer touch-none self-stretch;
+      @apply relative grow cursor-pointer touch-none self-stretch;
+
+      /* desktop only: keeps the track usable in the auto-sized grid track
+         (Figma line: 270px); on base the row spans full width already */
+      @variant desktop {
+        @apply min-w-[270px];
+      }
     }
 
     .timeline-line {
@@ -183,6 +188,52 @@
          pill stable until the licensed cut brings real tabular figures */
       @apply min-w-[3.25em] text-center;
       @apply cursor-grab select-none active:cursor-grabbing;
+    }
+  }
+
+  /* Category filter (Figma CategorySlider): checkbox pills with the category dot */
+  .category-filter {
+    @apply flex gap-1;
+    /* fieldsets refuse to shrink (UA min-inline-size) — scroll instead: the Figma
+       component is a "CategorySlider" and partners approved horizontal scroll */
+    @apply min-w-0 overflow-x-auto;
+
+    .category-filter-item {
+      @apply flex min-w-10 cursor-pointer items-center justify-center gap-2;
+      @apply rounded-io-pill bg-io-neutral-50 p-3;
+      @apply text-io-sm font-bold whitespace-nowrap select-none;
+
+      /* focus ring on the pill while the sr-only checkbox has keyboard focus */
+      &:has(input:focus-visible) {
+        outline: auto;
+      }
+
+      /* TODO(design): interim active state so toggling is visible — solid darker
+         gray (no ramp token between 100 and 500); replace once Figma defines the
+         real checked/unchecked treatment */
+      &:has(input:checked) {
+        @apply bg-[#dadada];
+      }
+
+      /* TODO(design): hover state */
+      &:hover {
+      }
+    }
+
+    .category-filter-dot {
+      @apply size-3.5 rounded-full; /* 14px, Figma ellipse */
+
+      &[data-category="pr"] {
+        @apply bg-io-pr-500;
+      }
+
+      &[data-category="ngo"] {
+        @apply bg-io-ngo-500;
+      }
+
+      &[data-category="io"] {
+        @apply bg-io-io-500;
+      }
     }
   }
 
