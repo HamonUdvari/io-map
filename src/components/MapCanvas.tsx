@@ -4,6 +4,7 @@ import clsx from "clsx";
 import {
   year as globalYear,
   categories as globalCategories,
+  mapBbox as globalMapBbox,
 } from "../lib/state.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
@@ -16,10 +17,13 @@ import layersData from "../../docs/data/swisstopo-layers.json";
 export default function MapCanvas({
   year = globalYear,
   categories = globalCategories,
+  bbox = globalMapBbox,
   class: className,
 }: {
   year?: Signal<number>;
   categories?: Signal<string[]>;
+  /** written by the map: the current viewport as a lon/lat bbox */
+  bbox?: Signal<number[] | null>;
   class?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -45,6 +49,13 @@ export default function MapCanvas({
       map.setLayer(basemapForYear(year.value, { editions, layersData })),
     );
     const disposeMarkers = attachMarkers(map, { year, categories });
+    // publish the viewport bbox (debounced past the camera motion) so the
+    // org table can mirror what the map shows
+    let bboxPending: ReturnType<typeof setTimeout>;
+    map.onRender(({ bbox: b }: { bbox: number[] }) => {
+      clearTimeout(bboxPending);
+      bboxPending = setTimeout(() => (bbox.value = b), 150);
+    });
     // follow host resizes (window, dvh changes, orientation), debounced to the
     // gesture end so a live drag-resize doesn't refetch tiles per frame
     let pending: ReturnType<typeof setTimeout>;
@@ -59,11 +70,12 @@ export default function MapCanvas({
     return () => {
       ro.disconnect();
       clearTimeout(pending);
+      clearTimeout(bboxPending);
       dispose();
       disposeMarkers();
       map.node.remove();
     };
-  }, [year, categories]);
+  }, [year, categories, bbox]);
 
   return (
     <>

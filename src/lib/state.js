@@ -14,3 +14,8 @@ export const year = signal(2025);
 // categories.value.length === 0 || categories.value.includes(c)
 /** @type {import("@preact/signals").Signal<string[]>} */
 export const categories = signal([]);
+
+// Current map viewport as a lon/lat bbox [w, s, e, n]; null until the map
+// first renders. Written (debounced) by MapCanvas, read by the org table.
+/** @type {import("@preact/signals").Signal<number[] | null>} */
+export const mapBbox = signal(null);
