@@ -1,0 +1,45 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@theme",
+      "description": "Tailwind v4: define design tokens (CSS-first theme configuration).",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/theme"}]
+    },
+    {
+      "name": "@utility",
+      "description": "Tailwind v4: register a custom utility that works with variants.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities"}]
+    },
+    {
+      "name": "@variant",
+      "description": "Tailwind v4: apply a variant (e.g. a breakpoint) inside custom CSS.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles#using-variants"}]
+    },
+    {
+      "name": "@custom-variant",
+      "description": "Tailwind v4: define a custom variant.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles"}]
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind: inline utility classes into custom CSS.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/functions-and-directives#apply-directive"}]
+    },
+    {
+      "name": "@plugin",
+      "description": "Tailwind v4: load a plugin from CSS.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/functions-and-directives#plugin-directive"}]
+    },
+    {
+      "name": "@source",
+      "description": "Tailwind v4: register extra source files for utility scanning.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/detecting-classes-in-source-files"}]
+    },
+    {
+      "name": "@reference",
+      "description": "Tailwind v4: import a stylesheet for reference without emitting it.",
+      "references": [{"name": "Docs", "url": "https://tailwindcss.com/docs/functions-and-directives#reference-directive"}]
+    }
+  ]
+}

@@ -30,6 +30,9 @@
     "d3-dsv": "^3.0.1",
     "esbuild": "^0.28.0",
     "playwright-core": "^1.60.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "storybook": "^10.6.0",
     "tailwindcss": "^4.2.1"
   }
