@@ -365,30 +365,42 @@
   .org-list {
   }
 
-  /* Map marker (Figma “Map Node”). bg-* styles HTML markers; d3 SVG circles need
-     fill from the same primitives. */
+  /* Map marker (Figma “Map Node”). One class set for both worlds: bg- and
+     border utilities style HTML markers, fill- and stroke- the d3 SVG circles. */
   .marker {
     @apply rounded-full border border-io-neutral-50 text-io-lg text-io-neutral-50;
+    @apply stroke-io-neutral-50 stroke-1;
 
     &.marker-pr {
       @apply bg-io-pr-500 hover:bg-io-pr-500/75;
+      @apply fill-io-pr-500 hover:fill-io-pr-500/75;
     }
 
     &.marker-ngo {
       @apply bg-io-ngo-500 hover:bg-io-ngo-500/75;
+      @apply fill-io-ngo-500 hover:fill-io-ngo-500/75;
     }
 
     &.marker-io {
       @apply bg-io-io-500 hover:bg-io-io-500/75;
+      @apply fill-io-io-500 hover:fill-io-io-500/75;
     }
 
     &.marker-cluster {
       @apply bg-io-neutral-500/75 hover:bg-io-neutral-500;
+      @apply fill-io-neutral-500/75 hover:fill-io-neutral-500;
     }
 
     &.marker-neutral {
-      @apply bg-io-neutral-950/75; /* categoryless dark dot (Figma node-single-background) */
+      /* categoryless dark dot (Figma node-single-background) */
+      @apply bg-io-neutral-950/75 fill-io-neutral-950/75;
     }
+  }
+
+  /* count label inside a cluster circle */
+  .marker-count {
+    @apply fill-io-neutral-50 text-io-sm font-bold;
+    @apply pointer-events-none select-none;
   }
 
   /* Table / popover rows (Figma “Table - Popover”) */
