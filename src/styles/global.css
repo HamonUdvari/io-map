@@ -1,8 +1,14 @@
 @import "tailwindcss";
+@import "./fonts.css";
 
 @theme {
   --breakpoint-tablet: 48rem; /* 768px */
   --breakpoint-desktop: 80rem; /* 1280px */
+
+  --font-alpha: "OT Alpha", ui-sans-serif, system-ui, sans-serif;
+  --font-alpha-mono: "OT Alpha Mono", ui-monospace, monospace;
+
+  --font-sans: var(--font-alpha);
 }
 
 @layer components {
@@ -17,7 +23,22 @@
   .map svg > g:first-child {
     @apply [filter:url(#map-tone)];
   }
+
+  .button {
+
+  }
 }
 
 @layer base {
+  /* Match Figma's text rendering (pattern from salecharacter.com): grayscale
+     antialiasing instead of macOS subpixel (text otherwise renders heavier than
+     the design), precise glyph metrics, and no faux bold/italic — missing cuts
+     fall back visibly instead of being synthesized. */
+  * {
+    @apply antialiased [text-rendering:geometricPrecision];
+  }
+
+  html {
+    @apply [font-synthesis:none];
+  }
 }
