@@ -170,6 +170,11 @@
     @apply flex h-10 items-center gap-1 rounded-io-pill bg-io-neutral-50 px-4 py-2;
     @apply tabular-nums; /* year widths stay constant as digits change */
 
+    /* tablet+ only: cap the pill at 380px; base stays full width */
+    @variant tablet {
+      @apply max-w-[23.75rem];
+    }
+
     span {
       @apply text-io-sm font-bold;
     }
