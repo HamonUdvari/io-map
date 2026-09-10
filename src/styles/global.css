@@ -125,6 +125,9 @@
        re-enable events for the nav and everything in it */
     @apply pointer-events-auto;
     @apply grid grid-cols-[auto_auto] items-start justify-between gap-2;
+    /* page spacing lives here (not on the overlay) so the filters row can
+       bleed to the viewport edges; the other items re-add it as margins */
+    @apply py-(--page-py);
     grid-template-areas:
       "title lang"
       "timeline timeline"
@@ -138,12 +141,17 @@
     /* buttons hug their content — grid items otherwise stretch to the track,
        which the spanning rows inflate on base/tablet */
     .nav-title {
-      @apply justify-self-start;
+      @apply ml-(--page-px) justify-self-start;
       grid-area: title;
     }
 
     .nav-timeline {
+      @apply mx-(--page-px);
       grid-area: timeline;
+
+      @variant desktop {
+        @apply mx-0;
+      }
     }
 
     .nav-filters {
@@ -151,7 +159,7 @@
     }
 
     .nav-lang {
-      @apply justify-self-end;
+      @apply mr-(--page-px) justify-self-end;
       grid-area: lang;
     }
   }
@@ -203,11 +211,23 @@
     /* fieldsets refuse to shrink (UA min-inline-size) — scroll instead: the Figma
        component is a "CategorySlider" and partners approved horizontal scroll */
     @apply min-w-0 overflow-x-auto;
+    /* full-bleed on base/tablet: the grid row reaches the viewport edges, so
+       pills scroll off screen; the padding keeps the first pill on the page
+       rhythm. Desktop places the filters mid-row — no bleed, no padding. */
+    @apply px-(--page-px);
+
+    @variant desktop {
+      @apply px-0;
+    }
 
     .category-filter-item {
-      @apply flex min-w-10 cursor-pointer items-center justify-center gap-2;
+      @apply flex min-w-10 shrink-0 cursor-pointer items-center justify-center gap-2;
       @apply rounded-io-pill bg-io-neutral-50 p-3;
       @apply text-io-sm font-bold whitespace-nowrap select-none;
+      /* contain the absolutely-positioned sr-only checkbox — otherwise its
+         containing block is the page and a scrolled-off pill's input widens
+         the document (horizontal page overflow) */
+      @apply relative;
 
       /* focus ring on the pill while the sr-only checkbox has keyboard focus */
       &:has(input:focus-visible) {
