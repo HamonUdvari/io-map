@@ -272,7 +272,10 @@ function tipProps(members, address) {
 // Subscribes the marker overlay to the signals; returns the dispose function.
 // Rebuilds the cluster index when year/categories change — the overlay then
 // redraws from it on every camera move.
-export function attachMarkers(map, { year, categories, query, selected }) {
+export function attachMarkers(
+  map,
+  { year, categories, query, selected, hovered },
+) {
   let currentCtx = null; // the live effect's draw context, for the assist path
   let assistedAt = 0; // an assisted tap's synthesized click must not clear
 
@@ -402,14 +405,27 @@ export function attachMarkers(map, { year, categories, query, selected }) {
       map,
       sel,
       selected,
+      hovered,
       tip,
       selClusterByZ: new Map(),
+      hintCache: { name: null, byZ: new Map() },
     };
     currentCtx = ctx;
     map.setOverlay((g, helpers) => draw(g, helpers, ctx));
   });
+  // table hover changes redraw the overlay immediately (the camera is
+  // usually still); draw() itself only peek()s the signal
+  const disposeHover =
+    hovered == null
+      ? null
+      : effect(() => {
+          void hovered.value;
+          if (currentCtx != null)
+            map.setOverlay((g, helpers) => draw(g, helpers, currentCtx));
+        });
   return () => {
     dispose();
+    disposeHover?.();
     clearLongPress();
     tip.dispose();
     map.setOverlay(() => {});
@@ -421,30 +437,41 @@ export function attachMarkers(map, { year, categories, query, selected }) {
   };
 }
 
-// The cluster (if any) holding the selected org at this integer zoom — it
-// inherits the selected treatment while the org itself is invisible inside.
+// The cluster (if any) holding `name` at this integer zoom — it inherits
+// the org's marker treatment while the org itself is invisible inside.
+function containingClusterId(index, name, z) {
+  for (const c of index.getClusters([-180, -85, 180, 85], z)) {
+    if (!c.properties.cluster) continue; // singletons mark themselves
+    if (
+      index
+        .getLeaves(c.properties.cluster_id, Infinity)
+        .some((l) => l.properties.nameEN === name)
+    )
+      return c.properties.cluster_id;
+  }
+  return null;
+}
+
 function selClusterId(ctx, z) {
   const { index, sel, selClusterByZ } = ctx;
-  if (!selClusterByZ.has(z)) {
-    let found = null;
-    for (const c of index.getClusters([-180, -85, 180, 85], z)) {
-      if (!c.properties.cluster) continue; // singletons ring themselves
-      if (
-        index
-          .getLeaves(c.properties.cluster_id, Infinity)
-          .some((l) => l.properties.nameEN === sel)
-      ) {
-        found = c.properties.cluster_id;
-        break;
-      }
-    }
-    selClusterByZ.set(z, found);
-  }
+  if (!selClusterByZ.has(z))
+    selClusterByZ.set(z, containingClusterId(index, sel, z));
   return selClusterByZ.get(z);
+}
+
+// same lookup for the table-hover echo; cached per name until it changes
+function hintClusterId(ctx, name, z) {
+  if (ctx.hintCache.name !== name) ctx.hintCache = { name, byZ: new Map() };
+  if (!ctx.hintCache.byZ.has(z))
+    ctx.hintCache.byZ.set(z, containingClusterId(ctx.index, name, z));
+  return ctx.hintCache.byZ.get(z);
 }
 
 function draw(g, { zoomLevel, bbox, project }, ctx) {
   const { index, spread, map, sel, selected, tip } = ctx;
+  // table-row hover echo; the selected org's own treatment wins ties
+  const hov = ctx.hovered != null ? ctx.hovered.peek() : null;
+  const hint = hov !== sel ? hov : null;
   const clustered = zoomLevel < MARKER_PARAMS.spreadAtZoom;
   const [w, s, e, n] = bbox;
   const pad = MARKER_PARAMS.bboxPad;
@@ -476,19 +503,27 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
       return gc;
     })
     .call((groups) => {
-      const ringed =
-        sel != null && clustered
-          ? selClusterId(ctx, Math.max(0, Math.floor(zoomLevel)))
-          : null;
+      const z = Math.max(0, Math.floor(zoomLevel));
+      const ringed = sel != null && clustered ? selClusterId(ctx, z) : null;
+      const hinted =
+        hint != null && clustered ? hintClusterId(ctx, hint, z) : null;
       groups
         .select("circle")
         .attr("class", (c) =>
           c.properties.cluster
             ? `${clusterClass(c.properties)} cursor-pointer ${
-                c.properties.cluster_id === ringed ? "marker-selected" : ""
+                c.properties.cluster_id === ringed
+                  ? "marker-selected"
+                  : c.properties.cluster_id === hinted
+                    ? "marker-hint"
+                    : ""
               }`
             : `${markerClass(categoryKey(c.properties))} cursor-pointer ${
-                c.properties.nameEN === sel ? "marker-selected" : ""
+                c.properties.nameEN === sel
+                  ? "marker-selected"
+                  : c.properties.nameEN === hint
+                    ? "marker-hint"
+                    : ""
               }`,
         )
         .attr("r", (c) =>
@@ -524,7 +559,11 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
       "class",
       (o) =>
         `org ${markerClass(categoryKey(o.d))} cursor-pointer ${
-          o.d.nameEN === sel ? "marker-selected" : ""
+          o.d.nameEN === sel
+            ? "marker-selected"
+            : o.d.nameEN === hint
+              ? "marker-hint"
+              : ""
         }`,
     )
     .attr("r", MARKER_PARAMS.dotRadius)

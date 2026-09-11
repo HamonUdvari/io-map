@@ -7,6 +7,7 @@ import {
   query,
   mapBbox,
   selectedOrg,
+  hoveredOrg,
   centerOn,
 } from "../lib/state.js";
 import {
@@ -94,9 +95,14 @@ export default function Organisations({
   // the content swaps (mobile wish — no sliding); desktop is always open
   const info = selected != null ? orgInfo(selected, year.value) : null;
 
+  // row hover (both tables): echo the row's marker on the map
+  const hoverRow = (row: { name: string } | null) =>
+    (hoveredOrg.value = row?.name ?? null);
+
   // row click (main table and the infobox's nearest list): select the org
   // and pan the map to it at the current zoom
   const selectRow = (row: { name: string }) => {
+    hoveredOrg.value = null; // the list is about to unmount — no stale echo
     selectedOrg.value = row.name;
     const point = points.find((d: any) => d.nameEN === row.name);
     if (point) centerOn([point.long, point.lat]);
@@ -126,6 +132,7 @@ export default function Organisations({
           })}
           absentYear={active ? null : year.value}
           onSelectNearest={selectRow}
+          onHoverNearest={hoverRow}
           onJump={() => (drawer.value = "open")}
           about={demo?.about}
           photo={demo?.photo}
@@ -173,6 +180,7 @@ export default function Organisations({
           category: categoryKey(d),
         }))}
         onSelect={selectRow}
+        onHover={hoverRow}
       />
     </Drawer>
   );

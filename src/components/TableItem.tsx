@@ -17,12 +17,18 @@ export default function TableItem({
   category,
   right,
   onClick,
+  onPointerEnter,
   class: className,
-}: TableRow & { onClick?: () => void; class?: string }) {
+}: TableRow & {
+  onClick?: () => void;
+  onPointerEnter?: () => void;
+  class?: string;
+}) {
   return (
     <li
       class={clsx("table-item", className)}
       onClick={onClick}
+      onPointerEnter={onPointerEnter}
       {...(onClick != null && {
         role: "button",
         tabIndex: 0,

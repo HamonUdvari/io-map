@@ -7,6 +7,7 @@ import {
   query as globalQuery,
   mapBbox as globalMapBbox,
   selectedOrg as globalSelectedOrg,
+  hoveredOrg as globalHoveredOrg,
   zoomCommand,
 } from "../lib/state.js";
 import { filteredPoints } from "../lib/orgs.js";
@@ -30,6 +31,7 @@ export default function MapCanvas({
   query = globalQuery,
   bbox = globalMapBbox,
   selected = globalSelectedOrg,
+  hovered = globalHoveredOrg,
   class: className,
 }: {
   year?: Signal<number>;
@@ -39,6 +41,8 @@ export default function MapCanvas({
   bbox?: Signal<number[] | null>;
   /** read AND written: dot click selects, background click clears */
   selected?: Signal<string | null>;
+  /** table-row hover: the org's marker (or containing cluster) highlights */
+  hovered?: Signal<string | null>;
   class?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -106,6 +110,7 @@ export default function MapCanvas({
       categories,
       query,
       selected,
+      hovered,
     });
     // zoom commands from the state (zoomIn/zoomOut/zoomToFit — buttons come
     // later). Consumed on execution so a remount cannot replay the last one;
@@ -230,7 +235,7 @@ export default function MapCanvas({
       disposeMarkers();
       map.node.remove();
     };
-  }, [year, categories, query, bbox, selected]);
+  }, [year, categories, query, bbox, selected, hovered]);
 
   return (
     <>

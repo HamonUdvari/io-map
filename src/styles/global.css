@@ -598,6 +598,14 @@
     /* TODO(design): interim selected treatment — scale-up plus a dark ring
        until the real selected-marker style is decided; override here in one
        place */
+    /* TODO(design): table-row hover echoed on the map — selected's pop
+       with a thinner ring; declared BEFORE marker-selected so a selected
+       marker wins if both ever apply */
+    &.marker-hint {
+      @apply scale-120;
+      @apply stroke-io-neutral-950 stroke-1;
+    }
+
     &.marker-selected {
       @apply scale-120;
       @apply stroke-io-neutral-950 stroke-2;

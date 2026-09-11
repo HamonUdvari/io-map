@@ -29,6 +29,7 @@ export default function InfoBox({
   nearest,
   absentYear,
   onSelectNearest,
+  onHoverNearest,
   onJump,
   about,
   photo,
@@ -43,6 +44,8 @@ export default function InfoBox({
   absentYear?: number | null;
   /** row click in Nearest Organisations (jump to that organisation) */
   onSelectNearest?: (item: TableRow) => void;
+  /** row hover in Nearest Organisations (marker echo on the map) */
+  onHoverNearest?: (item: TableRow | null) => void;
   /** in-page anchor chip click. At the sheet's half detent the scroller's
       lower part is below the fold and max-scroll can't reach the last
       sections — the host expands the sheet here (Safari doesn't focus links
@@ -151,7 +154,11 @@ export default function InfoBox({
       {nearest.length > 0 && (
         <section class="infobox-section infobox-nearest" id="infobox-nearest">
           <h3>Nearest Organisations</h3>
-          <Table items={nearest} onSelect={onSelectNearest} />
+          <Table
+            items={nearest}
+            onSelect={onSelectNearest}
+            onHover={onHoverNearest}
+          />
         </section>
       )}
     </div>

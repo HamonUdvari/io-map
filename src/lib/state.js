@@ -31,6 +31,12 @@ export const query = signal("");
 /** @type {import("@preact/signals").Signal<string | null>} */
 export const selectedOrg = signal(null);
 
+// Organisation under the pointer in a table view (nameEN) — its marker (or
+// the cluster containing it) echoes the hover on the map. Cleared when the
+// pointer leaves the list.
+/** @type {import("@preact/signals").Signal<string | null>} */
+export const hoveredOrg = signal(null);
+
 // Map camera commands. UI-less for now: future buttons (and anything else)
 // call zoomIn()/zoomOut()/zoomToFit()/centerOn(); MapCanvas executes against
 // the map and consumes the command. "fit" frames every marker the map
