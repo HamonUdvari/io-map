@@ -55,5 +55,15 @@ import Button from "../components/Button";
         class="col-start-1 row-start-2 self-end justify-self-end mr-(--page-px) mb-(--page-py) hidden desktop:flex"
       />
     </div>
+
+    <script>
+      // tile cache service worker (public/sw.js): swisstopo tiles persist
+      // across visits, so the idle preload accumulates toward the whole
+      // timeline instead of restarting every session
+      if ("serviceWorker" in navigator) {
+        const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+        navigator.serviceWorker.register(`${base}/sw.js`).catch(() => {});
+      }
+    </script>
   </body>
 </html>
