@@ -314,7 +314,10 @@
     /* the page overlay is pointer-events-none — re-enable, like .nav */
     @apply pointer-events-auto;
     @apply flex min-h-0 flex-col;
-    @apply rounded-t-io-panel bg-io-neutral-50;
+    /* the surface color rides a variable so children (e.g. the sticky
+       infobox anchors) can match it; the tint classes only swap the var */
+    --drawer-surface: var(--color-io-neutral-50);
+    @apply rounded-t-io-panel bg-(--drawer-surface);
     /* clip slotted children (striped rows) to the rounded corners */
     @apply overflow-clip;
     /* max(0px, …): on rows shorter than the detent (landscape phones) the
@@ -374,20 +377,23 @@
       @apply min-h-0 grow overflow-y-auto overscroll-contain;
       /* anchor jumps (infobox nav) glide instead of teleporting */
       @apply scroll-smooth motion-reduce:scroll-auto;
+      /* v4.3 scrollbar-color utilities: a transparent track lets the tinted
+         infobox surface show through; the thumb stays neutral */
+      @apply scrollbar-thin scrollbar-thumb-io-neutral-950/25 scrollbar-track-transparent;
     }
   }
 
   /* infobox mode: the drawer surface takes the organisation's category color */
   .drawer.drawer-tinted-pr {
-    @apply bg-io-pr-500;
+    --drawer-surface: var(--color-io-pr-500);
   }
 
   .drawer.drawer-tinted-ngo {
-    @apply bg-io-ngo-500;
+    --drawer-surface: var(--color-io-ngo-500);
   }
 
   .drawer.drawer-tinted-io {
-    @apply bg-io-io-500;
+    --drawer-surface: var(--color-io-io-500);
   }
 
   /* the selected organisation's title in the drawer header (wraps) */
@@ -404,7 +410,9 @@
   /* Selected organisation detail (Figma 49-7140): photo, meta, about, anchor
      nav, timeline, nearest — on the category-tinted drawer surface */
   .infobox {
-    @apply flex flex-col gap-4 py-2;
+    /* pt only — the nearest section (last child) runs into the drawer's
+       rounded bottom corners and is clipped by them, no trailing space */
+    @apply flex flex-col gap-4 pt-2;
 
     .infobox-photo {
       @apply flex flex-col gap-1 px-2;
@@ -426,14 +434,18 @@
       @apply px-2 text-io-base;
     }
 
-    /* anchor nav: bordered sharp-cornered chips — deliberately NOT the pill
-       language; they jump to sections inside the infobox (URL is external) */
-    .infobox-anchors {
-      @apply flex flex-col items-start gap-1 px-2;
+    .infobox-anchors-title {
+      @apply px-2 text-io-base font-bold;
+    }
 
-      h3 {
-        @apply text-io-base font-bold;
-      }
+    /* anchor nav: bordered sharp-cornered chips — deliberately NOT the pill
+       language; they jump to sections inside the infobox (URL is external).
+       Only the chip row sticks — a sibling of the sections, so its sticky
+       range is the whole infobox; the title above scrolls away. The -mt
+       closes the column gap back to chip spacing. */
+    .infobox-anchors {
+      @apply -mt-3 flex flex-wrap items-center gap-1 px-2 py-1;
+      @apply sticky top-0 z-10 bg-(--drawer-surface);
 
       a {
         @apply border border-io-neutral-950 p-1 text-io-base font-bold;
@@ -441,7 +453,9 @@
     }
 
     .infobox-section {
-      @apply scroll-mt-2;
+      /* anchor jumps land below the sticky chip bar (~35px + air), not
+         under it */
+      @apply scroll-mt-12;
 
       h3 {
         @apply p-2 text-io-base font-bold;

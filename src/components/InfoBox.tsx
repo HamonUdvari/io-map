@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "preact/hooks";
 import clsx from "clsx";
 import TimelineEntry, { type TimelineEvent } from "./TimelineEntry";
 import Table, { type TableRow } from "./Table";
@@ -39,8 +40,17 @@ export default function InfoBox({
   url?: string | null;
   class?: string;
 }) {
+  const root = useRef<HTMLDivElement>(null);
+  // a freshly opened organisation starts reading from the top — the drawer's
+  // scroller is the same element across selections and keeps its position
+  useEffect(() => {
+    root.current
+      ?.closest(".drawer-content")
+      ?.scrollTo({ top: 0, behavior: "instant" });
+  }, [info.name]);
+
   return (
-    <div class={clsx("infobox", className)}>
+    <div class={clsx("infobox", className)} ref={root}>
       {photo != null && (
         <figure class="infobox-photo">
           <img
@@ -73,8 +83,8 @@ export default function InfoBox({
 
       {about != null && <p class="infobox-about">{about}</p>}
 
+      <h3 class="infobox-anchors-title">In this infobox:</h3>
       <nav class="infobox-anchors" aria-label="In this infobox">
-        <h3>In this infobox:</h3>
         <a href="#infobox-timeline">Timeline</a>
         <a href="#infobox-nearest">Nearest organisations</a>
         {url != null && (
