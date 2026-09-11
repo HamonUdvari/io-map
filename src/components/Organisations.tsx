@@ -7,7 +7,6 @@ import {
   query,
   mapBbox,
   selectedOrg,
-  selectEpoch,
   centerOn,
 } from "../lib/state.js";
 import {
@@ -56,21 +55,14 @@ export default function Organisations({
     if (selected != null && !present) selectedOrg.value = null;
   }, [selected, present]);
 
-  // selection opens the sheet; deselection returns to the resting detent.
-  // The epoch dep re-opens it when the SAME dot is clicked again (a
-  // same-value selectedOrg write alone would not re-run this effect).
-  const epoch = selectEpoch.value;
-  useEffect(() => {
-    drawer.value = selected != null && present ? "open" : "half";
-  }, [selected, present, epoch]);
-
+  // selection does NOT move the sheet: it keeps its current detent and only
+  // the content swaps (mobile wish — no sliding); desktop is always open
   const info = present ? orgInfo(selected!, year.value) : null;
 
   // row click (main table and the infobox's nearest list): select the org
   // and pan the map to it at the current zoom
   const selectRow = (row: { name: string }) => {
     selectedOrg.value = row.name;
-    selectEpoch.value++;
     const point = points.find((d: any) => d.nameEN === row.name);
     if (point) centerOn([point.long, point.lat]);
   };

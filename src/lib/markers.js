@@ -7,7 +7,7 @@
 // the io- design tokens — between the two, every styling knob has one home.
 import Supercluster from "supercluster";
 import { h, render } from "preact";
-import { effect, selectEpoch } from "./state.js";
+import { effect } from "./state.js";
 import { filteredPoints, categoryKey } from "./orgs.js";
 import MarkerTip from "../components/MarkerTip";
 import {
@@ -26,24 +26,105 @@ export const MARKER_PARAMS = {
   clusterRadiusFor: (count) => Math.min(28, 8 + 4 * Math.sqrt(count)),
   bboxPad: 0.2, // cluster query overscan, so markers slide in instead of popping
   tipMaxRows: 8, // hover-tip member rows before "+ N more"
+  // touch taps on bare map activate the nearest marker whose EDGE is within
+  // this many px — a 10px dot alone is far below the 44px target that Apple
+  // HIG / WCAG 2.5.5 recommend (WCAG 2.5.8 AA minimum: 24px); mouse stays
+  // precise
+  touchRadius: 22,
 };
 
 const markerClass = (key) => `marker marker-${key ?? "neutral"}`;
 
-// Dot-click choreography: mark the circle selected NOW (the CSS scale
+// Marker activation is detected manually on pointerup (pressed element +
+// minimal travel, mirroring the zoom's clickDistance): Chrome does NOT
+// synthesize a click on an element that the hover raise re-appended, so a
+// click handler would never fire on first hover. Touch gets a looser travel
+// tolerance — finger jitter exceeds a mouse's.
+const TAP_DIST = 4;
+const TOUCH_TAP_DIST = 10;
+const tapDist = (event) =>
+  event.pointerType === "touch" ? TOUCH_TAP_DIST : TAP_DIST;
+// module-scoped: only one pointer can be mid-tap at a time (a second
+// concurrent pointer voids the slot — a pinch is not a tap). Shared across
+// map instances; the element + pointerId checks prevent cross-talk.
+let tapStart = null;
+const tapDown = (event) => {
+  if (event.button !== 0) return; // primary only (touch reports 0)
+  tapStart =
+    tapStart == null
+      ? {
+          el: event.currentTarget,
+          id: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+        }
+      : null;
+};
+const cancelTap = () => (tapStart = null);
+const isTap = (event) => {
+  const t = tapStart;
+  tapStart = null;
+  return (
+    t != null &&
+    t.id === event.pointerId &&
+    t.el === event.currentTarget &&
+    Math.hypot(event.clientX - t.x, event.clientY - t.y) <= tapDist(event)
+  );
+};
+
+// Dot-tap choreography: mark the circle selected NOW (the CSS scale
 // transition plays) and land the selection in the state a beat later, so
 // the pop is visible before the infobox takes over.
-const selectWithPop = (event, name, selected) => {
-  event.stopPropagation();
-  // singleton clicks land on the g.cluster group — the styled .marker is
-  // its circle; spread clicks land on the circle itself
-  const el = event.currentTarget;
+const selectWithPop = (el, name, selected) => {
+  // singleton taps land on the g.cluster group — the styled .marker is
+  // its circle; spread taps land on the circle itself
   const circle = el.tagName === "g" ? el.querySelector("circle") : el;
   circle.classList.add("marker-selected");
   setTimeout(() => {
     selected.value = name;
-    selectEpoch.value++;
   }, MARKER_PARAMS.selectDelay);
+};
+
+// One activation path for every tap flavor (direct or touch-assisted): the
+// element's d3 datum tells cluster (fly) from singleton/spread dot (select).
+const activate = (el, { map, index, selected, tip }) => {
+  const datum = el.__data__;
+  tip.hide();
+  if (datum?.properties != null) {
+    if (!datum.properties.cluster) {
+      selectWithPop(el, datum.properties.nameEN, selected);
+      return;
+    }
+    map.flyTo({
+      center: datum.geometry.coordinates,
+      zoom: Math.min(
+        index.getClusterExpansionZoom(datum.properties.cluster_id),
+        MARKER_PARAMS.spreadAtZoom,
+      ),
+    });
+  } else if (datum?.d != null) {
+    selectWithPop(el, datum.d.nameEN, selected);
+  }
+};
+
+// Nearest marker whose visual edge is within `radius` px of the tap point.
+const nearestMarker = (svgNode, event, radius) => {
+  let best = null;
+  let bestDist = radius;
+  for (const el of svgNode.querySelectorAll("g.cluster, circle.org")) {
+    const r = el.getBoundingClientRect();
+    const dist =
+      Math.hypot(
+        event.clientX - (r.x + r.width / 2),
+        event.clientY - (r.y + r.height / 2),
+      ) -
+      Math.max(r.width, r.height) / 2;
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = el;
+    }
+  }
+  return best;
 };
 
 // single-category clusters keep the category color; mixed ones go neutral
@@ -123,9 +204,56 @@ function tipProps(members, address) {
 // Rebuilds the cluster index when year/categories change — the overlay then
 // redraws from it on every camera move.
 export function attachMarkers(map, { year, categories, query, selected }) {
-  // clicking the map anywhere but a dot dismisses the selection (dot clicks
-  // stop propagation); cluster clicks fly AND clear — they navigate away
-  map.svg.on("click.select", () => (selected.value = null));
+  let currentCtx = null; // the live effect's draw context, for the assist path
+  let assistedAt = 0; // an assisted tap's synthesized click must not clear
+
+  // clicking the map anywhere but a marker dismisses the selection (marker
+  // taps run on pointerup and usually produce no synthesized click at all —
+  // see the raise note above — so clicks landing on markers are ignored;
+  // cluster taps fly WITHOUT clearing: the containing-cluster ring keeps a
+  // retained selection coherent at clustered zooms)
+  map.svg.on("click.select", (event) => {
+    if (performance.now() - assistedAt < 500) {
+      assistedAt = 0; // one-shot: only the assisted tap's own click
+      return;
+    }
+    if (event.target.closest("g.cluster, circle.org")) return;
+    selected.value = null;
+  });
+
+  // touch tap assist: a touch tap on bare map activates the nearest marker
+  // within MARKER_PARAMS.touchRadius (see the param note on HIG/WCAG sizes).
+  // One slot, pointerId-checked: a second concurrent touch voids it (pinch).
+  let assistStart = null;
+  map.svg.on("pointerdown.assist", (event) => {
+    if (event.pointerType !== "touch") return;
+    assistStart =
+      assistStart == null
+        ? { id: event.pointerId, x: event.clientX, y: event.clientY }
+        : null;
+  });
+  map.svg.on("pointercancel.assist", () => {
+    assistStart = null;
+    cancelTap();
+  });
+  map.svg.on("pointerup.assist", (event) => {
+    const start = assistStart;
+    assistStart = null;
+    if (event.pointerType !== "touch" || start == null) return;
+    if (start.id !== event.pointerId) return;
+    if (
+      Math.hypot(event.clientX - start.x, event.clientY - start.y) >
+      TOUCH_TAP_DIST
+    )
+      return;
+    if (event.target.closest("g.cluster, circle.org")) return; // direct hit
+    if (currentCtx == null) return;
+    const el = nearestMarker(map.svg.node(), event, MARKER_PARAMS.touchRadius);
+    if (el == null) return;
+    assistedAt = performance.now();
+    activate(el, currentCtx);
+  });
+
   const tip = createTip(map);
   // safety net for the raise-on-hover chain resets: any hover that lands on
   // bare map (not a marker) dismisses the tip
@@ -165,9 +293,19 @@ export function attachMarkers(map, { year, categories, query, selected }) {
       },
     }).load(toFeatures(points));
 
-    map.setOverlay((g, helpers) =>
-      draw(g, helpers, { index, spread, map, sel, selected, tip }),
-    );
+    // one context object per effect run: draw() runs per camera frame and
+    // caches the selected org's containing cluster per integer zoom in it
+    const ctx = {
+      index,
+      spread,
+      map,
+      sel,
+      selected,
+      tip,
+      selClusterByZ: new Map(),
+    };
+    currentCtx = ctx;
+    map.setOverlay((g, helpers) => draw(g, helpers, ctx));
   });
   return () => {
     dispose();
@@ -175,14 +313,36 @@ export function attachMarkers(map, { year, categories, query, selected }) {
     map.setOverlay(() => {});
     map.svg.on("click.select", null);
     map.svg.on("pointerover.tip", null);
+    map.svg.on("pointerdown.assist", null);
+    map.svg.on("pointerup.assist", null);
+    map.svg.on("pointercancel.assist", null);
   };
 }
 
-function draw(
-  g,
-  { zoomLevel, bbox, project },
-  { index, spread, map, sel, selected, tip },
-) {
+// The cluster (if any) holding the selected org at this integer zoom — it
+// inherits the selected treatment while the org itself is invisible inside.
+function selClusterId(ctx, z) {
+  const { index, sel, selClusterByZ } = ctx;
+  if (!selClusterByZ.has(z)) {
+    let found = null;
+    for (const c of index.getClusters([-180, -85, 180, 85], z)) {
+      if (!c.properties.cluster) continue; // singletons ring themselves
+      if (
+        index
+          .getLeaves(c.properties.cluster_id, Infinity)
+          .some((l) => l.properties.nameEN === sel)
+      ) {
+        found = c.properties.cluster_id;
+        break;
+      }
+    }
+    selClusterByZ.set(z, found);
+  }
+  return selClusterByZ.get(z);
+}
+
+function draw(g, { zoomLevel, bbox, project }, ctx) {
+  const { index, spread, map, sel, selected, tip } = ctx;
   const clustered = zoomLevel < MARKER_PARAMS.spreadAtZoom;
   const [w, s, e, n] = bbox;
   const pad = MARKER_PARAMS.bboxPad;
@@ -214,11 +374,17 @@ function draw(
       return gc;
     })
     .call((groups) => {
+      const ringed =
+        sel != null && clustered
+          ? selClusterId(ctx, Math.max(0, Math.floor(zoomLevel)))
+          : null;
       groups
         .select("circle")
         .attr("class", (c) =>
           c.properties.cluster
-            ? `${clusterClass(c.properties)} cursor-pointer`
+            ? `${clusterClass(c.properties)} cursor-pointer ${
+                c.properties.cluster_id === ringed ? "marker-selected" : ""
+              }`
             : `${markerClass(categoryKey(c.properties))} cursor-pointer ${
                 c.properties.nameEN === sel ? "marker-selected" : ""
               }`,
@@ -243,20 +409,10 @@ function draw(
     })
     .on("pointermove", (event) => tip.move(event))
     .on("pointerleave", () => tip.hide())
-    .on("click", (event, c) => {
-      tip.hide();
-      if (!c.properties.cluster) {
-        // a zoomed-out singleton is one organisation — select it
-        selectWithPop(event, c.properties.nameEN, selected);
-        return;
-      }
-      map.flyTo({
-        center: c.geometry.coordinates,
-        zoom: Math.min(
-          index.getClusterExpansionZoom(c.properties.cluster_id),
-          MARKER_PARAMS.spreadAtZoom,
-        ),
-      });
+    .on("pointerdown", tapDown)
+    .on("pointerup", (event) => {
+      if (!isTap(event)) return;
+      activate(event.currentTarget, ctx);
     });
 
   g.selectAll("circle.org")
@@ -280,8 +436,9 @@ function draw(
     })
     .on("pointermove", (event) => tip.move(event))
     .on("pointerleave", () => tip.hide())
-    .on("click", (event, o) => {
-      tip.hide();
-      selectWithPop(event, o.d.nameEN, selected);
+    .on("pointerdown", tapDown)
+    .on("pointerup", (event) => {
+      if (!isTap(event)) return;
+      activate(event.currentTarget, ctx);
     });
 }

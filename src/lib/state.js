@@ -31,11 +31,6 @@ export const query = signal("");
 /** @type {import("@preact/signals").Signal<string | null>} */
 export const selectedOrg = signal(null);
 
-// Bumped on every dot click — re-clicking the already-selected dot is a
-// same-value signal write (no notify), but the drawer must still reopen.
-/** @type {import("@preact/signals").Signal<number>} */
-export const selectEpoch = signal(0);
-
 // Map camera commands. UI-less for now: future buttons (and anything else)
 // call zoomIn()/zoomOut()/zoomToFit()/centerOn(); MapCanvas executes against
 // the map and consumes the command. "fit" frames every marker the map
