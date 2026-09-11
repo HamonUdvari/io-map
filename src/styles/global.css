@@ -113,11 +113,16 @@
     /* fullscreen viewport height; the svg covers it via slice — set in MapCanvas */
     @apply h-dvh w-full;
 
-    /* #map-tone (MapCanvas.tsx) must target an SVG element — mobile Safari can't
-       filter:url() HTML — and tiles only, so overlays stay unfiltered */
-    svg > g:first-child {
-      @apply [filter:url(#map-tone)];
-    }
+    /* The map tone now BAKES into each tile at load (src/lib/tile-tone.js):
+       WebKit does not apply CSS filters to SVG elements at all (bug 246106),
+       so both earlier approaches were no-ops on iOS. Kept for reference:
+       1) the #map-tone SVG filter (defs commented in MapCanvas.tsx) — also
+          software-rasterized per frame on iOS:
+          svg > g:first-child { @apply [filter:url(#map-tone)]; }
+       2) the GPU shorthand chain — Chrome-only on SVG elements:
+          svg > g:first-child {
+            filter: grayscale(1) invert(1) contrast(39.33%) brightness(89%);
+          } */
   }
 
   /* typography only — filter buttons may differentiate later */

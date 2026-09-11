@@ -11,6 +11,7 @@ import {
 } from "../lib/state.js";
 import { filteredPoints } from "../lib/orgs.js";
 import { preloadBasemaps, PRELOAD_PARAMS } from "../lib/basemap-preload.js";
+import { tonedTileHref } from "../lib/tile-tone.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
 import editions from "../../docs/data/zeitreise-editions.json";
@@ -49,7 +50,9 @@ export default function MapCanvas({
         height: Math.round(r.height) || 500,
       };
     };
-    const map = createGenevaMap(hostSize());
+    // the tone bakes into each tile at load (tile-tone.js) — CSS/SVG filters
+    // on SVG elements are no-ops in WebKit, see the notes in global.css
+    const map = createGenevaMap({ ...hostSize(), tileHref: tonedTileHref });
     host.current!.append(map.node);
     map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
     map.svg
@@ -153,9 +156,9 @@ export default function MapCanvas({
           the dark background; sRGB so the numbers read like CSS lightness
           values. Tune: intercept = ink lightness, intercept + slope = paper
           lightness (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)).
-          Tune: intercept = ink lightness, intercept + slope = paper
-          lightness (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)). Active via
-          global.css [filter:url(#map-tone)]:
+          RETIRED: the tone now bakes into each tile at load
+          (src/lib/tile-tone.js) — WebKit neither applies CSS filters to SVG
+          elements nor runs SVG filter graphs on the GPU. Kept for reference:
       <svg width="0" height="0" aria-hidden="true">
         <filter id="map-tone" color-interpolation-filters="sRGB">
           <feColorMatrix type="saturate" values="0" />

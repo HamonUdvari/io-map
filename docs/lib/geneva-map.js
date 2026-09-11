@@ -61,6 +61,9 @@ function wmtsLayer({label, id, ext, time, shownYear, times}) {
   };
 }
 
+/** @param {{width?: number, height?: number, center?: number[], zoom?: number,
+ *  minZoom?: number, maxZoom?: number, bw?: boolean, extent?: number[] | null,
+ *  transform?: any, tileHref?: ((url: string) => Promise<string>) | null}} [options] */
 export function createGenevaMap({
   width = 928,
   height = 500,
@@ -70,7 +73,8 @@ export function createGenevaMap({
   maxZoom = 18,      // the swisstopo layers' tile matrices end at 18
   bw = false,
   extent = null,     // optional lon/lat bbox clamping panning (e.g. GENEVA_BBOX)
-  transform = null   // optional initial transform (pass a zoomState holder's value)
+  transform = null,  // optional initial transform (pass a zoomState holder's value)
+  tileHref = null    // optional async url -> displayed href (e.g. tone baked into tiles)
 } = {}) {
   const node = document.createElement("div");
   node.style.position = "relative";
@@ -204,7 +208,22 @@ export function createGenevaMap({
             lv.errored.add(String(d3.select(this).datum()));
             pruneLevels(lv.key);
           })
-          .attr("xlink:href", d => lv.url(...tileWrap(d)))
+          .each(function(d) {
+            // tileHref may transform the tile asynchronously (the site bakes
+            // its tone in); the raw URL is the fallback so a failed
+            // transform still renders (and 404s keep settling pruning).
+            // Deferred one frame: levels created and destroyed by a fast
+            // year scrub never start their fetch+bake at all.
+            const url = lv.url(...tileWrap(d));
+            if (!tileHref) { d3.select(this).attr("xlink:href", url); return; }
+            requestAnimationFrame(() => {
+              if (!this.isConnected) return;
+              tileHref(url).then(
+                href => { if (this.isConnected) d3.select(this).attr("xlink:href", href); },
+                () => { if (this.isConnected) d3.select(this).attr("xlink:href", url); }
+              );
+            });
+          })
           .call(s => placeTiles(s, current)), // prefetched tiles must not draw at [0,0]
       update => update,
       exit => exit.each(d => { lv.loaded.delete(String(d)); lv.errored.delete(String(d)); }).remove()
