@@ -355,6 +355,93 @@
     }
   }
 
+  /* Selected organisation detail (Figma 49-7140): photo, meta, about, anchor
+     nav, timeline, nearest — on the category-tinted drawer surface */
+  .infobox {
+    @apply flex flex-col gap-4 py-2;
+
+    .infobox-photo {
+      @apply flex flex-col gap-1 px-2;
+
+      img {
+        @apply w-full rounded-io-panel;
+      }
+
+      figcaption {
+        @apply text-io-sm; /* image credit sits right below (client wish) */
+      }
+    }
+
+    .infobox-meta {
+      @apply flex flex-col gap-1 px-2 text-io-sm;
+    }
+
+    .infobox-about {
+      @apply px-2 text-io-base;
+    }
+
+    /* anchor nav: bordered sharp-cornered chips — deliberately NOT the pill
+       language; they jump to sections inside the infobox (URL is external) */
+    .infobox-anchors {
+      @apply flex flex-col items-start gap-1 px-2;
+
+      h3 {
+        @apply text-io-base font-bold;
+      }
+
+      a {
+        @apply border border-io-neutral-950 p-1 text-io-base font-bold;
+      }
+    }
+
+    .infobox-section {
+      @apply scroll-mt-2;
+
+      h3 {
+        @apply p-2 text-io-base font-bold;
+      }
+    }
+
+    .infobox-nearest {
+      @apply bg-io-neutral-50;
+    }
+  }
+
+  /* One year of an organisation's history (Figma TimelineEntry): bullet dot,
+     bold year, event blocks with notes and source refs */
+  .timeline-entry {
+    @apply flex items-start gap-2 p-1;
+
+    .timeline-entry-dot {
+      @apply mt-1.5 size-3 shrink-0 rounded-full bg-io-neutral-950;
+    }
+
+    .timeline-entry-body {
+      @apply flex min-w-0 grow flex-col gap-2;
+    }
+
+    .timeline-entry-year {
+      @apply text-io-base font-bold;
+    }
+
+    .timeline-entry-event {
+      @apply flex flex-col gap-1 pb-3 pl-1 text-io-base;
+      @apply wrap-break-word; /* unbroken tokens (long URLs in notes/refs) */
+    }
+
+    .timeline-entry-title {
+      @apply text-io-base font-bold;
+    }
+
+    .timeline-entry-sources {
+      @apply flex flex-col gap-1 text-io-sm;
+
+      a {
+        @apply underline [text-underline-position:from-font];
+      }
+    }
+  }
+
   /* Name filter (Figma "Search"): neutral pill, magnifier, muted placeholder */
   .text-filter {
     @apply flex h-10 items-center gap-2 rounded-io-pill bg-io-neutral-50 p-2;

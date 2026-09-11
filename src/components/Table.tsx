@@ -13,7 +13,8 @@ export default function Table({
   class?: string;
 }) {
   return (
-    <ul class={clsx("table-list", className)}>
+    // preflight strips list-style, which drops list semantics in VoiceOver
+    <ul class={clsx("table-list", className)} role="list">
       {items.map((item) => (
         <TableItem key={item.name} {...item} />
       ))}

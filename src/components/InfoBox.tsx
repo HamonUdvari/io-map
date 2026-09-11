@@ -1,0 +1,103 @@
+import clsx from "clsx";
+import TimelineEntry, { type TimelineEvent } from "./TimelineEntry";
+import Table, { type TableRow } from "./Table";
+
+export type OrgInfo = {
+  name: string;
+  category: string;
+  key?: string | null;
+  prefix?: string | null;
+  region?: string | null;
+  address?: string | null;
+  building?: string | null;
+  representative?: string | null;
+  activity: string;
+};
+
+// Selected organisation detail (Figma 49-7140), rendered in the drawer's
+// content slot on the category-tinted surface; the title lives in the drawer
+// header. Pure presentational: data in via props (org-info.js derivations),
+// photo/about/url render only when provided — the client columns for those
+// come later.
+export default function InfoBox({
+  info,
+  groups,
+  nearest,
+  about,
+  photo,
+  url,
+  class: className,
+}: {
+  info: OrgInfo;
+  groups: { year: number; events: TimelineEvent[] }[];
+  nearest: TableRow[];
+  about?: string | null;
+  photo?: { src: string; alt: string; credit?: string } | null;
+  url?: string | null;
+  class?: string;
+}) {
+  return (
+    <div class={clsx("infobox", className)}>
+      {photo != null && (
+        <figure class="infobox-photo">
+          <img
+            src={photo.src}
+            alt={photo.alt}
+            loading="lazy"
+            decoding="async"
+          />
+          {photo.credit != null && <figcaption>{photo.credit}</figcaption>}
+        </figure>
+      )}
+
+      <div class="infobox-meta">
+        <p>
+          Category: {info.category}
+          {info.region != null && (
+            <>
+              <br />
+              {info.region}
+            </>
+          )}
+        </p>
+        {info.address != null && <p>address: {info.address}</p>}
+        {info.building != null && <p>Building: {info.building}</p>}
+        <p>Activity: {info.activity}</p>
+        {info.representative != null && (
+          <p>Representative: {info.representative}</p>
+        )}
+      </div>
+
+      {about != null && <p class="infobox-about">{about}</p>}
+
+      <nav class="infobox-anchors" aria-label="In this infobox">
+        <h3>In this infobox:</h3>
+        <a href="#infobox-timeline">Timeline</a>
+        <a href="#infobox-nearest">Nearest organisations</a>
+        {url != null && (
+          <a href={url} target="_blank" rel="noreferrer">
+            URL <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </nav>
+
+      <section class="infobox-section" id="infobox-timeline">
+        <h3>Timeline</h3>
+        <ul role="list">
+          {groups.map((group) => (
+            <TimelineEntry
+              key={group.year}
+              year={group.year}
+              events={group.events}
+            />
+          ))}
+        </ul>
+      </section>
+
+      <section class="infobox-section infobox-nearest" id="infobox-nearest">
+        <h3>Nearest Organisations</h3>
+        <Table items={nearest} />
+      </section>
+    </div>
+  );
+}
