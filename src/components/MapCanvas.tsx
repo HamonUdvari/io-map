@@ -62,9 +62,45 @@ export default function MapCanvas({
     map.svg
       .attr("preserveAspectRatio", "xMidYMid slice") // inert at 1:1; covers sub-px rounding
       .style("height", "100%");
-    const dispose = effect(() =>
-      map.setLayer(basemapForYear(year.value, { editions, layersData })),
-    );
+    // Edition stepper — the time-scrub pattern Leaflet.TimeDimension and the
+    // Esri time slider use: swap only when the incoming step is READY, hold
+    // the last complete edition meanwhile, and drop intermediate steps like
+    // a video scrubber. A fast year scrub therefore steps through as many
+    // editions as the pipeline can paint — never a white gap, never a level
+    // per crossed edition. The timeout advances past editions that cannot
+    // settle (offline, coverage gaps).
+    const STEP_TIMEOUT = 1200;
+    let shownKey: string | null = null;
+    let pendingLayer: any = null;
+    let stepping = false;
+    let stepTimer: ReturnType<typeof setTimeout>;
+    const step = (layer: any) => {
+      stepping = true;
+      shownKey = layer.timeKey;
+      clearTimeout(stepTimer);
+      stepTimer = setTimeout(advance, STEP_TIMEOUT);
+      map.setLayer(layer); // may fire onLayerReady synchronously (warm level)
+    };
+    const advance = () => {
+      stepping = false;
+      const next = pendingLayer;
+      pendingLayer = null;
+      if (next != null && next.timeKey !== shownKey) step(next);
+      else clearTimeout(stepTimer);
+    };
+    map.onLayerReady(advance);
+    const dispose = effect(() => {
+      const layer = basemapForYear(year.value, { editions, layersData });
+      if (layer.timeKey === shownKey) {
+        pendingLayer = null; // scrubbed back onto the shown edition
+        return;
+      }
+      if (stepping) {
+        pendingLayer = layer; // latest wins; intermediates drop
+        return;
+      }
+      step(layer);
+    });
     const disposeMarkers = attachMarkers(map, {
       year,
       categories,
@@ -183,6 +219,7 @@ export default function MapCanvas({
       ro.disconnect();
       drawerObserver.disconnect();
       clearTimeout(pending);
+      clearTimeout(stepTimer);
       clearTimeout(detentPending);
       clearTimeout(bboxPending);
       clearTimeout(preloadPending);

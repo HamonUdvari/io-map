@@ -63,7 +63,8 @@ function wmtsLayer({label, id, ext, time, shownYear, times}) {
 
 /** @param {{width?: number, height?: number, center?: number[], zoom?: number,
  *  minZoom?: number, maxZoom?: number, bw?: boolean, extent?: number[] | null,
- *  transform?: any, tileHref?: ((url: string) => Promise<string>) | null}} [options] */
+ *  transform?: any, tileHref?: ((url: string) => Promise<string>) | null,
+ *  tileFade?: number}} [options] */
 export function createGenevaMap({
   width = 928,
   height = 500,
@@ -74,7 +75,8 @@ export function createGenevaMap({
   bw = false,
   extent = null,     // optional lon/lat bbox clamping panning (e.g. GENEVA_BBOX)
   transform = null,  // optional initial transform (pass a zoomState holder's value)
-  tileHref = null    // optional async url -> displayed href (e.g. tone baked into tiles)
+  tileHref = null,   // optional async url -> displayed href (e.g. tone baked into tiles)
+  tileFade = TILE_FADE // ms fade-in per tile; 0 = paint the instant a tile is ready
 } = {}) {
   const node = document.createElement("div");
   node.style.position = "relative";
@@ -129,6 +131,8 @@ export function createGenevaMap({
   let zooming = false;   // true during a gesture or flyTo — pruning is deferred
   let overlayDraw = null;
   let renderCb = null;
+  let layerReadyCb = null;
+  let lastReadyKey = null; // fire layerReadyCb once per level becoming ready
 
   const tileLevels = new Map(); // `${timeKey}|${z}` -> {key, timeKey, z, seq, g, url, loaded, errored, need}
 
@@ -158,7 +162,11 @@ export function createGenevaMap({
       lv = {key, timeKey, z, seq: layerSeq, g: gTiles.append("g"), url: layer.url,
             loaded: new Set(), errored: new Set(), need: null};
       tileLevels.set(key, lv);
-      for (const old of [...tileLevels.values()].sort((a, b) => a.seq - b.seq || a.z - b.z)) {
+      // evict unpainted levels first — a painted level is the visual
+      // fallback while newer levels load (a fast year scrub must not
+      // white-out the map by discarding the only drawn imagery)
+      for (const old of [...tileLevels.values()].sort((a, b) =>
+          (a.loaded.size > 0) - (b.loaded.size > 0) || a.seq - b.seq || a.z - b.z)) {
         if (tileLevels.size <= MAX_LEVELS) break;
         if (old.key === key) continue;
         tileLevels.delete(old.key);
@@ -181,7 +189,11 @@ export function createGenevaMap({
     for (const [key, lv] of tileLevels) {
       if (key === keepKey) continue;
       tileLevels.delete(key);
-      lv.g.transition().delay(TILE_FADE).remove(); // wait out the keep-level's fade-in
+      lv.g.transition().delay(tileFade).remove(); // wait out the keep-level's fade-in
+    }
+    if (keepKey !== lastReadyKey) {
+      lastReadyKey = keepKey;
+      if (layerReadyCb) layerReadyCb(keep.timeKey);
     }
   }
 
@@ -199,7 +211,7 @@ export function createGenevaMap({
           .style("opacity", 0)
           .on("load", function() {
             lv.loaded.add(String(d3.select(this).datum()));
-            d3.select(this).interrupt().transition().duration(TILE_FADE).style("opacity", 1);
+            d3.select(this).interrupt().transition().duration(tileFade).style("opacity", 1);
             pruneLevels(lv.key);
           })
           .on("error", function() {
@@ -302,6 +314,11 @@ export function createGenevaMap({
     onRender(cb) {
       renderCb = cb;
       renderCb(helpers());
+    },
+    // cb(timeKey) fires once whenever the live level has every tile settled
+    // — the "layer is ready" signal a time scrubber swaps editions on.
+    onLayerReady(cb) {
+      layerReadyCb = cb;
     },
     // Relative zoom around the viewport center (2 = one level in, 0.5 = one
     // level out); goes through the zoom behavior, so scale/translate extents
