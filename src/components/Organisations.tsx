@@ -126,6 +126,7 @@ export default function Organisations({
           })}
           absentYear={active ? null : year.value}
           onSelectNearest={selectRow}
+          onJump={() => (drawer.value = "open")}
           about={demo?.about}
           photo={demo?.photo}
           url={demo?.url}

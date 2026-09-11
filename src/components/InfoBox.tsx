@@ -29,6 +29,7 @@ export default function InfoBox({
   nearest,
   absentYear,
   onSelectNearest,
+  onJump,
   about,
   photo,
   url,
@@ -42,6 +43,11 @@ export default function InfoBox({
   absentYear?: number | null;
   /** row click in Nearest Organisations (jump to that organisation) */
   onSelectNearest?: (item: TableRow) => void;
+  /** in-page anchor chip click. At the sheet's half detent the scroller's
+      lower part is below the fold and max-scroll can't reach the last
+      sections — the host expands the sheet here (Safari doesn't focus links
+      on click, so the focusin-expand path never fires there). */
+  onJump?: () => void;
   about?: string | null;
   photo?: { src: string; alt: string; credit?: string } | null;
   url?: string | null;
@@ -112,9 +118,13 @@ export default function InfoBox({
 
       <h3 class="infobox-anchors-title">In this infobox:</h3>
       <nav class="infobox-anchors" aria-label="In this infobox">
-        <a href="#infobox-timeline">Timeline</a>
+        <a href="#infobox-timeline" onClick={onJump}>
+          Timeline
+        </a>
         {nearest.length > 0 && (
-          <a href="#infobox-nearest">Nearest organisations</a>
+          <a href="#infobox-nearest" onClick={onJump}>
+            Nearest organisations
+          </a>
         )}
         {url != null && (
           <a href={url} target="_blank" rel="noreferrer">
