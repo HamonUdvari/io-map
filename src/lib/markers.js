@@ -31,6 +31,7 @@ export const MARKER_PARAMS = {
   // HIG / WCAG 2.5.5 recommend (WCAG 2.5.8 AA minimum: 24px); mouse stays
   // precise
   touchRadius: 22,
+  longPressMs: 450, // touch: hold this long on a marker to peek at its tip
 };
 
 const markerClass = (key) => `marker marker-${key ?? "neutral"}`;
@@ -157,8 +158,8 @@ function createTip(map) {
   };
 
   return {
-    show(event, props) {
-      if (event.pointerType === "touch") return;
+    show(event, props, force = false) {
+      if (!force && event.pointerType === "touch") return;
       render(h(MarkerTip, props), el);
       el.hidden = false;
       place(event);
@@ -186,6 +187,70 @@ const raise = (event) => {
 };
 
 const tipRow = (d) => ({ name: d.nameEN, category: categoryKey(d) });
+
+// tip content for any marker element, from its d3 datum (cluster feature or
+// spread entry) — shared by mouse hover and the touch long-press peek
+const tipPropsFor = (el, index) => {
+  const datum = el.__data__;
+  if (datum?.properties != null) {
+    const p = datum.properties;
+    const members = p.cluster
+      ? index.getLeaves(p.cluster_id, Infinity).map((l) => l.properties)
+      : [p];
+    return tipProps(members, p.cluster ? null : tipAddress(p));
+  }
+  if (datum?.d != null) {
+    const members = [datum.d, ...datum.members.filter((m) => m !== datum.d)];
+    return tipProps(members, tipAddress(datum.d));
+  }
+  return null;
+};
+
+// Touch long-press: hold on (or just off) a marker to peek at its tip —
+// hover's stand-in. Firing consumes the gesture (the release must not
+// select) and the release hides the tip. One press at a time, pointerId-
+// checked so an unrelated pointer's events cannot clear or consume it.
+let longPress = null; // { id, timer, x, y, fired }
+const clearLongPress = () => {
+  if (longPress != null) clearTimeout(longPress.timer);
+  longPress = null;
+};
+const armLongPress = (event, ctx, el = event.currentTarget) => {
+  clearLongPress(); // also flushes stale state before the type check
+  if (event.pointerType !== "touch") return;
+  const { clientX, clientY } = event;
+  const state = {
+    id: event.pointerId,
+    x: clientX,
+    y: clientY,
+    fired: false,
+    timer: 0,
+  };
+  state.timer = setTimeout(() => {
+    // the marker join may have removed the element mid-hold (year scrub on
+    // a second pointer) — a tip for it could never be dismissed by hover
+    if (!el.isConnected) {
+      clearLongPress();
+      return;
+    }
+    state.fired = true;
+    const props = tipPropsFor(el, ctx.index);
+    if (props != null)
+      ctx.tip.show({ pointerType: "touch", clientX, clientY }, props, true);
+  }, MARKER_PARAMS.longPressMs);
+  longPress = state;
+};
+// shared release handling: true when this pointer's long-press consumed the
+// gesture (peek shown — hide it, spend the tap slot, activate nothing)
+const consumeLongPress = (event, tip) => {
+  if (longPress == null || longPress.id !== event.pointerId) return false;
+  const { fired } = longPress;
+  clearLongPress();
+  if (!fired) return false;
+  tip.hide();
+  if (tapStart?.id === event.pointerId) cancelTap();
+  return true;
+};
 const tipAddress = (d) => d.addressInfoboxDisplay || d.addressOSM || null;
 
 // hovered/leading org first, member cap, overflow count. A lone org is just
@@ -231,12 +296,44 @@ export function attachMarkers(map, { year, categories, query, selected }) {
       assistStart == null
         ? { id: event.pointerId, x: event.clientX, y: event.clientY }
         : null;
+    // near-miss long-press: holding just OFF a dot (inside the assist
+    // radius) peeks the same tip a hold ON it would — direct hits already
+    // armed in the marker's own pointerdown before this bubbled here
+    if (currentCtx != null && !event.target.closest("g.cluster, circle.org")) {
+      const el = nearestMarker(
+        map.svg.node(),
+        event,
+        MARKER_PARAMS.touchRadius,
+      );
+      if (el != null) armLongPress(event, currentCtx, el);
+    }
+  });
+  // finger travel past the tap tolerance cancels a pending press — one
+  // svg-level check covers marker and near-miss presses alike (bubbling)
+  map.svg.on("pointermove.assist", (event) => {
+    if (
+      longPress != null &&
+      longPress.id === event.pointerId &&
+      !longPress.fired &&
+      Math.hypot(event.clientX - longPress.x, event.clientY - longPress.y) >
+        TOUCH_TAP_DIST
+    )
+      clearLongPress();
   });
   map.svg.on("pointercancel.assist", () => {
     assistStart = null;
     cancelTap();
+    clearLongPress();
+    tip.hide(); // a fired peek would otherwise strand on screen
   });
   map.svg.on("pointerup.assist", (event) => {
+    // a fired peek consumes the release even when the pressed marker left
+    // the DOM mid-hold (the release then lands on bare svg and would
+    // otherwise fall through to the assist activation below)
+    if (consumeLongPress(event, tip)) {
+      assistStart = null;
+      return;
+    }
     const start = assistStart;
     assistStart = null;
     if (event.pointerType !== "touch" || start == null) return;
@@ -309,6 +406,7 @@ export function attachMarkers(map, { year, categories, query, selected }) {
   });
   return () => {
     dispose();
+    clearLongPress();
     tip.dispose();
     map.setOverlay(() => {});
     map.svg.on("click.select", null);
@@ -399,18 +497,18 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
         .text((c) => (c.properties.cluster ? c.properties.point_count : ""));
     })
     .attr("transform", (c) => `translate(${project(c.geometry.coordinates)})`)
-    .on("pointerover", (event, c) => {
+    .on("pointerover", (event) => {
       raise(event); // svg paints in document order — hovered marker on top
-      const p = c.properties;
-      const members = p.cluster
-        ? index.getLeaves(p.cluster_id, Infinity).map((l) => l.properties)
-        : [p];
-      tip.show(event, tipProps(members, p.cluster ? null : tipAddress(p)));
+      tip.show(event, tipPropsFor(event.currentTarget, index));
     })
     .on("pointermove", (event) => tip.move(event))
     .on("pointerleave", () => tip.hide())
-    .on("pointerdown", tapDown)
+    .on("pointerdown", (event) => {
+      tapDown(event);
+      armLongPress(event, ctx);
+    })
     .on("pointerup", (event) => {
+      if (consumeLongPress(event, tip)) return;
       if (!isTap(event)) return;
       activate(event.currentTarget, ctx);
     });
@@ -428,16 +526,18 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
     .attr("r", MARKER_PARAMS.dotRadius)
     .attr("cx", (o) => project([o.d.long, o.d.lat])[0] + o.off[0])
     .attr("cy", (o) => project([o.d.long, o.d.lat])[1] + o.off[1])
-    .on("pointerover", (event, o) => {
+    .on("pointerover", (event) => {
       raise(event); // svg paints in document order — hovered marker on top
-      // the hovered org leads, its same-address companions follow
-      const members = [o.d, ...o.members.filter((m) => m !== o.d)];
-      tip.show(event, tipProps(members, tipAddress(o.d)));
+      tip.show(event, tipPropsFor(event.currentTarget, index));
     })
     .on("pointermove", (event) => tip.move(event))
     .on("pointerleave", () => tip.hide())
-    .on("pointerdown", tapDown)
+    .on("pointerdown", (event) => {
+      tapDown(event);
+      armLongPress(event, ctx);
+    })
     .on("pointerup", (event) => {
+      if (consumeLongPress(event, tip)) return;
       if (!isTap(event)) return;
       activate(event.currentTarget, ctx);
     });
