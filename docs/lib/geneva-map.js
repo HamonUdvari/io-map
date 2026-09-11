@@ -238,6 +238,7 @@ export function createGenevaMap({
   }
 
   const zoomBehavior = d3.zoom()
+      .clickDistance(4) // hand drift on a click must not suppress overlay click handlers
       .scaleExtent([256 * 2 ** minZoom, 256 * 2 ** maxZoom])
       .extent([[0, 0], [width, height]])
       .on("start", () => { zooming = true; })

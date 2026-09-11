@@ -24,3 +24,14 @@ export const mapBbox = signal(null);
 // insensitive (orgs.js nameMatches) — applied by the table and the markers.
 /** @type {import("@preact/signals").Signal<string>} */
 export const query = signal("");
+
+// Selected organisation (nameEN, the dataset's stable identifier) — set by
+// clicking a marker dot, cleared by clicking the map background. Non-null
+// switches the drawer from the table to the infobox.
+/** @type {import("@preact/signals").Signal<string | null>} */
+export const selectedOrg = signal(null);
+
+// Bumped on every dot click — re-clicking the already-selected dot is a
+// same-value signal write (no notify), but the drawer must still reopen.
+/** @type {import("@preact/signals").Signal<number>} */
+export const selectEpoch = signal(0);

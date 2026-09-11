@@ -6,6 +6,7 @@ import {
   categories as globalCategories,
   query as globalQuery,
   mapBbox as globalMapBbox,
+  selectedOrg as globalSelectedOrg,
 } from "../lib/state.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
@@ -20,6 +21,7 @@ export default function MapCanvas({
   categories = globalCategories,
   query = globalQuery,
   bbox = globalMapBbox,
+  selected = globalSelectedOrg,
   class: className,
 }: {
   year?: Signal<number>;
@@ -27,6 +29,8 @@ export default function MapCanvas({
   query?: Signal<string>;
   /** written by the map: the current viewport as a lon/lat bbox */
   bbox?: Signal<number[] | null>;
+  /** read AND written: dot click selects, background click clears */
+  selected?: Signal<string | null>;
   class?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -51,7 +55,12 @@ export default function MapCanvas({
     const dispose = effect(() =>
       map.setLayer(basemapForYear(year.value, { editions, layersData })),
     );
-    const disposeMarkers = attachMarkers(map, { year, categories, query });
+    const disposeMarkers = attachMarkers(map, {
+      year,
+      categories,
+      query,
+      selected,
+    });
     // publish the viewport bbox (debounced past the camera motion) so the
     // org table can mirror what the map shows
     let bboxPending: ReturnType<typeof setTimeout>;
@@ -78,7 +87,7 @@ export default function MapCanvas({
       disposeMarkers();
       map.node.remove();
     };
-  }, [year, categories, query, bbox]);
+  }, [year, categories, query, bbox, selected]);
 
   return (
     <>

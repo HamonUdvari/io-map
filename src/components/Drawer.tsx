@@ -45,6 +45,7 @@ const useMediaQuery = (query: string) => {
 export default function Drawer({
   state: controlled,
   onStateChange,
+  onClose,
   header,
   children,
   class: className,
@@ -52,6 +53,9 @@ export default function Drawer({
   /** controlled detent; omit and the drawer manages its own */
   state?: DrawerState;
   onStateChange?: (state: DrawerState) => void;
+  /** desktop only: renders a close (×) button where the arrow sits on
+      mobile — the static panel has no detents to collapse to */
+  onClose?: () => void;
   /** left side of the header row (title, counts, …) */
   header?: ComponentChildren;
   children?: ComponentChildren;
@@ -191,6 +195,28 @@ export default function Drawer({
             >
               <path
                 d="M8 14V2M3 7l5-5 5 5"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+          </button>
+        )}
+        {isStatic && onClose != null && (
+          <button
+            type="button"
+            class="drawer-arrow"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 3l10 10M13 3L3 13"
                 stroke="currentColor"
                 stroke-width="1.5"
               />

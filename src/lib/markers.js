@@ -6,7 +6,7 @@
 // strokes, and hover states live in global.css (.marker, .marker-count) on
 // the io- design tokens — between the two, every styling knob has one home.
 import Supercluster from "supercluster";
-import { effect } from "./state.js";
+import { effect, selectEpoch } from "./state.js";
 import { pointsIn, categoryKey, nameMatches } from "./orgs.js";
 import {
   groupByCoordinate,
@@ -19,12 +19,29 @@ export const MARKER_PARAMS = {
   spreadAtZoom: 16, // below: clusters; at/above: every organisation its own dot
   clusterRadius: 40, // supercluster radius (512-unit tiles ≈ half that in px)
   jitterRadius: 10, // px spread cloud for organisations sharing one address
-  dotRadius: 5, // px radius of a single organisation dot
+  dotRadius: 5, // px radius of a single organisation dot (selection scales via CSS)
+  selectDelay: 250, // ms: let the dot's scale-up play before the infobox opens
   clusterRadiusFor: (count) => Math.min(28, 8 + 4 * Math.sqrt(count)),
   bboxPad: 0.2, // cluster query overscan, so markers slide in instead of popping
 };
 
 const markerClass = (key) => `marker marker-${key ?? "neutral"}`;
+
+// Dot-click choreography: mark the circle selected NOW (the CSS scale
+// transition plays) and land the selection in the state a beat later, so
+// the pop is visible before the infobox takes over.
+const selectWithPop = (event, name, selected) => {
+  event.stopPropagation();
+  // singleton clicks land on the g.cluster group — the styled .marker is
+  // its circle; spread clicks land on the circle itself
+  const el = event.currentTarget;
+  const circle = el.tagName === "g" ? el.querySelector("circle") : el;
+  circle.classList.add("marker-selected");
+  setTimeout(() => {
+    selected.value = name;
+    selectEpoch.value++;
+  }, MARKER_PARAMS.selectDelay);
+};
 
 // single-category clusters keep the category color; mixed ones go neutral
 const clusterClass = (p) => {
@@ -35,8 +52,12 @@ const clusterClass = (p) => {
 // Subscribes the marker overlay to the signals; returns the dispose function.
 // Rebuilds the cluster index when year/categories change — the overlay then
 // redraws from it on every camera move.
-export function attachMarkers(map, { year, categories, query }) {
-  return effect(() => {
+export function attachMarkers(map, { year, categories, query, selected }) {
+  // clicking the map anywhere but a dot dismisses the selection (dot clicks
+  // stop propagation); cluster clicks fly AND clear — they navigate away
+  map.svg.on("click.select", () => (selected.value = null));
+  const dispose = effect(() => {
+    const sel = selected.value;
     const cats = categories.value;
     const q = query.value;
     const points = pointsIn(year.value)
@@ -70,11 +91,22 @@ export function attachMarkers(map, { year, categories, query }) {
       },
     }).load(toFeatures(points));
 
-    map.setOverlay((g, helpers) => draw(g, helpers, { index, spread, map }));
+    map.setOverlay((g, helpers) =>
+      draw(g, helpers, { index, spread, map, sel, selected }),
+    );
   });
+  return () => {
+    dispose();
+    map.setOverlay(() => {});
+    map.svg.on("click.select", null);
+  };
 }
 
-function draw(g, { zoomLevel, bbox, project }, { index, spread, map }) {
+function draw(
+  g,
+  { zoomLevel, bbox, project },
+  { index, spread, map, sel, selected },
+) {
   const clustered = zoomLevel < MARKER_PARAMS.spreadAtZoom;
   const [w, s, e, n] = bbox;
   const pad = MARKER_PARAMS.bboxPad;
@@ -105,26 +137,32 @@ function draw(g, { zoomLevel, bbox, project }, { index, spread, map }) {
         .attr("dy", "0.35em");
       return gc;
     })
-    .call((sel) => {
-      sel
+    .call((groups) => {
+      groups
         .select("circle")
         .attr("class", (c) =>
           c.properties.cluster
             ? `${clusterClass(c.properties)} cursor-pointer`
-            : markerClass(categoryKey(c.properties)),
+            : `${markerClass(categoryKey(c.properties))} cursor-pointer ${
+                c.properties.nameEN === sel ? "marker-selected" : ""
+              }`,
         )
         .attr("r", (c) =>
           c.properties.cluster
             ? MARKER_PARAMS.clusterRadiusFor(c.properties.point_count)
             : MARKER_PARAMS.dotRadius,
         );
-      sel
+      groups
         .select("text")
         .text((c) => (c.properties.cluster ? c.properties.point_count : ""));
     })
     .attr("transform", (c) => `translate(${project(c.geometry.coordinates)})`)
     .on("click", (event, c) => {
-      if (!c.properties.cluster) return;
+      if (!c.properties.cluster) {
+        // a zoomed-out singleton is one organisation — select it
+        selectWithPop(event, c.properties.nameEN, selected);
+        return;
+      }
       map.flyTo({
         center: c.geometry.coordinates,
         zoom: Math.min(
@@ -137,8 +175,15 @@ function draw(g, { zoomLevel, bbox, project }, { index, spread, map }) {
   g.selectAll("circle.org")
     .data(clustered ? [] : spread, (o) => o.d.nameEN)
     .join("circle")
-    .attr("class", (o) => `org ${markerClass(categoryKey(o.d))}`)
+    .attr(
+      "class",
+      (o) =>
+        `org ${markerClass(categoryKey(o.d))} cursor-pointer ${
+          o.d.nameEN === sel ? "marker-selected" : ""
+        }`,
+    )
     .attr("r", MARKER_PARAMS.dotRadius)
     .attr("cx", (o) => project([o.d.long, o.d.lat])[0] + o.off[0])
-    .attr("cy", (o) => project([o.d.long, o.d.lat])[1] + o.off[1]);
+    .attr("cy", (o) => project([o.d.long, o.d.lat])[1] + o.off[1])
+    .on("click", (event, o) => selectWithPop(event, o.d.nameEN, selected));
 }

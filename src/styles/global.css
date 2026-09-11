@@ -327,13 +327,15 @@
     }
 
     .drawer-header {
-      @apply flex h-(--drawer-peek) shrink-0 items-center justify-between gap-2 pl-4;
+      /* min-h, not h: infobox titles wrap to two lines */
+      @apply flex min-h-(--drawer-peek) shrink-0 items-center justify-between gap-2 pl-4;
       @apply text-io-base font-bold;
       @apply cursor-grab touch-none select-none active:cursor-grabbing;
 
-      /* desktop: nothing to grab */
+      /* desktop: nothing to grab, and no arrow to inset the right edge */
       @variant desktop {
         @apply cursor-auto active:cursor-auto;
+        @apply pr-4;
       }
     }
 
@@ -352,7 +354,33 @@
 
     .drawer-content {
       @apply min-h-0 grow overflow-y-auto overscroll-contain;
+      /* anchor jumps (infobox nav) glide instead of teleporting */
+      @apply scroll-smooth motion-reduce:scroll-auto;
     }
+  }
+
+  /* infobox mode: the drawer surface takes the organisation's category color */
+  .drawer.drawer-tinted-pr {
+    @apply bg-io-pr-500;
+  }
+
+  .drawer.drawer-tinted-ngo {
+    @apply bg-io-ngo-500;
+  }
+
+  .drawer.drawer-tinted-io {
+    @apply bg-io-io-500;
+  }
+
+  /* the selected organisation's title in the drawer header (wraps) */
+  .drawer-title {
+    @apply py-2 text-io-title font-bold;
+  }
+
+  /* the collapsed peek shows only the top 48px — one clean title line
+     instead of a mid-glyph clip of the wrapped second line */
+  .drawer[data-state="closed"] .drawer-title {
+    @apply line-clamp-1;
   }
 
   /* Selected organisation detail (Figma 49-7140): photo, meta, about, anchor
@@ -477,6 +505,12 @@
   .marker {
     @apply rounded-full border border-io-neutral-50 text-io-lg text-io-neutral-50;
     @apply stroke-io-neutral-50 stroke-1;
+    /* the selection scale animates (dot pop before the infobox opens); only
+       the circle's own scale — positions move via attrs, untouched by this.
+       The origin lives HERE, not on .marker-selected: if it left with the
+       class, the un-scale would pivot on the svg corner and slide the dot */
+    @apply transition-transform duration-200 ease-out motion-reduce:transition-none;
+    @apply origin-center [transform-box:fill-box];
 
     &.marker-pr {
       @apply bg-io-pr-500 hover:bg-io-pr-500/75;
@@ -501,6 +535,12 @@
     &.marker-neutral {
       /* categoryless dark dot (Figma node-single-background) */
       @apply bg-io-neutral-950/75 fill-io-neutral-950/75;
+    }
+
+    /* TODO(design): interim selected treatment — a simple scale-up until the
+       real selected-marker style is decided; override here in one place */
+    &.marker-selected {
+      @apply scale-120;
     }
   }
 
