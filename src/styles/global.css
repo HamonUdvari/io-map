@@ -518,6 +518,19 @@
   .filter-panel {
   }
 
+  /* Marker hover tip (Figma Table-Popover as a floating card): d3 positions
+     and toggles it (markers.js), Preact renders the Table content into it */
+  .map-tip {
+    @apply pointer-events-none absolute z-10 w-max max-w-[24.375rem];
+    @apply overflow-clip rounded-io-panel bg-io-neutral-50;
+    @apply shadow-md; /* TODO(design): elevation not specified in Figma */
+
+    .map-tip-address,
+    .map-tip-more {
+      @apply px-2 py-1.5 text-io-sm text-io-neutral-500;
+    }
+  }
+
   /* Map marker (Figma “Map Node”). One class set for both worlds: bg- and
      border utilities style HTML markers, fill- and stroke- the d3 SVG circles. */
   .marker {
