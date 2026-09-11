@@ -56,6 +56,8 @@ export function orgInfo(name, year) {
     building: latestWith(history, "locationBuilding", at),
     representative: latestWith(history, "representativeName", at),
     activity: `${history[0].year}–${history.at(-1).year}`,
+    at, // the year the meta actually describes (latest row <= viewed year)
+    firstYear: history[0].year,
     history,
   };
 }

@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { useSignal } from "@preact/signals";
 import clsx from "clsx";
 import {
@@ -48,16 +48,51 @@ export default function Organisations({
   const selected = selectedOrg.value;
   const points = pointsIn(year.value);
 
-  // a selection scrubbed out of existence (year change) clears itself
-  const present =
-    selected != null && points.some((d: any) => d.nameEN === selected);
+  // the selection SURVIVES years where the org doesn't exist (closed/moved
+  // gaps): the infobox stays with an absent note, so scrubbing across a gap
+  // keeps tracking the organisation. Absence = ACTIVITY (closed/moved/not
+  // yet founded), not geocoding — a few active orgs have unmapped addresses
+  // and must not be declared "not present".
+  const active =
+    selected != null && organisationsIn(year.value).includes(selected);
+
+  // follow the selected organisation through time: scrubbing the year pans
+  // the map to its address of that year whenever it moved, so relocations
+  // can be tracked. Selecting only records the position (marker clicks must
+  // not pan; table clicks center via selectRow).
+  const selPoint =
+    selected != null
+      ? (points.find((d: any) => d.nameEN === selected) ?? null)
+      : null;
+  const lastPos = useRef<{ name: string; lat: number; long: number } | null>(
+    null,
+  );
   useEffect(() => {
-    if (selected != null && !present) selectedOrg.value = null;
-  }, [selected, present]);
+    if (selected == null) {
+      lastPos.current = null;
+      return;
+    }
+    // absent year: keep the trail so scrubbing across a gap pans to the
+    // reappearance address
+    if (selPoint == null) return;
+    const prev = lastPos.current;
+    if (
+      prev != null &&
+      prev.name === selPoint.nameEN &&
+      (prev.lat !== selPoint.lat || prev.long !== selPoint.long)
+    ) {
+      centerOn([selPoint.long, selPoint.lat]);
+    }
+    lastPos.current = {
+      name: selPoint.nameEN,
+      lat: selPoint.lat,
+      long: selPoint.long,
+    };
+  }, [selected, selPoint?.nameEN, selPoint?.lat, selPoint?.long]);
 
   // selection does NOT move the sheet: it keeps its current detent and only
   // the content swaps (mobile wish — no sliding); desktop is always open
-  const info = present ? orgInfo(selected!, year.value) : null;
+  const info = selected != null ? orgInfo(selected, year.value) : null;
 
   // row click (main table and the infobox's nearest list): select the org
   // and pan the map to it at the current zoom
@@ -89,6 +124,7 @@ export default function Organisations({
             cats: categories.value,
             query: query.value,
           })}
+          absentYear={active ? null : year.value}
           onSelectNearest={selectRow}
           about={demo?.about}
           photo={demo?.photo}

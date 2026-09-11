@@ -13,6 +13,9 @@ export type OrgInfo = {
   building?: string | null;
   representative?: string | null;
   activity: string;
+  /** the year the meta describes (latest row <= viewed year) */
+  at?: number;
+  firstYear?: number;
 };
 
 // Selected organisation detail (Figma 49-7140), rendered in the drawer's
@@ -24,6 +27,7 @@ export default function InfoBox({
   info,
   groups,
   nearest,
+  absentYear,
   onSelectNearest,
   about,
   photo,
@@ -33,6 +37,9 @@ export default function InfoBox({
   info: OrgInfo;
   groups: { year: number; events: TimelineEvent[] }[];
   nearest: TableRow[];
+  /** set when the org doesn't exist in the viewed year (closed/moved gap):
+      shows the absence note and hides the (empty) nearest section */
+  absentYear?: number | null;
   /** row click in Nearest Organisations (jump to that organisation) */
   onSelectNearest?: (item: TableRow) => void;
   about?: string | null;
@@ -63,6 +70,15 @@ export default function InfoBox({
         </figure>
       )}
 
+      {absentYear != null && (
+        <p class="infobox-absent">
+          {/* TODO(design): absence wording */}
+          {info.firstYear != null && absentYear < info.firstYear
+            ? `Not yet in Geneva in ${absentYear} — first recorded ${info.firstYear}`
+            : `Not present in Geneva in ${absentYear} — last known state ${info.at}`}
+        </p>
+      )}
+
       <div class="infobox-meta">
         <p>
           Category: {info.category}
@@ -73,12 +89,23 @@ export default function InfoBox({
             </>
           )}
         </p>
-        {info.address != null && <p>address: {info.address}</p>}
-        {info.building != null && <p>Building: {info.building}</p>}
-        <p>Activity: {info.activity}</p>
-        {info.representative != null && (
-          <p>Representative: {info.representative}</p>
+        {/* before the first mention there IS no known state — showing the
+            future first row's address/people as current would be wrong */}
+        {(absentYear == null ||
+          info.firstYear == null ||
+          absentYear >= info.firstYear) && (
+          <>
+            {info.address != null && <p>address: {info.address}</p>}
+            {info.building != null && <p>Building: {info.building}</p>}
+          </>
         )}
+        <p>Activity: {info.activity}</p>
+        {info.representative != null &&
+          (absentYear == null ||
+            info.firstYear == null ||
+            absentYear >= info.firstYear) && (
+            <p>Representative: {info.representative}</p>
+          )}
       </div>
 
       {about != null && <p class="infobox-about">{about}</p>}
@@ -86,7 +113,9 @@ export default function InfoBox({
       <h3 class="infobox-anchors-title">In this infobox:</h3>
       <nav class="infobox-anchors" aria-label="In this infobox">
         <a href="#infobox-timeline">Timeline</a>
-        <a href="#infobox-nearest">Nearest organisations</a>
+        {nearest.length > 0 && (
+          <a href="#infobox-nearest">Nearest organisations</a>
+        )}
         {url != null && (
           <a href={url} target="_blank" rel="noreferrer">
             URL <span aria-hidden="true">↗</span>
@@ -107,10 +136,14 @@ export default function InfoBox({
         </ul>
       </section>
 
-      <section class="infobox-section infobox-nearest" id="infobox-nearest">
-        <h3>Nearest Organisations</h3>
-        <Table items={nearest} onSelect={onSelectNearest} />
-      </section>
+      {/* an empty nearest list (absent year, unmapped address, or filters
+          excluding everything) renders no section at all */}
+      {nearest.length > 0 && (
+        <section class="infobox-section infobox-nearest" id="infobox-nearest">
+          <h3>Nearest Organisations</h3>
+          <Table items={nearest} onSelect={onSelectNearest} />
+        </section>
+      )}
     </div>
   );
 }

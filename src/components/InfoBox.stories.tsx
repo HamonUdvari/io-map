@@ -6,6 +6,7 @@ import {
   nearestTo,
   demoContent,
 } from "../lib/org-info.js";
+import { pointsIn } from "../lib/orgs.js";
 
 const meta = {
   title: "UI/InfoBox",
@@ -19,6 +20,8 @@ const meta = {
     about: { table: { disable: true } },
     photo: { table: { disable: true } },
     url: { table: { disable: true } },
+    absentYear: { table: { disable: true } },
+    onSelectNearest: { table: { disable: true } },
   },
 } satisfies Meta<typeof InfoBox>;
 
@@ -54,6 +57,11 @@ export const Interactive: StoryObj<{ name: string; year: number }> = {
           info={info}
           groups={eventGroups(info.history)}
           nearest={nearestTo(args.name, args.year)}
+          absentYear={
+            pointsIn(args.year).some((d: any) => d.nameEN === args.name)
+              ? null
+              : args.year
+          }
           about={demo?.about}
           photo={demo?.photo}
           url={demo?.url}

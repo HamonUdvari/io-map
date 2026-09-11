@@ -426,6 +426,11 @@
       }
     }
 
+    /* TODO(design): wording/treatment of the absence note (closed years) */
+    .infobox-absent {
+      @apply px-2 text-io-sm font-bold;
+    }
+
     .infobox-meta {
       @apply flex flex-col gap-1 px-2 text-io-sm;
     }
@@ -582,10 +587,12 @@
       @apply bg-io-neutral-950/75 fill-io-neutral-950/75;
     }
 
-    /* TODO(design): interim selected treatment — a simple scale-up until the
-       real selected-marker style is decided; override here in one place */
+    /* TODO(design): interim selected treatment — scale-up plus a dark ring
+       until the real selected-marker style is decided; override here in one
+       place */
     &.marker-selected {
       @apply scale-120;
+      @apply stroke-io-neutral-950 stroke-2;
     }
   }
 
