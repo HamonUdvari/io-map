@@ -81,9 +81,10 @@ export default function MapCanvas({
       if (cmd.action === "in") map.zoomBy(2);
       if (cmd.action === "out") map.zoomBy(0.5);
       if (cmd.action === "center") {
+        // 2x the fit/show-all pace: centering is a small hop, not a journey
         map.flyTo(
           { center: cmd.center, zoom: map.zoomLevel() },
-          { duration: 800 },
+          { duration: 400 },
         );
       }
       if (cmd.action === "fit") {

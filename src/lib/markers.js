@@ -31,6 +31,7 @@ export const MARKER_PARAMS = {
   // HIG / WCAG 2.5.5 recommend (WCAG 2.5.8 AA minimum: 24px); mouse stays
   // precise
   touchRadius: 22,
+  clusterFlyMs: 750, // cluster-tap fly-in (half the factory's 1500 — 2x speed)
   longPressMs: 450, // touch: hold this long on a marker to peek at its tip
 };
 
@@ -96,13 +97,16 @@ const activate = (el, { map, index, selected, tip }) => {
       selectWithPop(el, datum.properties.nameEN, selected);
       return;
     }
-    map.flyTo({
-      center: datum.geometry.coordinates,
-      zoom: Math.min(
-        index.getClusterExpansionZoom(datum.properties.cluster_id),
-        MARKER_PARAMS.spreadAtZoom,
-      ),
-    });
+    map.flyTo(
+      {
+        center: datum.geometry.coordinates,
+        zoom: Math.min(
+          index.getClusterExpansionZoom(datum.properties.cluster_id),
+          MARKER_PARAMS.spreadAtZoom,
+        ),
+      },
+      { duration: MARKER_PARAMS.clusterFlyMs },
+    );
   } else if (datum?.d != null) {
     selectWithPop(el, datum.d.nameEN, selected);
   }
