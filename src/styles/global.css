@@ -154,7 +154,10 @@
     /* the page overlay is pointer-events-none so the map stays interactive —
        re-enable events on the nav ITEMS only (not this grid box: its empty
        space would swallow map clicks across the whole top rows on mobile) */
-    @apply grid grid-cols-[auto_auto] items-start justify-between gap-2;
+    /* 1fr + auto: the flexible track absorbs the full-width spanning rows
+       (timeline/filters) — two auto tracks would split that width and
+       squeeze the title into wrapping while the lang column balloons */
+    @apply grid grid-cols-[1fr_auto] items-start justify-between gap-2;
     /* page spacing lives here (not on the overlay) so the filters row can
        bleed to the viewport edges; the other items re-add it as margins */
     @apply py-(--page-py);
@@ -353,10 +356,10 @@
       @apply text-io-base font-bold;
       @apply cursor-grab touch-none select-none active:cursor-grabbing;
 
-      /* desktop: nothing to grab, and no arrow to inset the right edge */
+      /* desktop: nothing to grab; the close cross sits flush like the
+         mobile arrow (no extra right padding) */
       @variant desktop {
         @apply cursor-auto active:cursor-auto;
-        @apply pr-4;
       }
     }
 

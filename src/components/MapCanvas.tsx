@@ -10,6 +10,7 @@ import {
   zoomCommand,
 } from "../lib/state.js";
 import { filteredPoints } from "../lib/orgs.js";
+import { preloadBasemaps, PRELOAD_PARAMS } from "../lib/basemap-preload.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
 import editions from "../../docs/data/zeitreise-editions.json";
@@ -108,6 +109,18 @@ export default function MapCanvas({
       clearTimeout(bboxPending);
       bboxPending = setTimeout(() => (bbox.value = b), 150);
     });
+    // idle warming: when the camera (bbox settles after motion) and the year
+    // go quiet, prefetch the neighboring editions' tiles for this viewport
+    let preloadPending: ReturnType<typeof setTimeout>;
+    const disposePreload = effect(() => {
+      void bbox.value; // idle signal — re-arms after every camera settle
+      const y = year.value;
+      clearTimeout(preloadPending);
+      preloadPending = setTimeout(
+        () => preloadBasemaps(map, y, { editions, layersData }),
+        PRELOAD_PARAMS.idleDelay,
+      );
+    });
     // follow host resizes (window, dvh changes, orientation), debounced to the
     // gesture end so a live drag-resize doesn't refetch tiles per frame
     let pending: ReturnType<typeof setTimeout>;
@@ -123,8 +136,10 @@ export default function MapCanvas({
       ro.disconnect();
       clearTimeout(pending);
       clearTimeout(bboxPending);
+      clearTimeout(preloadPending);
       dispose();
       disposeZoom();
+      disposePreload();
       disposeMarkers();
       map.node.remove();
     };
@@ -133,12 +148,15 @@ export default function MapCanvas({
   return (
     <>
       <div id="map" class={clsx("map", className)} ref={host}></div>
+      {/* #map-tone: the original SVG-filter tone — black & white, then a
+          linear remap inverting the tones: ink (0) → light gray, paper (1) →
+          the dark background; sRGB so the numbers read like CSS lightness
+          values. Tune: intercept = ink lightness, intercept + slope = paper
+          lightness (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)).
+          Tune: intercept = ink lightness, intercept + slope = paper
+          lightness (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)). Active via
+          global.css [filter:url(#map-tone)]:
       <svg width="0" height="0" aria-hidden="true">
-        {/* #map-tone: the whole map look in one filter — black & white, then a linear
-            remap inverting the tones: ink (0) → light gray, paper (1) → the dark
-            background. sRGB so the numbers read like CSS lightness values.
-            Tune: intercept = ink lightness, intercept + slope = paper lightness
-            (0.62 − 0.35 = 0.27 ≈ hsl(30deg 0% 27%)). */}
         <filter id="map-tone" color-interpolation-filters="sRGB">
           <feColorMatrix type="saturate" values="0" />
           <feComponentTransfer>
@@ -147,7 +165,7 @@ export default function MapCanvas({
             <feFuncB type="linear" slope="-0.35" intercept="0.62" />
           </feComponentTransfer>
         </filter>
-      </svg>
+      </svg> */}
     </>
   );
 }
