@@ -106,11 +106,47 @@ export default function MapCanvas({
       }
     });
     // publish the viewport bbox (debounced past the camera motion) so the
-    // org table can mirror what the map shows
+    // org table can mirror what the map shows. The bbox is CLIPPED to the
+    // map area the UI does not cover — nav rows above, the drawer panel
+    // (desktop, left) or sheet (mobile, bottom) — so "visible" counts mean
+    // actually visible, not hidden under the UI.
     let bboxPending: ReturnType<typeof setTimeout>;
-    map.onRender(({ bbox: b }: { bbox: number[] }) => {
+    const publishVisibleBbox = () => {
+      const r = (map.svg.node() as SVGSVGElement).getBoundingClientRect();
+      let { left, top, right, bottom } = r;
+      const nav = document.querySelector(".nav");
+      if (nav) top = Math.max(top, nav.getBoundingClientRect().bottom);
+      const drawerEl = document.querySelector(".drawer");
+      if (drawerEl) {
+        const d = drawerEl.getBoundingClientRect();
+        if (d.width < r.width * 0.9) left = Math.max(left, d.right);
+        else bottom = Math.min(bottom, d.top);
+      }
+      if (right - left < 40 || bottom - top < 40) return; // fully covered
+      const [w, n] = map.invert([left - r.left, top - r.top]);
+      const [e, s] = map.invert([right - r.left, bottom - r.top]);
+      bbox.value = [w, s, e, n];
+    };
+    const queueBboxPublish = () => {
       clearTimeout(bboxPending);
-      bboxPending = setTimeout(() => (bbox.value = b), 150);
+      bboxPending = setTimeout(publishVisibleBbox, 150);
+    };
+    map.onRender(queueBboxPublish);
+    // detent changes move the occluder without any camera motion: watch the
+    // drawer's data-state and republish once the 300ms detent transition is
+    // over. A fixed delay, not transitionend — motion-reduce:transition-none
+    // means the event never fires for reduced-motion users.
+    let detentPending: ReturnType<typeof setTimeout>;
+    const drawerObserver = new MutationObserver((records) => {
+      if (!records.some((m) => (m.target as Element).matches(".drawer")))
+        return;
+      clearTimeout(detentPending);
+      detentPending = setTimeout(publishVisibleBbox, 400);
+    });
+    drawerObserver.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-state"],
     });
     // idle warming: when the camera (bbox settles after motion) and the year
     // go quiet, prefetch the neighboring editions' tiles for this viewport
@@ -137,7 +173,9 @@ export default function MapCanvas({
     ro.observe(host.current!);
     return () => {
       ro.disconnect();
+      drawerObserver.disconnect();
       clearTimeout(pending);
+      clearTimeout(detentPending);
       clearTimeout(bboxPending);
       clearTimeout(preloadPending);
       dispose();
