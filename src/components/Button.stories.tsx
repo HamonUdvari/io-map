@@ -22,3 +22,8 @@ export const AsLink: Story = {
     href: "https://example.org",
   },
 };
+
+// the 30px circle variant (Figma Round Button) — compose .button-round in
+export const Round: Story = {
+  args: { children: "+", class: "button-round" },
+};

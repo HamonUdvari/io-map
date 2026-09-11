@@ -49,3 +49,11 @@ export function nameMatches(d, query) {
   const q = fold(query.trim());
   return q === "" || fold(d.nameEN).includes(q);
 }
+
+// The points the map shows: geocoded orgs of the year, narrowed by the
+// category chips and the name filter (shared by markers and zoom-to-fit).
+export function filteredPoints(year, cats, query) {
+  return pointsIn(year)
+    .filter((d) => cats.length === 0 || cats.includes(categoryKey(d)))
+    .filter((d) => nameMatches(d, query));
+}

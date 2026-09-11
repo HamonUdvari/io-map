@@ -10,15 +10,30 @@ export type TableRow = {
 };
 
 // One striped table row (Figma "table-item"): category dot, wrapping name,
-// optional right-aligned info.
+// optional right-aligned info. With onClick the row turns interactive
+// (keyboard-operable button semantics).
 export default function TableItem({
   name,
   category,
   right,
+  onClick,
   class: className,
-}: TableRow & { class?: string }) {
+}: TableRow & { onClick?: () => void; class?: string }) {
   return (
-    <li class={clsx("table-item", className)}>
+    <li
+      class={clsx("table-item", className)}
+      onClick={onClick}
+      {...(onClick != null && {
+        role: "button",
+        tabIndex: 0,
+        onKeyDown: (e: KeyboardEvent) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        },
+      })}
+    >
       <span
         class="table-item-dot"
         data-category={category ?? undefined}

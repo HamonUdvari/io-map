@@ -4,6 +4,7 @@ import MapCanvas from "../components/MapCanvas";
 import YearTimeline from "../components/YearTimeline";
 import CategoryFilters from "../components/CategoryFilters";
 import Organisations from "../components/Organisations";
+import ZoomButtons from "../components/ZoomButtons";
 import Button from "../components/Button";
 ---
 
@@ -44,7 +45,15 @@ import Button from "../components/Button";
         <CategoryFilters client:only="preact" class="nav-filters" />
       </nav>
 
-      <Organisations client:only="preact" />
+      {/* explicit cell: the zoom buttons share it — auto-placement would
+          otherwise push whichever comes second into an implicit third row */}
+      <Organisations client:only="preact" class="col-start-1 row-start-2" />
+
+      {/* desktop-only camera controls: the drawer's cell, bottom-right corner */}
+      <ZoomButtons
+        client:only="preact"
+        class="col-start-1 row-start-2 self-end justify-self-end mr-(--page-px) mb-(--page-py) hidden desktop:flex"
+      />
     </div>
   </body>
 </html>

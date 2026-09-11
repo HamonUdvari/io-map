@@ -7,7 +7,9 @@ import {
   query as globalQuery,
   mapBbox as globalMapBbox,
   selectedOrg as globalSelectedOrg,
+  zoomCommand,
 } from "../lib/state.js";
+import { filteredPoints } from "../lib/orgs.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
 import editions from "../../docs/data/zeitreise-editions.json";
@@ -61,6 +63,44 @@ export default function MapCanvas({
       query,
       selected,
     });
+    // zoom commands from the state (zoomIn/zoomOut/zoomToFit — buttons come
+    // later). Consumed on execution so a remount cannot replay the last one;
+    // peek() keeps this effect from re-running on data-signal changes.
+    const disposeZoom = effect(() => {
+      const cmd = zoomCommand.value;
+      if (cmd == null) return;
+      zoomCommand.value = null;
+      if (cmd.action === "in") map.zoomBy(2);
+      if (cmd.action === "out") map.zoomBy(0.5);
+      if (cmd.action === "center") {
+        map.flyTo(
+          { center: cmd.center, zoom: map.zoomLevel() },
+          { duration: 800 },
+        );
+      }
+      if (cmd.action === "fit") {
+        const points = filteredPoints(
+          year.peek(),
+          categories.peek(),
+          query.peek(),
+        );
+        if (points.length === 0) return;
+        const w = Math.min(...points.map((d: any) => d.long));
+        const e = Math.max(...points.map((d: any) => d.long));
+        const s = Math.min(...points.map((d: any) => d.lat));
+        const n = Math.max(...points.map((d: any) => d.lat));
+        // degenerate span (single point / one shared address): center instead
+        // of a division-by-zero transform
+        if (e - w < 5e-4 && n - s < 5e-4) {
+          map.flyTo(
+            { center: [(w + e) / 2, (s + n) / 2], zoom: 17 },
+            { duration: 800 },
+          );
+        } else {
+          map.flyTo({ bbox: [w, s, e, n] }, { duration: 800 });
+        }
+      }
+    });
     // publish the viewport bbox (debounced past the camera motion) so the
     // org table can mirror what the map shows
     let bboxPending: ReturnType<typeof setTimeout>;
@@ -84,6 +124,7 @@ export default function MapCanvas({
       clearTimeout(pending);
       clearTimeout(bboxPending);
       dispose();
+      disposeZoom();
       disposeMarkers();
       map.node.remove();
     };

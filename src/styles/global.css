@@ -128,6 +128,23 @@
     @apply p-2;
     @apply rounded-full;
     @apply inline-block;
+    /* real <button>s default to cursor:default — links get pointer from the
+       UA; make both variants signal clickability the same way */
+    @apply cursor-pointer;
+  }
+
+  /* Figma "Round Button": a 30px circle variant — compose with .button.
+     The glyph behaves like an icon: no leading, and (Chrome-only progressive
+     enhancement) text-box trims the half-leading so the ink itself centers. */
+  .button-round {
+    @apply inline-flex size-7.5 items-center justify-center p-0;
+    @apply leading-none;
+    @apply [text-box:trim-both_cap_alphabetic];
+  }
+
+  /* Figma "Desktop Zoom Buttons": the camera controls, grouped */
+  .zoom-buttons {
+    @apply pointer-events-auto flex items-center gap-1.5;
   }
 
   /* Base/tablet: buttons row (pushed apart), timeline, filters. Desktop: one row —
@@ -560,6 +577,11 @@
   .table-item {
     @apply flex items-center gap-2 px-2 py-1.5;
     @apply text-io-base text-io-neutral-950 odd:bg-io-neutral-100 even:bg-io-neutral-50;
+
+    /* clickable rows (drawer table): row click opens the infobox */
+    &[role="button"] {
+      @apply cursor-pointer select-none;
+    }
 
     .table-item-dot {
       /* Figma map-node at 75%; categoryless organisations get the dark dot */

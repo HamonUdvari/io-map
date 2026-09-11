@@ -7,7 +7,7 @@
 // the io- design tokens — between the two, every styling knob has one home.
 import Supercluster from "supercluster";
 import { effect, selectEpoch } from "./state.js";
-import { pointsIn, categoryKey, nameMatches } from "./orgs.js";
+import { filteredPoints, categoryKey } from "./orgs.js";
 import {
   groupByCoordinate,
   stackOffsets,
@@ -58,11 +58,7 @@ export function attachMarkers(map, { year, categories, query, selected }) {
   map.svg.on("click.select", () => (selected.value = null));
   const dispose = effect(() => {
     const sel = selected.value;
-    const cats = categories.value;
-    const q = query.value;
-    const points = pointsIn(year.value)
-      .filter((d) => cats.length === 0 || cats.includes(categoryKey(d)))
-      .filter((d) => nameMatches(d, q));
+    const points = filteredPoints(year.value, categories.value, query.value);
 
     // same-address stacks spread apart with deterministic jitter (spread mode)
     const spread = [];

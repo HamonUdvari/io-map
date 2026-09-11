@@ -35,3 +35,17 @@ export const selectedOrg = signal(null);
 // same-value signal write (no notify), but the drawer must still reopen.
 /** @type {import("@preact/signals").Signal<number>} */
 export const selectEpoch = signal(0);
+
+// Map camera commands. UI-less for now: future buttons (and anything else)
+// call zoomIn()/zoomOut()/zoomToFit()/centerOn(); MapCanvas executes against
+// the map and consumes the command. "fit" frames every marker the map
+// currently shows (year + category + name filters applied); "center" pans
+// to a lon/lat at the current zoom (e.g. a table-row selection).
+/** @type {import("@preact/signals").Signal<{action: "in" | "out" | "fit"} | {action: "center", center: number[]} | null>} */
+export const zoomCommand = signal(null);
+
+export const zoomIn = () => (zoomCommand.value = { action: "in" });
+export const zoomOut = () => (zoomCommand.value = { action: "out" });
+export const zoomToFit = () => (zoomCommand.value = { action: "fit" });
+export const centerOn = (center) =>
+  (zoomCommand.value = { action: "center", center });

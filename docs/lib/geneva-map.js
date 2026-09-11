@@ -284,6 +284,12 @@ export function createGenevaMap({
       renderCb = cb;
       renderCb(helpers());
     },
+    // Relative zoom around the viewport center (2 = one level in, 0.5 = one
+    // level out); goes through the zoom behavior, so scale/translate extents
+    // apply and render() runs per frame.
+    zoomBy(factor, {duration = 250} = {}) {
+      svg.transition().duration(duration).call(zoomBehavior.scaleBy, factor);
+    },
     flyTo(target, {duration = 1500} = {}) {
       const t = target.bbox
         ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height})

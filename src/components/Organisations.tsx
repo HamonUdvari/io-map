@@ -8,6 +8,7 @@ import {
   mapBbox,
   selectedOrg,
   selectEpoch,
+  centerOn,
 } from "../lib/state.js";
 import {
   pointsIn,
@@ -38,7 +39,12 @@ const TINTS: Record<string, string> = {
 //   shows (year + category + name filters + current viewport), sorted A–Z
 // - an organisation selected (marker click): the category-tinted InfoBox;
 //   clicking the map background clears the selection and restores the table
-export default function Organisations() {
+// `class` reaches the Drawer root — the page passes its grid placement.
+export default function Organisations({
+  class: className,
+}: {
+  class?: string;
+}) {
   const drawer = useSignal<DrawerState>("half");
   const selected = selectedOrg.value;
   const points = pointsIn(year.value);
@@ -67,7 +73,7 @@ export default function Organisations() {
         state={drawer.value}
         onStateChange={(next) => (drawer.value = next)}
         onClose={() => (selectedOrg.value = null)}
-        class={clsx(info.key != null && TINTS[info.key])}
+        class={clsx(className, info.key != null && TINTS[info.key])}
         header={
           <h2 class="drawer-title">
             {info.prefix != null && `[${info.prefix}] `}
@@ -106,6 +112,7 @@ export default function Organisations() {
     <Drawer
       state={drawer.value}
       onStateChange={(next) => (drawer.value = next)}
+      class={className}
       header={
         <span>
           Organisations ({visible.length}/{organisationsIn(year.value).length})
@@ -123,6 +130,12 @@ export default function Organisations() {
           name: d.nameEN,
           category: categoryKey(d),
         }))}
+        onSelect={(row) => {
+          selectedOrg.value = row.name;
+          selectEpoch.value++;
+          const point = points.find((d: any) => d.nameEN === row.name);
+          if (point) centerOn([point.long, point.lat]);
+        }}
       />
     </Drawer>
   );
