@@ -66,6 +66,15 @@ export default function Organisations({
 
   const info = present ? orgInfo(selected!, year.value) : null;
 
+  // row click (main table and the infobox's nearest list): select the org
+  // and pan the map to it at the current zoom
+  const selectRow = (row: { name: string }) => {
+    selectedOrg.value = row.name;
+    selectEpoch.value++;
+    const point = points.find((d: any) => d.nameEN === row.name);
+    if (point) centerOn([point.long, point.lat]);
+  };
+
   if (info != null) {
     const demo = demoContent(info.name); // TODO remove: Afghanistan-only mock
     return (
@@ -84,7 +93,11 @@ export default function Organisations({
         <InfoBox
           info={info}
           groups={eventGroups(info.history)}
-          nearest={nearestTo(info.name, year.value)}
+          nearest={nearestTo(info.name, year.value, {
+            cats: categories.value,
+            query: query.value,
+          })}
+          onSelectNearest={selectRow}
           about={demo?.about}
           photo={demo?.photo}
           url={demo?.url}
@@ -130,12 +143,7 @@ export default function Organisations({
           name: d.nameEN,
           category: categoryKey(d),
         }))}
-        onSelect={(row) => {
-          selectedOrg.value = row.name;
-          selectEpoch.value++;
-          const point = points.find((d: any) => d.nameEN === row.name);
-          if (point) centerOn([point.long, point.lat]);
-        }}
+        onSelect={selectRow}
       />
     </Drawer>
   );

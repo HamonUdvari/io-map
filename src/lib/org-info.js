@@ -2,7 +2,7 @@
 // organisation, derived from the CSV rows (data layer untouched). Ported from
 // the docs/infobox-content.html notebook: the "no"-aware content gate, the
 // display-address-or-OSM fallback, and latest-row-at-year selection.
-import { rows, pointsIn, categoryKey } from "./orgs.js";
+import { rows, pointsIn, filteredPoints, categoryKey } from "./orgs.js";
 import { haversineMeters, formatDistance } from "../../docs/lib/io-data.js";
 
 // literal "no" is the sheet's explicit none placeholder
@@ -137,17 +137,28 @@ export function eventGroups(history) {
   return groups;
 }
 
-// Nearest organisations for the table (Figma right-side info): neighbors
-// among ALL geocoded orgs of the year (notebook semantics — ignores the UI
-// filters), "same addr." under a metre, else the formatted distance.
-export function nearestTo(name, year, k = 7) {
-  const points = pointsIn(year);
-  const self = points.find((d) => d.nameEN === name);
+// Nearest organisations for the table (Figma right-side info): every org
+// within `radius` meters — or the `min` closest when the neighbourhood is
+// sparser than that — among the orgs the GLOBAL filters allow (category
+// chips + name query, like the map). The selected org itself anchors from
+// the unfiltered set, so filters never orphan it. "same addr." under a
+// metre.
+/**
+ * @param {string} name
+ * @param {number} year
+ * @param {{cats?: string[], query?: string, radius?: number, min?: number}} [options]
+ */
+export function nearestTo(
+  name,
+  year,
+  { cats = [], query = "", radius = 500, min = 5 } = {},
+) {
+  const self = pointsIn(year).find((d) => d.nameEN === name);
   if (!self) return [];
   // distances from self only (O(n)) — io-data's nearestNeighbors builds the
   // full all-pairs map, too slow to run per render during a year drag
-  return points
-    .filter((d) => d !== self)
+  const sorted = filteredPoints(year, cats, query)
+    .filter((d) => d.nameEN !== name)
     .map((point) => ({
       point,
       meters: haversineMeters(self.lat, self.long, point.lat, point.long),
@@ -155,13 +166,15 @@ export function nearestTo(name, year, k = 7) {
     .sort(
       (a, b) =>
         a.meters - b.meters || (a.point.nameEN < b.point.nameEN ? -1 : 1),
-    )
-    .slice(0, k)
-    .map(({ point, meters }) => ({
+    );
+  const within = sorted.filter((n) => n.meters <= radius);
+  return (within.length >= min ? within : sorted.slice(0, min)).map(
+    ({ point, meters }) => ({
       name: point.nameEN,
       category: categoryKey(point),
       right: meters < 1 ? "same addr." : formatDistance(meters),
-    }));
+    }),
+  );
 }
 
 // TODO remove: demo-only infobox content for Afghanistan until the client

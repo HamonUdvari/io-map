@@ -23,6 +23,7 @@ export default function InfoBox({
   info,
   groups,
   nearest,
+  onSelectNearest,
   about,
   photo,
   url,
@@ -31,6 +32,8 @@ export default function InfoBox({
   info: OrgInfo;
   groups: { year: number; events: TimelineEvent[] }[];
   nearest: TableRow[];
+  /** row click in Nearest Organisations (jump to that organisation) */
+  onSelectNearest?: (item: TableRow) => void;
   about?: string | null;
   photo?: { src: string; alt: string; credit?: string } | null;
   url?: string | null;
@@ -96,7 +99,7 @@ export default function InfoBox({
 
       <section class="infobox-section infobox-nearest" id="infobox-nearest">
         <h3>Nearest Organisations</h3>
-        <Table items={nearest} />
+        <Table items={nearest} onSelect={onSelectNearest} />
       </section>
     </div>
   );
