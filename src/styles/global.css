@@ -135,8 +135,8 @@
      buttons stay in charge of their own size; items-start stops vertical stretch. */
   .nav {
     /* the page overlay is pointer-events-none so the map stays interactive —
-       re-enable events for the nav and everything in it */
-    @apply pointer-events-auto;
+       re-enable events on the nav ITEMS only (not this grid box: its empty
+       space would swallow map clicks across the whole top rows on mobile) */
     @apply grid grid-cols-[auto_auto] items-start justify-between gap-2;
     /* page spacing lives here (not on the overlay) so the filters row can
        bleed to the viewport edges; the other items re-add it as margins */
@@ -154,12 +154,12 @@
     /* buttons hug their content — grid items otherwise stretch to the track,
        which the spanning rows inflate on base/tablet */
     .nav-title {
-      @apply ml-(--page-px) justify-self-start;
+      @apply pointer-events-auto ml-(--page-px) justify-self-start;
       grid-area: title;
     }
 
     .nav-timeline {
-      @apply mx-(--page-px);
+      @apply pointer-events-auto mx-(--page-px);
       grid-area: timeline;
 
       @variant desktop {
@@ -168,11 +168,12 @@
     }
 
     .nav-filters {
+      @apply pointer-events-auto;
       grid-area: filters;
     }
 
     .nav-lang {
-      @apply mr-(--page-px) justify-self-end;
+      @apply pointer-events-auto mr-(--page-px) justify-self-end;
       grid-area: lang;
     }
   }
