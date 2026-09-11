@@ -10,7 +10,11 @@ import {
   zoomCommand,
 } from "../lib/state.js";
 import { filteredPoints } from "../lib/orgs.js";
-import { preloadBasemaps, PRELOAD_PARAMS } from "../lib/basemap-preload.js";
+import {
+  preloadBasemaps,
+  abortPreload,
+  PRELOAD_PARAMS,
+} from "../lib/basemap-preload.js";
 import { tonedTileHref } from "../lib/tile-tone.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
@@ -149,11 +153,14 @@ export default function MapCanvas({
       attributeFilter: ["data-state"],
     });
     // idle warming: when the camera (bbox settles after motion) and the year
-    // go quiet, prefetch the neighboring editions' tiles for this viewport
+    // go quiet, trickle-fetch nearby tiles (basemap-preload.js). Activity
+    // aborts a running queue immediately — the next idle re-queues from the
+    // new viewport/year.
     let preloadPending: ReturnType<typeof setTimeout>;
     const disposePreload = effect(() => {
       void bbox.value; // idle signal — re-arms after every camera settle
       const y = year.value;
+      abortPreload();
       clearTimeout(preloadPending);
       preloadPending = setTimeout(
         () => preloadBasemaps(map, y, { editions, layersData }),
@@ -178,6 +185,7 @@ export default function MapCanvas({
       clearTimeout(detentPending);
       clearTimeout(bboxPending);
       clearTimeout(preloadPending);
+      abortPreload();
       dispose();
       disposeZoom();
       disposePreload();
