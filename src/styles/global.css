@@ -335,9 +335,12 @@
 
     /* desktop (Figma 47-10512): static panel docked left, always expanded
        (the component forces the open state), page padding from the edges;
-       it floats free of the viewport edge, so all corners round */
+       it floats free of the viewport edge, so all corners round. self-start
+       + max-h: short content hugs, long content fills and scrolls (mobile
+       keeps the stretched height — the detent math needs it) */
     @variant desktop {
       @apply w-full max-w-[24.3125rem] justify-self-start; /* 389px */
+      @apply max-h-full self-start;
       @apply mb-(--page-py) ml-(--page-px);
       @apply rounded-io-panel;
     }
@@ -356,8 +359,9 @@
     }
 
     .drawer-header {
-      /* min-h, not h: infobox titles wrap to two lines */
-      @apply flex min-h-(--drawer-peek) shrink-0 items-center justify-between gap-2 pl-4;
+      /* min-h fixed (the peek VAR now follows the measured header height —
+         set inline by Drawer — so it must not feed back into this) */
+      @apply flex min-h-12 shrink-0 items-center justify-between gap-2 pl-4;
       @apply text-io-base font-bold;
       @apply cursor-grab touch-none select-none active:cursor-grabbing;
 
@@ -369,7 +373,9 @@
     }
 
     .drawer-arrow {
-      @apply grid h-(--drawer-peek) w-(--drawer-peek) shrink-0 cursor-pointer place-items-center;
+      /* fixed 48px box, pinned to the TOP of a wrapped title (its icon
+         centers on the first line) */
+      @apply grid size-12 shrink-0 cursor-pointer place-items-center self-start;
 
       svg {
         /* quick flip on state change (transition-transform covers rotate in v4) */
@@ -407,12 +413,6 @@
   /* the selected organisation's title in the drawer header (wraps) */
   .drawer-title {
     @apply py-2 text-io-title font-bold;
-  }
-
-  /* the collapsed peek shows only the top 48px — one clean title line
-     instead of a mid-glyph clip of the wrapped second line */
-  .drawer[data-state="closed"] .drawer-title {
-    @apply line-clamp-1;
   }
 
   /* Selected organisation detail (Figma 49-7140): photo, meta, about, anchor

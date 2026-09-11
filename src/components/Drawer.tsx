@@ -62,7 +62,22 @@ export default function Drawer({
   class?: string;
 }) {
   const root = useRef<HTMLElement>(null);
+  const headerEl = useRef<HTMLDivElement>(null);
   const contentId = useId();
+
+  // the collapsed peek always shows the WHOLE header: measure it and write
+  // --drawer-peek on the drawer — the CSS translate calc and the drag stops
+  // both read the variable, so wrapped two-line titles are never clipped
+  useEffect(() => {
+    const el = root.current;
+    const head = headerEl.current;
+    if (el == null || head == null) return;
+    const ro = new ResizeObserver(() =>
+      el.style.setProperty("--drawer-peek", `${head.offsetHeight}px`),
+    );
+    ro.observe(head);
+    return () => ro.disconnect();
+  }, []);
   const internal = useSignal<DrawerState>("half");
   const isStatic = useMediaQuery("(min-width: 80rem)"); // = --breakpoint-desktop
   const state = isStatic ? "open" : (controlled ?? internal.value);
@@ -170,6 +185,7 @@ export default function Drawer({
     <section class={clsx("drawer", className)} ref={root} data-state={state}>
       <div
         class="drawer-header"
+        ref={headerEl}
         onPointerDown={isStatic ? undefined : onPointerDown}
         onPointerMove={isStatic ? undefined : onPointerMove}
         onPointerUp={isStatic ? undefined : onPointerUp}
