@@ -26,6 +26,16 @@ import Drawer, { type DrawerState } from "./Drawer";
 import InfoBox from "./InfoBox";
 import Table from "./Table";
 import TextFilter from "./TextFilter";
+import CategoryCounts from "./CategoryCounts";
+import { CATEGORIES } from "./CategoryFilter";
+
+// short labels for the per-category counts in the list header
+const SHORT_LABELS: Record<string, string> = {
+  pr: "PR",
+  ngo: "NGO",
+  io: "IO",
+  special: "Special", // TODO(design): follows the label of the fourth category
+};
 
 // static strings — Tailwind's scanner cannot see composed class names
 const TINTS: Record<string, string> = {
@@ -159,15 +169,29 @@ export default function Organisations({
     )
     .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN));
 
+  // the split of the listed organisations by category; a category the chips
+  // filter out shows 0, so the row keeps its shape while filters change
+  const counts = CATEGORIES.map((c) => ({
+    id: c.id,
+    label: c.label,
+    short: SHORT_LABELS[c.id] ?? c.label,
+    count: visible.filter((d: any) => categoryKey(d) === c.id).length,
+  }));
+
   return (
     <Drawer
       state={drawer.value}
       onStateChange={(next) => (drawer.value = next)}
       class={className}
       header={
-        <span>
-          Organisations ({visible.length}/{organisationsIn(year.value).length})
-        </span>
+        // TODO(design): interim placement — the counts sit under the title
+        <div class="drawer-heading">
+          <span>
+            Organisations ({visible.length}/{organisationsIn(year.value).length}
+            )
+          </span>
+          <CategoryCounts counts={counts} />
+        </div>
       }
     >
       <div class="org-filter">
