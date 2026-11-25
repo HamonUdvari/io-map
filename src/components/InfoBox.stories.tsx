@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/preact-vite";
 import InfoBox from "./InfoBox";
 import {
   orgInfo,
+  orgStatus,
   eventGroups,
+  decadeGroups,
   nearestTo,
-  demoContent,
 } from "../lib/org-info.js";
-import { pointsIn } from "../lib/orgs.js";
 
 const meta = {
   title: "UI/InfoBox",
@@ -34,8 +34,7 @@ const TINTS: Record<string, string> = {
   io: "bg-io-io-500",
 };
 
-// The real dataset end to end: pick any organisation + year. Afghanistan
-// carries the demo about/photo/url content (TODO remove with the mock).
+// The real dataset end to end: pick any organisation (by uniqueName) + year.
 export const Interactive: StoryObj<{ name: string; year: number }> = {
   args: { name: "Afghanistan", year: 2000 },
   argTypes: {
@@ -44,7 +43,7 @@ export const Interactive: StoryObj<{ name: string; year: number }> = {
   render: (args) => {
     const info = orgInfo(args.name, args.year);
     if (info == null) return <p class="p-2">No such organisation.</p>;
-    const demo = demoContent(args.name);
+    const groups = eventGroups(info.history);
     return (
       <div
         class={`mx-auto flex min-h-dvh max-w-[24.375rem] flex-col ${TINTS[info.key] ?? "bg-io-neutral-500"}`}
@@ -55,16 +54,11 @@ export const Interactive: StoryObj<{ name: string; year: number }> = {
         </h2>
         <InfoBox
           info={info}
-          groups={eventGroups(info.history)}
+          status={orgStatus(args.name, args.year)!}
+          groups={groups}
+          decades={decadeGroups(groups)}
           nearest={nearestTo(args.name, args.year)}
-          absentYear={
-            pointsIn(args.year).some((d: any) => d.uniqueName === args.name)
-              ? null
-              : args.year
-          }
-          about={demo?.about}
-          photo={demo?.photo}
-          url={demo?.url}
+          sourcesHref="#sources"
         />
       </div>
     );
