@@ -2,7 +2,13 @@
 // organisation, derived from the CSV rows (data layer untouched). Ported from
 // the docs/infobox-content.html notebook: the "no"-aware content gate, the
 // display-address-or-OSM fallback, and latest-row-at-year selection.
-import { rows, pointsIn, filteredPoints, categoryKey } from "./orgs.js";
+import {
+  rows,
+  pointsIn,
+  filteredPoints,
+  categoryKey,
+  orgStateIn,
+} from "./orgs.js";
 import { haversineMeters, formatDistance } from "../../docs/lib/io-data.js";
 
 // literal "no" is the sheet's explicit none placeholder
@@ -63,15 +69,77 @@ export function orgInfo(id, year) {
     building: latestWith(history, "locationBuilding", at),
     representative: latestWith(history, "representativeName", at),
     activity: `${history[0].year}–${history.at(-1).year}`,
+    // organisation-level text: the sheet repeats or places it on any row
+    description: latestWith(history, "description", Infinity),
     at, // the year the meta actually describes (latest row <= viewed year)
     firstYear: history[0].year,
     history,
   };
 }
 
+// Where the organisation stands in the viewed year — the infobox's status
+// line ("show if currently closed or not"). `kind` is for styling, `label`
+// the sentence. Follows the map's presence rule (orgs.js orgStateIn).
+// TODO(design): wording.
+/**
+ * @param {string} id uniqueName
+ * @param {number} year
+ * @returns {{kind: "present" | "present-no-address" | "not-yet" | "closed" | "no-information" | "gap", label: string, year: number, first: number, last: number} | null}
+ */
+export function orgStatus(id, year) {
+  const history = orgRows(id);
+  if (history.length === 0) return null;
+  const first = history[0].year;
+  const last = history.at(-1).year;
+  const base = { year, first, last };
+  const state = orgStateIn(id, year);
+  if (state != null) {
+    const located = hasAddress(state.addressOSM);
+    return {
+      ...base,
+      kind: located ? "present" : "present-no-address",
+      label: located
+        ? `Present in Geneva in ${year}`
+        : `Present in Geneva in ${year} — address not known`,
+    };
+  }
+  if (year < first) {
+    return {
+      ...base,
+      kind: "not-yet",
+      label: `Not yet in Geneva in ${year} — first recorded in ${first}`,
+    };
+  }
+  const before = history.filter((d) => d.year <= year).at(-1);
+  const after = history.find((d) => d.year > year) ?? null;
+  if (before.event === "closed") {
+    return {
+      ...base,
+      kind: "closed",
+      label:
+        after != null
+          ? `Closed in ${before.year} — back in Geneva in ${after.year}`
+          : `Closed in ${before.year}`,
+    };
+  }
+  if (after == null) {
+    return {
+      ...base,
+      kind: "no-information",
+      label: `No information in the sources after ${before.year}`,
+    };
+  }
+  return {
+    ...base,
+    kind: "gap",
+    label: `Not recorded in ${year} — recorded in ${before.year} and again in ${after.year}`,
+  };
+}
+
 // Humanized event titles (clients: "shouldn't read like a database"); unknown
 // event strings fall through as-is (the sheet has free-text one-offs).
-const eventTitle = (row) => {
+// `previous` is the organisation's row before this one, if any.
+const eventTitle = (row, previous) => {
   switch (row.event) {
     case "addressChange":
       return hasContent(addressOf(row))
@@ -85,9 +153,9 @@ const eventTitle = (row) => {
         ? `${row.representativeName} named new representative`
         : "New representative named";
     case "nameChange":
-      return "Renamed";
-    case "nameChangeFR":
-      return "French name changed";
+      return previous != null && previous.nameEN !== row.nameEN
+        ? `Renamed ${row.nameEN}`
+        : "Renamed";
     case "established":
       return "Established in Geneva";
     case "reopened":
@@ -101,49 +169,37 @@ const eventTitle = (row) => {
   }
 };
 
-// source1/source2 -> render refs: URLs become labelled links, Blue Book codes
-// stay plain text, "no"/empty drop out.
-const SOURCE_LABELS = [["archives.ungeneva.org", "UN Archives"]];
-
-export function sourceRefs(row) {
-  return [row.source1, row.source2].filter(hasContent).map((s) => {
-    const v = String(s).trim();
-    try {
-      if (/^https?:\/\//.test(v)) {
-        const host = new URL(v).hostname;
-        const label =
-          SOURCE_LABELS.find(([h]) => host.endsWith(h))?.[1] ?? host;
-        return { label, href: v };
-      }
-    } catch {
-      // hand-edited sheet — a malformed URL must not blank the infobox
-    }
-    return { label: v };
-  });
-}
-
 // The timeline, regrouped by year: same-year rows merge under one heading
 // (e.g. Afghanistan 1983: address + representative change). Rows without an
 // event still appear when they carry a note — the "first mention" case.
-// TODO(design): clients eventually want collapsible decade grouping on top.
 export function eventGroups(history) {
   const groups = [];
-  for (const row of history) {
+  history.forEach((row, i) => {
     const entry = {
-      title: hasContent(row.event) ? eventTitle(row) : null,
+      title: hasContent(row.event) ? eventTitle(row, history[i - 1]) : null,
       note: hasContent(row.notesEN) ? row.notesEN : null,
-      note2: null,
-      sources: sourceRefs(row),
     };
-    // yearly rows with nothing to TELL drop out — deliberately including the
-    // ~34% attestation-only rows (a source but no event/note); listing every
-    // Blue Book attestation would drown the curated timeline. Client call.
-    if (!entry.title && !entry.note && !entry.note2) continue;
+    // yearly rows with nothing to TELL drop out: most rows only attest that
+    // the organisation was there that year
+    if (!entry.title && !entry.note) return;
     const group = groups.at(-1);
     if (group?.year === row.year) group.events.push(entry);
     else groups.push({ year: row.year, events: [entry] });
-  }
+  });
   return groups;
+}
+
+// The year groups regrouped by decade, for the collapsible timeline
+// (clients: with many changes the list is too long to read in one piece).
+export function decadeGroups(groups) {
+  const decades = [];
+  for (const group of groups) {
+    const decade = Math.floor(group.year / 10) * 10;
+    if (decades.at(-1)?.decade !== decade)
+      decades.push({ decade, label: `${decade}s`, groups: [] });
+    decades.at(-1).groups.push(group);
+  }
+  return decades;
 }
 
 // Nearest organisations for the table (Figma right-side info): every org
@@ -185,27 +241,4 @@ export function nearestTo(
       right: meters < 1 ? "same addr." : formatDistance(meters),
     }),
   );
-}
-
-// TODO remove: demo-only infobox content for Afghanistan until the client
-// columns (descriptions, contemporary web links, photos + credits) land.
-const DEMO_CONTENT = {
-  Afghanistan: {
-    about:
-      "Afghanistan maintained a permanent delegation to the League of " +
-      "Nations in Geneva from 1936, opened in the wake of the Conference " +
-      "on Disarmament. Closed at the outbreak of the Second World War, " +
-      "the representation returned to Geneva in 1983 and remained active " +
-      "through the United Nations era.",
-    photo: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Palais_des_nations.jpg/960px-Palais_des_nations.jpg",
-      alt: "Palais des Nations, Geneva",
-      credit: "Photo: Wikimedia Commons, CC BY-SA",
-    },
-    url: "https://www.ungeneva.org/en/blue-book/missions/member-states",
-  },
-};
-
-export function demoContent(name) {
-  return DEMO_CONTENT[name] ?? null;
 }

@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Afghanistan's real 1936 first mention + the regrouped 1983 double event —
-// edit the args to explore titled/untitled events, sources, plain-text refs.
+// edit the args to explore titled and untitled events.
 export const Interactive: Story = {
   args: {
     year: 1936,
@@ -27,23 +27,10 @@ export const Interactive: Story = {
           "on Disarmament in 1932. The delegation was in contact with the " +
           "League Secretariat. However, there was no permanent delegation " +
           "before according to CH authorities",
-        sources: [
-          {
-            label: "UN Archives",
-            href: "https://archives.ungeneva.org/communications-with-the-government-of-afghanistan",
-          },
-          { label: "B1936_jan" },
-        ],
       },
       {
         title: "Address changed to 23, Avenue de Beau-Séjour",
         note: "In September 1937",
-        sources: [
-          {
-            label: "UN Archives",
-            href: "https://archives.ungeneva.org/",
-          },
-        ],
       },
     ],
   },

@@ -18,9 +18,10 @@ import {
 } from "../lib/orgs.js";
 import {
   orgInfo,
+  orgStatus,
   eventGroups,
+  decadeGroups,
   nearestTo,
-  demoContent,
 } from "../lib/org-info.js";
 import Drawer, { type DrawerState } from "./Drawer";
 import InfoBox from "./InfoBox";
@@ -49,13 +50,10 @@ export default function Organisations({
   const selected = selectedOrg.value;
   const points = pointsIn(year.value);
 
-  // the selection SURVIVES years where the org doesn't exist (closed/moved
-  // gaps): the infobox stays with an absent note, so scrubbing across a gap
-  // keeps tracking the organisation. Absence = ACTIVITY (closed/moved/not
-  // yet founded), not geocoding — a few active orgs have unmapped addresses
-  // and must not be declared "not present".
-  const active =
-    selected != null && organisationsIn(year.value).includes(selected);
+  // the selection SURVIVES years where the org doesn't exist (closed years,
+  // gaps, before the first mention): the infobox stays and its status line
+  // says where the organisation stands, so scrubbing across a gap keeps
+  // tracking it (org-info.js orgStatus)
 
   // follow the selected organisation through time: scrubbing the year pans
   // the map to its address of that year whenever it moved, so relocations
@@ -110,7 +108,7 @@ export default function Organisations({
   };
 
   if (info != null) {
-    const demo = demoContent(info.id); // TODO remove: Afghanistan-only mock
+    const groups = eventGroups(info.history);
     return (
       <Drawer
         state={drawer.value}
@@ -126,18 +124,17 @@ export default function Organisations({
       >
         <InfoBox
           info={info}
-          groups={eventGroups(info.history)}
+          status={orgStatus(info.id, year.value)!}
+          groups={groups}
+          decades={decadeGroups(groups)}
           nearest={nearestTo(info.id, year.value, {
             cats: categories.value,
             query: query.value,
           })}
-          absentYear={active ? null : year.value}
           onSelectNearest={selectRow}
           onHoverNearest={hoverRow}
           onJump={() => (drawer.value = "open")}
-          about={demo?.about}
-          photo={demo?.photo}
-          url={demo?.url}
+          sourcesHref={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/about/#sources`}
         />
       </Drawer>
     );

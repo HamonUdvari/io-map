@@ -61,6 +61,12 @@ function stateIn(states, year) {
   return state == null || state.event === "closed" ? null : state;
 }
 
+// The state of one organisation (by uniqueName) in `year`; null = not present.
+export function orgStateIn(id, year) {
+  const states = statesByOrg.get(id);
+  return states == null ? null : stateIn(states, year);
+}
+
 const presentByYear = new Map();
 
 // One row (the state of the year) for each organisation present in `year`.
