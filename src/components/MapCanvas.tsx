@@ -68,6 +68,7 @@ export default function MapCanvas({
       tileHref: tonedTileHref,
       extent: MAP_BOUNDS,
       minZoom: BOUNDS_PARAMS.minZoom,
+      baseZoom: BOUNDS_PARAMS.baseZoom,
     });
     host.current!.append(map.node);
     map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
@@ -113,6 +114,23 @@ export default function MapCanvas({
       }
       step(layer);
     });
+    // The map area the UI does not cover, as [x0, y0, x1, y1] in canvas px:
+    // below the nav rows, right of the drawer panel (desktop) or above the
+    // sheet (mobile). null when less than 40px remain.
+    const freeRect = (): number[] | null => {
+      const r = (map.svg.node() as SVGSVGElement).getBoundingClientRect();
+      let { left, top, right, bottom } = r;
+      const nav = document.querySelector(".nav");
+      if (nav) top = Math.max(top, nav.getBoundingClientRect().bottom);
+      const drawerEl = document.querySelector(".drawer");
+      if (drawerEl) {
+        const d = drawerEl.getBoundingClientRect();
+        if (d.width < r.width * 0.9) left = Math.max(left, d.right);
+        else bottom = Math.min(bottom, d.top);
+      }
+      if (right - left < 40 || bottom - top < 40) return null;
+      return [left - r.left, top - r.top, right - r.left, bottom - r.top];
+    };
     const disposeMarkers = attachMarkers(map, {
       year,
       categories,
@@ -129,10 +147,13 @@ export default function MapCanvas({
       zoomCommand.value = null;
       if (cmd.action === "in") map.zoomBy(2);
       if (cmd.action === "out") map.zoomBy(0.5);
+      // camera targets are framed in the map area the UI leaves free, so a
+      // centred organisation or a fitted set never lands under the drawer
+      const rect = freeRect() ?? undefined;
       if (cmd.action === "center") {
         // 2x the fit/show-all pace: centering is a small hop, not a journey
         map.flyTo(
-          { center: cmd.center, zoom: map.zoomLevel() },
+          { center: cmd.center, zoom: map.zoomLevel(), rect },
           { duration: 400 },
         );
       }
@@ -151,11 +172,11 @@ export default function MapCanvas({
         // of a division-by-zero transform
         if (e - w < 5e-4 && n - s < 5e-4) {
           map.flyTo(
-            { center: [(w + e) / 2, (s + n) / 2], zoom: 17 },
+            { center: [(w + e) / 2, (s + n) / 2], zoom: 17, rect },
             { duration: 800 },
           );
         } else {
-          map.flyTo({ bbox: [w, s, e, n] }, { duration: 800 });
+          map.flyTo({ bbox: [w, s, e, n], rect }, { duration: 800 });
         }
       }
     });
@@ -166,19 +187,10 @@ export default function MapCanvas({
     // actually visible, not hidden under the UI.
     let bboxPending: ReturnType<typeof setTimeout>;
     const publishVisibleBbox = () => {
-      const r = (map.svg.node() as SVGSVGElement).getBoundingClientRect();
-      let { left, top, right, bottom } = r;
-      const nav = document.querySelector(".nav");
-      if (nav) top = Math.max(top, nav.getBoundingClientRect().bottom);
-      const drawerEl = document.querySelector(".drawer");
-      if (drawerEl) {
-        const d = drawerEl.getBoundingClientRect();
-        if (d.width < r.width * 0.9) left = Math.max(left, d.right);
-        else bottom = Math.min(bottom, d.top);
-      }
-      if (right - left < 40 || bottom - top < 40) return; // fully covered
-      const [w, n] = map.invert([left - r.left, top - r.top]);
-      const [e, s] = map.invert([right - r.left, bottom - r.top]);
+      const rect = freeRect();
+      if (rect == null) return; // fully covered
+      const [w, n] = map.invert([rect[0], rect[1]]);
+      const [e, s] = map.invert([rect[2], rect[3]]);
       bbox.value = [w, s, e, n];
     };
     const queueBboxPublish = () => {

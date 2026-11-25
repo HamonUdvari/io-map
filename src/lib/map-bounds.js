@@ -11,6 +11,10 @@ export const BOUNDS_PARAMS = {
   canton: [5.94, 46.12, 6.32, 46.37],
   pad: 0.15, // margin around the addresses, as a share of their span
   minZoom: 11, // absolute floor, whatever the viewport size
+  // the whole area stays loaded at this coarse level under the live tiles
+  // (about 16 tiles for each basemap edition), so zoom-out and "Show all"
+  // never open onto an empty area
+  baseZoom: 12,
 };
 
 function addressBounds() {
