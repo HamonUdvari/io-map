@@ -387,6 +387,16 @@
       @apply rotate-180;
     }
 
+    /* the close cross (mobile: beside the arrow; desktop: alone) */
+    .drawer-close {
+      /* mobile: the arrow already gives the 48px edge box — the cross tucks in */
+      @apply -ml-2;
+
+      @variant desktop {
+        @apply ml-0;
+      }
+    }
+
     .drawer-content {
       @apply min-h-0 grow overflow-y-auto overscroll-contain;
       /* anchor jumps (infobox nav) glide instead of teleporting */
