@@ -480,9 +480,11 @@
       }
     }
 
-    /* TODO(design): wording/treatment of the absence note (closed years) */
-    .infobox-absent {
-      @apply px-2 text-io-sm font-bold;
+    /* TODO(design): the status line (present / closed / not yet / no
+       information) — the partners want it prominent; [data-status] carries
+       the kind for a per-status treatment */
+    .infobox-status {
+      @apply px-2 text-io-base font-bold;
     }
 
     .infobox-meta {
@@ -521,6 +523,17 @@
       }
     }
 
+    /* TODO(design): interim decade fold of long timelines (native details) */
+    .infobox-decade {
+      summary {
+        @apply cursor-pointer px-2 py-1 text-io-base font-bold;
+      }
+
+      .infobox-decade-count {
+        @apply text-io-sm font-normal;
+      }
+    }
+
     .infobox-nearest {
       @apply bg-io-neutral-50;
     }
@@ -550,14 +563,6 @@
 
     .timeline-entry-title {
       @apply text-io-base font-bold;
-    }
-
-    .timeline-entry-sources {
-      @apply flex flex-col gap-1 text-io-sm;
-
-      a {
-        @apply underline [text-underline-position:from-font];
-      }
     }
   }
 
