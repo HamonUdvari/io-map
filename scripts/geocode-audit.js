@@ -33,7 +33,7 @@ function writeJson(path, value) {
   renameSync(path + ".tmp", path);
 }
 
-const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
+const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
 
 // "13bis, Avenue X, Quarter" -> {number: "13bis", street: "Avenue X"}; a range
 // ("8-14") asks for its first number. Addresses without a leading number
