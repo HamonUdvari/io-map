@@ -110,10 +110,17 @@
     "precision": "house"
   },
   "13, Avenue de Champel": {
-    "lat": 46.1885218,
-    "lon": 6.1517536,
-    "displayName": "Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "residential"
+    "lat": 46.19396209716797,
+    "lon": 6.151830673217773,
+    "displayName": "Avenue de Champel 13 1206 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1885218,
+      "lon": 6.1517536,
+      "displayName": "Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "residential"
+    }
   },
   "30, Rue de Contamines": {
     "lat": 46.1952277,
@@ -290,10 +297,17 @@
     "precision": "house"
   },
   "20, Route de Pré-Bois, Cointrin": {
-    "lat": 46.22567,
-    "lon": 6.1018132,
-    "displayName": "Dukascopy Bank, 20, Route de Pré-Bois, Cointrin, Meyrin, Genève, 1215, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.224578857421875,
+    "lon": 6.100836277008057,
+    "displayName": "Route de Pré-Bois 20 1215 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.22567,
+      "lon": 6.1018132,
+      "displayName": "Dukascopy Bank, 20, Route de Pré-Bois, Cointrin, Meyrin, Genève, 1215, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "3, Chemin Gilbert-Trolliet, Moillebeau": {
     "lat": 46.2191416,
@@ -320,10 +334,17 @@
     "precision": "house"
   },
   "15, Avenue de la Paix": {
-    "lat": 46.2229885,
-    "lon": 6.1420368,
-    "displayName": "Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "primary"
+    "lat": 46.226558685302734,
+    "lon": 6.135650634765625,
+    "displayName": "Avenue de la Paix 15 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2229885,
+      "lon": 6.1420368,
+      "displayName": "Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "primary"
+    }
   },
   "6, Avenue de France": {
     "lat": 46.2193628,
@@ -434,10 +455,17 @@
     "precision": "house"
   },
   "33, Rue Antoine-Carteret": {
-    "lat": 46.2131638,
-    "lon": 6.1343658,
-    "displayName": "Rue Antoine-Carteret, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "residential"
+    "lat": 46.21405792236328,
+    "lon": 6.135299205780029,
+    "displayName": "Rue Antoine-CARTERET 33 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2131638,
+      "lon": 6.1343658,
+      "displayName": "Rue Antoine-Carteret, La Servette, Petit-Saconnex et Servette, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "residential"
+    }
   },
   "17B, L'Ancienne Route": {
     "lat": 46.2377712,
@@ -507,10 +535,17 @@
     "precision": "house"
   },
   "16, Chemin des Crêts-de-Pregny": {
-    "lat": 46.2336001,
-    "lon": 6.1315279,
-    "displayName": "Mission Permanente de la Bulgarie, 16, Chemin des Crêts-de-Pregny, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.234107971191406,
+    "lon": 6.130922794342041,
+    "displayName": "Chemin des Crêts-de-Pregny 16 1292 Chambésy",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2336001,
+      "lon": 6.1315279,
+      "displayName": "Mission Permanente de la Bulgarie, 16, Chemin des Crêts-de-Pregny, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "20, Rue de Lausanne": {
     "lat": 46.2114679,
@@ -927,10 +962,17 @@
     "precision": "house"
   },
   "8, Route de Pregny": {
-    "lat": 46.2362473,
-    "lon": 6.139925,
-    "displayName": "Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "tertiary"
+    "lat": 46.228790283203125,
+    "lon": 6.140303611755371,
+    "displayName": "Route de Pregny 8 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2362473,
+      "lon": 6.139925,
+      "displayName": "Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "tertiary"
+    }
   },
   "34, Rue de Vermont": {
     "lat": 46.2186603,
@@ -1023,10 +1065,17 @@
     "precision": "house"
   },
   "17, Chemin Camille-Vidart": {
-    "lat": 46.2344734,
-    "lon": 6.1317262,
-    "displayName": "Mission permanente de la République tchèque, 17, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.21996307373047,
+    "lon": 6.136559963226318,
+    "displayName": "Chemin Camille-VIDART 17 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2344734,
+      "lon": 6.1317262,
+      "displayName": "Mission permanente de la République tchèque, 17, Chemin Camille-Vidart, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "49, Rue de Moillebeau": {
     "lat": 46.2215426,
@@ -1041,10 +1090,17 @@
     "precision": "house"
   },
   "6, Route de Pregny": {
-    "lat": 46.2362473,
-    "lon": 6.139925,
-    "displayName": "Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "tertiary"
+    "lat": 46.228370666503906,
+    "lon": 6.139008522033691,
+    "displayName": "Route de Pregny 6 1292 Chambésy",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2362473,
+      "lon": 6.139925,
+      "displayName": "Route de Pregny, Chambésy, Pregny-Chambésy, Genève, 1292, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "tertiary"
+    }
   },
   "28, Rue de Vermont, Quartier des Nations": {
     "lat": 46.2181639,
@@ -1971,10 +2027,17 @@
     "precision": "house"
   },
   "54-56, Rue de Montbrillant": {
-    "lat": 46.2123165,
-    "lon": 6.1412511,
-    "displayName": "Rue de Montbrillant, Grottes et Saint-Gervais, Genève, 1201, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "secondary"
+    "lat": 46.21721267700195,
+    "lon": 6.141388416290283,
+    "displayName": "Rue de Montbrillant 54 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2123165,
+      "lon": 6.1412511,
+      "displayName": "Rue de Montbrillant, Grottes et Saint-Gervais, Genève, 1201, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "secondary"
+    }
   },
   "15, Quai du Mont-Blanc": {
     "lat": 46.2093766,
@@ -2000,7 +2063,13 @@
     "displayName": "18, Avenue du Bouchet, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz/Suisse/Svizzera/Svizra",
     "precision": "house"
   },
-  "82, Route de Valavran, Les Grands-Champs, Grand-Bois, Bellevue": null,
+  "82, Route de Valavran, Les Grands-Champs, Grand-Bois, Bellevue": {
+    "lat": 46.25932693481445,
+    "lon": 6.145287990570068,
+    "displayName": "Route de Valavran 82 1293 Bellevue",
+    "precision": "house",
+    "source": "swisstopo"
+  },
   "1, Rue de Varembé": {
     "lat": 46.2211768,
     "lon": 6.1397034,
@@ -2187,7 +2256,13 @@
     "displayName": "3, Rue François-Versonnex, Rive, Eaux-Vives, Genève, 1207, Schweiz/Suisse/Svizzera/Svizra",
     "precision": "house"
   },
-  "25, Avenue des Cavaliers, Chêne-Bourgeries": null,
+  "25, Avenue des Cavaliers, Chêne-Bourgeries": {
+    "lat": 46.20137023925781,
+    "lon": 6.183594703674316,
+    "displayName": "Avenue des Cavaliers 25 1224 Chêne-Bougeries",
+    "precision": "house",
+    "source": "swisstopo"
+  },
   "32, Chemin des Colombettes": {
     "lat": 46.2216609,
     "lon": 6.1361341,
@@ -2214,10 +2289,17 @@
     "precision": "house"
   },
   "31-35, Avenue De-Budé": {
-    "lat": 46.2257073,
-    "lon": 6.1309223,
-    "displayName": "Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "residential"
+    "lat": 46.22532653808594,
+    "lon": 6.128866672515869,
+    "displayName": "Avenue De-BUDÉ 31 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2257073,
+      "lon": 6.1309223,
+      "displayName": "Avenue De-Budé, Moillebeau, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "residential"
+    }
   },
   "35, Avenue De-Budé": {
     "lat": 46.2254829,
@@ -2742,10 +2824,17 @@
     "precision": "place"
   },
   "1, Chemin de l'Impératrice": {
-    "lat": 46.228146,
-    "lon": 6.1462926,
-    "displayName": "Bibliothèque du Jardin botanique de Genève, 1, Chemin de l'Impératrice, Pâquis, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.22762680053711,
+    "lon": 6.146735191345215,
+    "displayName": "Chemin de l'Impératrice 1 1292 Chambésy",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.228146,
+      "lon": 6.1462926,
+      "displayName": "Bibliothèque du Jardin botanique de Genève, 1, Chemin de l'Impératrice, Pâquis, Genève, 1292, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "11, Route de Pregny": {
     "lat": 46.2326141,
@@ -2808,10 +2897,17 @@
     "precision": "house"
   },
   "19, Chemin du Jonc, Cointrin": {
-    "lat": 46.2258263,
-    "lon": 6.1062837,
-    "displayName": "Chemin du Jonc, Cointrin, Meyrin, Genève, 1216, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "residential"
+    "lat": 46.22744369506836,
+    "lon": 6.110225200653076,
+    "displayName": "Chemin du Jonc 19 1218 Le Grand-Saconnex",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2258263,
+      "lon": 6.1062837,
+      "displayName": "Chemin du Jonc, Cointrin, Meyrin, Genève, 1216, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "residential"
+    }
   },
   "3, Rue Merle-d'Aubigné": {
     "lat": 46.2068483,
@@ -2892,10 +2988,17 @@
     "precision": "house"
   },
   "150, Route de Ferney": {
-    "lat": 46.230006,
-    "lon": 6.1286849,
-    "displayName": "Centre international de justice de Genève, 150, Route de Ferney, Le Grand-Saconnex, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.229461669921875,
+    "lon": 6.127623558044434,
+    "displayName": "Route de Ferney 150 1218 Le Grand-Saconnex",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.230006,
+      "lon": 6.1286849,
+      "displayName": "Centre international de justice de Genève, 150, Route de Ferney, Le Grand-Saconnex, Genève, 1211, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "150, Route de ferney": {
     "lat": 46.230006,
@@ -3031,10 +3134,17 @@
     "precision": "house"
   },
   "19, Avenue de la Paix": {
-    "lat": 46.228027,
-    "lon": 6.1363038,
-    "displayName": "Bibliothèque du CICR, 19, Avenue de la Paix, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra",
-    "precision": "house"
+    "lat": 46.22786331176758,
+    "lon": 6.137182235717773,
+    "displayName": "Avenue de la Paix 19 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.228027,
+      "lon": 6.1363038,
+      "displayName": "Bibliothèque du CICR, 19, Avenue de la Paix, Pâquis, Genève, 1202, Schweiz/Suisse/Svizzera/Svizra",
+      "precision": "house"
+    }
   },
   "154, Rue de Lausanne": {
     "lat": 46.22426,
@@ -3115,10 +3225,17 @@
     "precision": "house"
   },
   "14, Avenue de la Paix": {
-    "lat": 46.2257055,
-    "lon": 6.1408064,
-    "displayName": "Palais des Nations, 8 - 14, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "office"
+    "lat": 46.22673797607422,
+    "lon": 6.139932155609131,
+    "displayName": "Avenue de la Paix 14 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2257055,
+      "lon": 6.1408064,
+      "displayName": "Palais des Nations, 8 - 14, Avenue de la Paix, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "office"
+    }
   },
   "41, Avenue Giuseppe-Motta": {
     "lat": 46.2210985,
@@ -3301,10 +3418,17 @@
     "precision": "place"
   },
   "10, Allée David-Morse": {
-    "lat": 46.2268128,
-    "lon": 6.134696,
-    "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "road"
+    "lat": 46.226688385009766,
+    "lon": 6.134148120880127,
+    "displayName": "Allée David-MORSE 10 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2268128,
+      "lon": 6.134696,
+      "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "road"
+    }
   },
   "51, Avenue Blanc": {
     "lat": 46.2214788,
@@ -3481,10 +3605,17 @@
     "precision": "house"
   },
   "12, Allée David-Morse": {
-    "lat": 46.2268128,
-    "lon": 6.134696,
-    "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "road"
+    "lat": 46.22657012939453,
+    "lon": 6.133978843688965,
+    "displayName": "Allée David-MORSE 12 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2268128,
+      "lon": 6.134696,
+      "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "road"
+    }
   },
   "3, Rue du Vieux-Billard": {
     "lat": 46.2001994,
@@ -3583,10 +3714,17 @@
     "precision": "house"
   },
   "6, Allée David-Morse": {
-    "lat": 46.2268128,
-    "lon": 6.134696,
-    "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "road"
+    "lat": 46.22690200805664,
+    "lon": 6.134485721588135,
+    "displayName": "Allée David-MORSE 6 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2268128,
+      "lon": 6.134696,
+      "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "road"
+    }
   },
   "26, Rue Maunoir": {
     "lat": 46.2030851,
@@ -3613,10 +3751,17 @@
     "precision": "house"
   },
   "15, Avenue de Sécheron": {
-    "lat": 46.2210153,
-    "lon": 6.1468678,
-    "displayName": "Avenue de Sécheron, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "pedestrian"
+    "lat": 46.22068786621094,
+    "lon": 6.147401332855225,
+    "displayName": "Avenue de Sécheron 15 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2210153,
+      "lon": 6.1468678,
+      "displayName": "Avenue de Sécheron, Sécheron, Pâquis, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "pedestrian"
+    }
   },
   "2, Chemin du Pavillon": {
     "lat": 46.2381729,
@@ -3691,10 +3836,17 @@
     "precision": "house"
   },
   "8, Allée David-Morse": {
-    "lat": 46.2268128,
-    "lon": 6.134696,
-    "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "road"
+    "lat": 46.22679138183594,
+    "lon": 6.134314060211182,
+    "displayName": "Allée David-MORSE 8 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2268128,
+      "lon": 6.134696,
+      "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "road"
+    }
   },
   "10, Avenue de Sécheron": {
     "lat": 46.2207431,
@@ -3751,10 +3903,17 @@
     "precision": "house"
   },
   "14-16, Allée David-Morse": {
-    "lat": 46.2268128,
-    "lon": 6.134696,
-    "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "road"
+    "lat": 46.22642517089844,
+    "lon": 6.133737564086914,
+    "displayName": "Allée David-MORSE 14 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2268128,
+      "lon": 6.134696,
+      "displayName": "Allée David-Morse, Pâquis, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "road"
+    }
   },
   "32, Rue Antoine-Carteret": {
     "lat": 46.213246,
@@ -3897,10 +4056,17 @@
     "precision": "house"
   },
   "14, Avenue Trembley, Le Petit-Saconnex": {
-    "lat": 46.2219241,
-    "lon": 6.1203074,
-    "displayName": "Collège et Ecole de commerce André-Chavanne, 14, Avenue Trembley, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.221397399902344,
+    "lon": 6.120390892028809,
+    "displayName": "Avenue TREMBLEY 14 1209 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2219241,
+      "lon": 6.1203074,
+      "displayName": "Collège et Ecole de commerce André-Chavanne, 14, Avenue Trembley, Le Petit-Saconnex, Petit-Saconnex et Servette, Genève, 1209, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "7 bis, Avenue de la Paix": {
     "lat": 46.2232525,
@@ -3921,10 +4087,17 @@
     "precision": "place"
   },
   "2, Rue de Varembé": {
-    "lat": 46.2207529,
-    "lon": 6.1370269,
-    "displayName": "International Telecommunications Union, 2, Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.22133255004883,
+    "lon": 6.139303684234619,
+    "displayName": "Rue de Varembé 2 1202 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2207529,
+      "lon": 6.1370269,
+      "displayName": "International Telecommunications Union, 2, Rue de Varembé, Quartier des Nations, Petit-Saconnex et Servette, Genève, 1202, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "128, Rue de Lausanne": {
     "lat": 46.2208287,
@@ -3988,10 +4161,17 @@
     "precision": "house"
   },
   "13, Chemin des Anémones": {
-    "lat": 46.2135875,
-    "lon": 6.1119824,
-    "displayName": "Chemin des Anémones, Le Bouchet, Quartier de l'Etang, Châtelaine, Vernier, Genève, 1220, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "residential"
+    "lat": 46.213134765625,
+    "lon": 6.111176013946533,
+    "displayName": "Chemin des Anémones 13 1219 Châtelaine",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2135875,
+      "lon": 6.1119824,
+      "displayName": "Chemin des Anémones, Le Bouchet, Quartier de l'Etang, Châtelaine, Vernier, Genève, 1220, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "residential"
+    }
   },
   "15, Chemin des Anémones": {
     "lat": 46.2130256,
@@ -4042,10 +4222,17 @@
     "precision": "house"
   },
   "44, Rue des Maraîchers": {
-    "lat": 46.1976748,
-    "lon": 6.1376646,
-    "displayName": "ADEM Maraîchers, 44, Rue des Maraîchers, Jonction, Coulouvrenière, Genève, 1205, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.19801330566406,
+    "lon": 6.137084484100342,
+    "displayName": "Rue des Maraîchers 44 1205 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1976748,
+      "lon": 6.1376646,
+      "displayName": "ADEM Maraîchers, 44, Rue des Maraîchers, Jonction, Coulouvrenière, Genève, 1205, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "2C, Chemin Eugène-Rigot": {
     "lat": 46.2213987,
@@ -4270,10 +4457,17 @@
     "precision": "house"
   },
   "5, Avenue de Champel": {
-    "lat": 46.1922676,
-    "lon": 6.1532506,
-    "displayName": "Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "tertiary"
+    "lat": 46.19449996948242,
+    "lon": 6.151399612426758,
+    "displayName": "Avenue de Champel 5 1205 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1922676,
+      "lon": 6.1532506,
+      "displayName": "Avenue de Champel, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "tertiary"
+    }
   },
   "94, Rue des Eaux-Vives": {
     "lat": 46.2053498,
@@ -4571,10 +4765,17 @@
     "precision": "house"
   },
   "17, Rue François-Dussaud": {
-    "lat": 46.192796,
-    "lon": 6.1365385,
-    "displayName": "17, Rue François-Dussaud (Rue Lina-Stern), Les Vernets, Les Acacias, Genève, 1227, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.19558334350586,
+    "lon": 6.129178047180176,
+    "displayName": "Rue François-DUSSAUD 17 1227 Les Acacias",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.192796,
+      "lon": 6.1365385,
+      "displayName": "17, Rue François-Dussaud (Rue Lina-Stern), Les Vernets, Les Acacias, Genève, 1227, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "3, Rue de Monthoux": {
     "lat": 46.2099163,
@@ -4898,16 +5099,30 @@
     "precision": "secondary"
   },
   "5, Chemin du Pré-du-Couvent": {
-    "lat": 46.2025238,
-    "lon": 6.1822581,
-    "displayName": "Cycle d'Orientation de la Gradelle, 5, Chemin du Pré-du-Couvent, La Gradelle, Grange-Canal, Chêne-Bougeries, Genève, 1224, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.20269775390625,
+    "lon": 6.181588649749756,
+    "displayName": "Chemin du Pré-du-Couvent 5 1224 Chêne-Bougeries",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2025238,
+      "lon": 6.1822581,
+      "displayName": "Cycle d'Orientation de la Gradelle, 5, Chemin du Pré-du-Couvent, La Gradelle, Grange-Canal, Chêne-Bougeries, Genève, 1224, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "6, Route des Jeunes": {
-    "lat": 46.1838721,
-    "lon": 6.1264182,
-    "displayName": "Picus, 6, Route des Jeunes, La Praille, Carouge, Genève, 1227, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.18568801879883,
+    "lon": 6.127329349517822,
+    "displayName": "Route des Jeunes 6 1212 Grand-Lancy",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1838721,
+      "lon": 6.1264182,
+      "displayName": "Picus, 6, Route des Jeunes, La Praille, Carouge, Genève, 1227, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "34, Rue De-Candolle": {
     "lat": 46.1970005,
@@ -5984,10 +6199,17 @@
     "precision": "house"
   },
   "22, Rue Michel-Chauvet": {
-    "lat": 46.1963925,
-    "lon": 6.1590801,
-    "displayName": "Ecole de Contamines, 22, Rue Michel-Chauvet, Florissant, Champel, Genève, 1208, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.196876525878906,
+    "lon": 6.158638000488281,
+    "displayName": "Rue Michel-CHAUVET 22 1208 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1963925,
+      "lon": 6.1590801,
+      "displayName": "Ecole de Contamines, 22, Rue Michel-Chauvet, Florissant, Champel, Genève, 1208, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "31, Chemin Frank-Thomas": {
     "lat": 46.2038278,
@@ -6933,10 +7155,17 @@
     "precision": "house"
   },
   "91, Route de La-Capite, Ruth, Cologny": {
-    "lat": 46.2249747,
-    "lon": 6.191234,
-    "displayName": "91, Route de La-Capite, Ruth, Cologny, Genève, 1223, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.2252082824707,
+    "lon": 6.191976070404053,
+    "displayName": "Route de La-Capite 91 1223 Cologny",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2249747,
+      "lon": 6.191234,
+      "displayName": "91, Route de La-Capite, Ruth, Cologny, Genève, 1223, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "29, Rue des Allobroges": {
     "lat": 46.1902332,
@@ -7053,10 +7282,17 @@
     "precision": "house"
   },
   "1, Chemin du Pré-Picot": {
-    "lat": 46.2042029,
-    "lon": 6.1764255,
-    "displayName": "Ecole Pré-Picot, 1, Chemin du Pré-Picot, Cologny, Genève, 1223, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.20358657836914,
+    "lon": 6.177667140960693,
+    "displayName": "Chemin du Pré-Picot 1 1223 Cologny",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.2042029,
+      "lon": 6.1764255,
+      "displayName": "Ecole Pré-Picot, 1, Chemin du Pré-Picot, Cologny, Genève, 1223, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "48, Avenue Wendt, La Servette": {
     "lat": 46.2121888,
@@ -7234,10 +7470,17 @@
     "precision": "house"
   },
   "5, Avenue de Miremont, Crêts-de-Champel": {
-    "lat": 46.1896056,
-    "lon": 6.1540941,
-    "displayName": "5, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "house"
+    "lat": 46.191444396972656,
+    "lon": 6.154165267944336,
+    "displayName": "Avenue de Miremont 5 1206 Genève",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1896056,
+      "lon": 6.1540941,
+      "displayName": "5, Avenue de Miremont, Crêts-de-Champel, Champel, Genève, 1206, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "house"
+    }
   },
   "12, Rue Jean-Calvin": {
     "lat": 46.2019651,
@@ -7486,9 +7729,16 @@
     "precision": "house"
   },
   "2-4, Route de Drize": {
-    "lat": 46.1709133,
-    "lon": 6.139782,
-    "displayName": "Route de Drize, Vessy, Veyrier, Genève, 1234, Schweiz / Suisse / Svizzera / Svizra",
-    "precision": "secondary"
+    "lat": 46.1779899597168,
+    "lon": 6.137282848358154,
+    "displayName": "Route de Drize 2 1227 Carouge GE",
+    "precision": "house",
+    "source": "swisstopo",
+    "replaced": {
+      "lat": 46.1709133,
+      "lon": 6.139782,
+      "displayName": "Route de Drize, Vessy, Veyrier, Genève, 1234, Schweiz / Suisse / Svizzera / Svizra",
+      "precision": "secondary"
+    }
   }
 }

@@ -114,7 +114,7 @@ const fold = (s) =>
   s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
+    .replace(/[\u0300-\u036f]/g, "");
 
 // matches the name of the year in both languages, and the identifier (so a
 // former or later name of the same organisation still finds it)

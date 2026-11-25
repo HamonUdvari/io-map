@@ -37,10 +37,30 @@ export default function PrintExport() {
       (r) => {
         const base = `geneva-${year}-${frame}`;
         const files: [string, string, string, Blob][] = [
-          ["download-svg", "SVG, basemap embedded", `${base}.svg`, new Blob([r.svgEmbedded], { type: "image/svg+xml" })],
-          ["download-svg-linked", "SVG, basemap as a linked file", `${base}-linked.svg`, new Blob([r.svgLinked], { type: "image/svg+xml" })],
-          ["download-basemap-dark", "Basemap, site tone (PNG)", `${base}-basemap-dark.png`, r.basemapDark],
-          ["download-basemap-original", "Basemap, original colours (PNG)", `${base}-basemap-original.png`, r.basemapOriginal],
+          [
+            "download-svg",
+            "SVG, basemap embedded",
+            `${base}.svg`,
+            new Blob([r.svgEmbedded], { type: "image/svg+xml" }),
+          ],
+          [
+            "download-svg-linked",
+            "SVG, basemap as a linked file",
+            `${base}-linked.svg`,
+            new Blob([r.svgLinked], { type: "image/svg+xml" }),
+          ],
+          [
+            "download-basemap-dark",
+            "Basemap, site tone (PNG)",
+            `${base}-basemap-dark.png`,
+            r.basemapDark,
+          ],
+          [
+            "download-basemap-original",
+            "Basemap, original colours (PNG)",
+            `${base}-basemap-original.png`,
+            r.basemapOriginal,
+          ],
         ];
         downloads.value = files.map(([id, label, name, blob]) => {
           const url = URL.createObjectURL(blob);
@@ -59,7 +79,8 @@ export default function PrintExport() {
     <main class="print-export" data-print-ready={r != null ? "" : undefined}>
       <form method="get" class="print-export-controls">
         <label>
-          Year <input type="number" name="year" min="1920" max="2026" value={year} />
+          Year{" "}
+          <input type="number" name="year" min="1920" max="2026" value={year} />
         </label>
         <label>
           Frame{" "}
@@ -79,10 +100,25 @@ export default function PrintExport() {
 
       {r != null && (
         <>
-          <p id="print-stats" data-stats={JSON.stringify({ ...r, svgEmbedded: undefined, svgLinked: undefined, basemapDark: undefined, basemapOriginal: undefined })}>
-            {r.year}: {r.total} organisations in the frame ({Object.entries(r.counts).map(([id, n]) => `${id} ${n}`).join(", ")}).{" "}
-            {r.outside} outside the frame, {r.withoutAddress} without address. Basemap: {r.basemapLabel}, tile level {r.tileZoom}
-            {r.missingTiles > 0 && `, ${r.missingTiles} tiles missing`}. Output: {r.size} px = {PRINT_PARAMS.inches} in at {Math.round(r.size / PRINT_PARAMS.inches)} dpi.
+          <p
+            id="print-stats"
+            data-stats={JSON.stringify({
+              ...r,
+              svgEmbedded: undefined,
+              svgLinked: undefined,
+              basemapDark: undefined,
+              basemapOriginal: undefined,
+            })}
+          >
+            {r.year}: {r.total} organisations in the frame (
+            {Object.entries(r.counts)
+              .map(([id, n]) => `${id} ${n}`)
+              .join(", ")}
+            ). {r.outside} outside the frame, {r.withoutAddress} without
+            address. Basemap: {r.basemapLabel}, tile level {r.tileZoom}
+            {r.missingTiles > 0 && `, ${r.missingTiles} tiles missing`}. Output:{" "}
+            {r.size} px = {PRINT_PARAMS.inches} in at{" "}
+            {Math.round(r.size / PRINT_PARAMS.inches)} dpi.
           </p>
           <ul class="print-export-downloads">
             {downloads.value.map((d) => (
@@ -93,7 +129,12 @@ export default function PrintExport() {
               </li>
             ))}
           </ul>
-          <img id="print-preview" class="print-export-preview" src={downloads.value[0]?.url} alt={`Map of ${r.year}`} />
+          <img
+            id="print-preview"
+            class="print-export-preview"
+            src={downloads.value[0]?.url}
+            alt={`Map of ${r.year}`}
+          />
         </>
       )}
     </main>
