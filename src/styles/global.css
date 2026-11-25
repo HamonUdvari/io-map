@@ -666,6 +666,65 @@
   .table-header {
     @apply bg-io-neutral-50;
   }
+
+  /* TODO(design): interim — the About page has no design yet. One readable
+     column; each section is a native details/summary accordion item. */
+  .about {
+    @apply mx-auto flex max-w-[45rem] flex-col gap-4 px-(--page-px) py-(--page-py) text-io-base;
+
+    .about-header {
+      @apply flex flex-col items-start gap-4;
+
+      h1 {
+        @apply text-io-lg font-bold;
+      }
+    }
+
+    .about-nav ul {
+      @apply flex flex-wrap gap-x-4 gap-y-1 underline;
+    }
+
+    .about-section {
+      @apply scroll-mt-4 border-t border-io-neutral-950 py-2;
+
+      summary {
+        @apply cursor-pointer;
+
+        h2 {
+          @apply inline text-io-lg font-bold;
+        }
+      }
+
+      h3 {
+        @apply mt-4 text-io-base font-bold;
+      }
+
+      h4 {
+        @apply mt-4 text-io-base font-bold;
+      }
+
+      p {
+        @apply mt-2;
+      }
+
+      ul,
+      ol {
+        @apply mt-2 list-outside pl-6;
+      }
+
+      ul {
+        @apply list-disc;
+      }
+
+      ol {
+        @apply list-[lower-alpha];
+      }
+
+      a {
+        @apply underline [text-underline-position:from-font];
+      }
+    }
+  }
 }
 
 @layer base {
