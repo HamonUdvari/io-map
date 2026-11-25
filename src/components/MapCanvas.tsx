@@ -19,6 +19,7 @@ import {
 import { tonedTileHref } from "../lib/tile-tone.js";
 import { createGenevaMap, basemapForYear } from "../../docs/lib/geneva-map.js";
 import { attachMarkers } from "../lib/markers.js";
+import { MAP_BOUNDS, BOUNDS_PARAMS } from "../lib/map-bounds.js";
 import editions from "../../docs/data/zeitreise-editions.json";
 import layersData from "../../docs/data/swisstopo-layers.json";
 
@@ -60,7 +61,14 @@ export default function MapCanvas({
     };
     // the tone bakes into each tile at load (tile-tone.js) — CSS/SVG filters
     // on SVG elements are no-ops in WebKit, see the notes in global.css
-    const map = createGenevaMap({ ...hostSize(), tileHref: tonedTileHref });
+    // the view stays inside MAP_BOUNDS: no pan past it, no zoom-out past the
+    // level where it covers the viewport (map-bounds.js)
+    const map = createGenevaMap({
+      ...hostSize(),
+      tileHref: tonedTileHref,
+      extent: MAP_BOUNDS,
+      minZoom: BOUNDS_PARAMS.minZoom,
+    });
     host.current!.append(map.node);
     map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
     map.svg
