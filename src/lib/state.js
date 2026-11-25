@@ -37,6 +37,19 @@ export const selectedOrg = signal(null);
 /** @type {import("@preact/signals").Signal<string | null>} */
 export const hoveredOrg = signal(null);
 
+// Pinned organisations (uniqueName), no limit: the partners' "select several
+// individual entries to compare them". While the list is non-empty the map
+// shows the pinned organisations ONLY, whatever the category chips and the
+// name filter say (orgs.js filteredPoints). Empty = normal filtering.
+/** @type {import("@preact/signals").Signal<string[]>} */
+export const pinnedOrgs = signal([]);
+
+export const togglePin = (id) =>
+  (pinnedOrgs.value = pinnedOrgs.value.includes(id)
+    ? pinnedOrgs.value.filter((p) => p !== id)
+    : [...pinnedOrgs.value, id]);
+export const clearPins = () => (pinnedOrgs.value = []);
+
 // Map camera commands. UI-less for now: future buttons (and anything else)
 // call zoomIn()/zoomOut()/zoomToFit()/centerOn(); MapCanvas executes against
 // the map and consumes the command. "fit" frames every marker the map

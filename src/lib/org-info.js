@@ -217,7 +217,9 @@ export function nearestTo(
   if (!self) return [];
   // distances from self only (O(n)) — io-data's nearestNeighbors builds the
   // full all-pairs map, too slow to run per render during a year drag
-  const sorted = filteredPoints(year, cats, query)
+  // the neighbourhood ignores the pins: it answers "what is around", not
+  // "which of my pinned organisations are around"
+  const sorted = filteredPoints(year, cats, query, [])
     .filter((d) => d.uniqueName !== id)
     .map((point) => ({
       point,
