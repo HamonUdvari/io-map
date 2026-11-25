@@ -164,9 +164,7 @@ async function renderBasemap(year, geometry, size, onProgress) {
 // The dots of the year in frame px, grouped by category. Organisations at one
 // coordinate spread deterministically (same input, same layout).
 function placeDots(year, geometry, size) {
-  const points = presentIn(year).filter(
-    (d) => d.lat != null && d.long != null,
-  );
+  const points = presentIn(year).filter((d) => d.lat != null && d.long != null);
   const dots = [];
   let outside = 0;
   for (const members of groupByCoordinate(points).values()) {
@@ -179,7 +177,11 @@ function placeDots(year, geometry, size) {
       else dots.push({ d, x, y });
     });
   }
-  return { dots, outside, withoutAddress: presentIn(year).length - points.length };
+  return {
+    dots,
+    outside,
+    withoutAddress: presentIn(year).length - points.length,
+  };
 }
 
 const circle = (dot, r) =>
