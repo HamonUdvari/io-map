@@ -12,6 +12,7 @@ import geocodeCache from "../../docs/data/geocode-v3.json";
 import overridesText from "../../docs/data/geocode-overrides.csv?raw";
 import { csvParse } from "d3";
 import { joinGeocode } from "../../docs/lib/io-data.js";
+import { pinnedOrgs } from "./state.js";
 
 // Presence rule knobs.
 export const PRESENCE = {
@@ -119,7 +120,13 @@ export function nameMatches(d, query) {
 
 // The points the map shows: geocoded orgs of the year, narrowed by the
 // category chips and the name filter (shared by markers and zoom-to-fit).
-export function filteredPoints(year, cats, query) {
+// Pinned organisations replace the filters: with pins, the map shows exactly
+// the pinned ones. `pins` defaults to the global pin list — read here, inside
+// the caller's effect or render, so callers follow pin changes on their own;
+// pass [] to ignore the pins.
+export function filteredPoints(year, cats, query, pins = pinnedOrgs.value) {
+  if (pins.length > 0)
+    return pointsIn(year).filter((d) => pins.includes(d.uniqueName));
   return pointsIn(year)
     .filter((d) => cats.length === 0 || cats.includes(categoryKey(d)))
     .filter((d) => nameMatches(d, query));

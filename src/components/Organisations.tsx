@@ -9,6 +9,9 @@ import {
   selectedOrg,
   hoveredOrg,
   centerOn,
+  pinnedOrgs,
+  togglePin,
+  clearPins,
 } from "../lib/state.js";
 import {
   pointsIn,
@@ -36,7 +39,10 @@ const TINTS: Record<string, string> = {
 
 // Island: the organisations drawer. Two modes on one Drawer:
 // - no selection: name filter + the table of the organisations the map
-//   shows (year + category + name filters + current viewport), sorted A–Z
+//   shows (year + category + name filters + current viewport), sorted A–Z.
+//   With pinned organisations the table lists THOSE instead (the map shows
+//   only them); typing in the name filter then searches every organisation
+//   of the year, to pin more
 // - an organisation selected (marker click): the category-tinted InfoBox;
 //   clicking the map background clears the selection and restores the table
 // `class` reaches the Drawer root — the page passes its grid placement.
@@ -145,18 +151,37 @@ export default function Organisations({
 
   const cats = categories.value;
   const bbox = mapBbox.value;
-  const visible = points
-    .filter((d: any) => cats.length === 0 || cats.includes(categoryKey(d)))
-    .filter((d: any) => nameMatches(d, query.value))
-    .filter(
-      (d: any) =>
-        bbox === null ||
-        (d.long >= bbox[0] &&
-          d.lat >= bbox[1] &&
-          d.long <= bbox[2] &&
-          d.lat <= bbox[3]),
-    )
-    .sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN));
+  const pins: string[] = pinnedOrgs.value;
+  const pinning = pins.length > 0;
+  const searching = query.value.trim() !== "";
+  const visible = (
+    pinning
+      ? // pin mode: the pinned organisations, wherever they are on the map;
+        // a name query widens the list to every match, so more can be pinned
+        points.filter((d: any) =>
+          searching ? nameMatches(d, query.value) : pins.includes(d.uniqueName),
+        )
+      : points
+          .filter(
+            (d: any) => cats.length === 0 || cats.includes(categoryKey(d)),
+          )
+          .filter((d: any) => nameMatches(d, query.value))
+          .filter(
+            (d: any) =>
+              bbox === null ||
+              (d.long >= bbox[0] &&
+                d.lat >= bbox[1] &&
+                d.long <= bbox[2] &&
+                d.lat <= bbox[3]),
+          )
+  ).sort((a: any, b: any) => a.nameEN.localeCompare(b.nameEN));
+  // pinned organisations without a map point this year (not present, or no
+  // known address) stay in the list, so a pin does not vanish while the
+  // year moves
+  const absentPins =
+    pinning && !searching
+      ? pins.filter((id) => !points.some((d: any) => d.uniqueName === id))
+      : [];
 
   return (
     <Drawer
@@ -175,14 +200,36 @@ export default function Organisations({
           onInput={(next) => (query.value = next)}
         />
       </div>
+      {pinning && (
+        // TODO(design): interim pin bar
+        <p class="pin-bar">
+          <span>
+            {pins.length} pinned — the map shows only{" "}
+            {pins.length === 1 ? "this organisation" : "these organisations"}
+          </span>
+          <button type="button" onClick={clearPins}>
+            Clear
+          </button>
+        </p>
+      )}
       <Table
-        items={visible.map((d: any) => ({
-          id: d.uniqueName,
-          name: d.nameEN,
-          category: categoryKey(d),
-        }))}
+        items={[
+          ...visible.map((d: any) => ({
+            id: d.uniqueName,
+            name: d.nameEN,
+            category: categoryKey(d),
+            pinned: pins.includes(d.uniqueName),
+          })),
+          ...absentPins.map((id) => ({
+            id,
+            name: id,
+            pinned: true,
+            right: `not on the map in ${year.value}`,
+          })),
+        ]}
         onSelect={selectRow}
         onHover={hoverRow}
+        onTogglePin={(row) => togglePin(row.id ?? row.name)}
       />
     </Drawer>
   );

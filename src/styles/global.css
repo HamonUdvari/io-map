@@ -654,6 +654,24 @@
       @apply grow [word-break:break-word];
     }
 
+    /* rows with a pin toggle: the clickable part moves into this element */
+    .table-item-main {
+      @apply flex min-w-0 grow items-center gap-2;
+
+      &[role="button"] {
+        @apply cursor-pointer select-none;
+      }
+    }
+
+    /* TODO(design): interim pin toggle */
+    .table-item-pin {
+      @apply shrink-0 cursor-pointer rounded-io-pill border border-io-neutral-950 px-2 text-io-sm;
+
+      &[aria-pressed="true"] {
+        @apply bg-io-neutral-950 text-io-neutral-50;
+      }
+    }
+
     .table-item-right {
       @apply shrink-0 text-io-sm whitespace-nowrap;
     }
@@ -665,6 +683,15 @@
 
   .table-header {
     @apply bg-io-neutral-50;
+  }
+
+  /* TODO(design): interim bar above the list while organisations are pinned */
+  .pin-bar {
+    @apply flex items-center justify-between gap-2 px-2 py-1.5 text-io-sm font-bold;
+
+    button {
+      @apply cursor-pointer rounded-io-pill border border-io-neutral-950 px-2 font-normal;
+    }
   }
 }
 
