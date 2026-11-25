@@ -238,6 +238,12 @@
       @apply absolute inset-x-[1.625em] inset-y-0;
     }
 
+    /* TODO(design): interim decade marks — a short tick on the line for each
+       full decade (1920, 1930, …) */
+    .timeline-tick {
+      @apply absolute top-1/2 h-2.5 w-px -translate-x-1/2 -translate-y-1/2 bg-io-neutral-500;
+    }
+
     .timeline-thumb {
       @apply absolute top-1/2 -translate-x-1/2 -translate-y-1/2;
       @apply rounded-full bg-io-neutral-950/75 px-1 py-0.5 text-io-neutral-50;
