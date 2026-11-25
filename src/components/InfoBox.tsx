@@ -4,6 +4,9 @@ import TimelineEntry, { type TimelineEvent } from "./TimelineEntry";
 import Table, { type TableRow } from "./Table";
 
 export type OrgInfo = {
+  /** stable identifier (uniqueName) */
+  id?: string;
+  /** the name carried in the described year */
   name: string;
   category: string;
   key?: string | null;
@@ -63,7 +66,7 @@ export default function InfoBox({
     root.current
       ?.closest(".drawer-content")
       ?.scrollTo({ top: 0, behavior: "instant" });
-  }, [info.name]);
+  }, [info.id ?? info.name]);
 
   return (
     <div class={clsx("infobox", className)} ref={root}>

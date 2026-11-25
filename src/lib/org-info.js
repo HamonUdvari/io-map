@@ -12,14 +12,20 @@ const PREFIXES = {
   "Permanent Representation": "PR",
   "International Organisation": "IO",
   "Non-governmental Organisation": "NGO",
-  "Sub-NGO": "Sub-NGO",
 };
 
-const orgRows = (name) =>
-  rows.filter((d) => d.nameEN === name).sort((a, b) => a.year - b.year);
+// the sheet's placeholder for an unknown address — not an address to show
+const NO_ADDRESS = "informationunavailable";
+const hasAddress = (s) =>
+  hasContent(s) && String(s).trim().toLowerCase() !== NO_ADDRESS;
+
+// one organisation's rows, oldest first (stable sort: same-year rows keep the
+// sheet's chronological order)
+const orgRows = (id) =>
+  rows.filter((d) => d.uniqueName === id).sort((a, b) => a.year - b.year);
 
 const addressOf = (row) =>
-  hasContent(row.addressInfoboxDisplay)
+  hasAddress(row.addressInfoboxDisplay)
     ? row.addressInfoboxDisplay
     : row.addressOSM;
 
@@ -28,10 +34,10 @@ const latestWith = (history, field, year) => {
   return known.length ? known.at(-1)[field] : null;
 };
 
-// Header/meta content for one organisation, as of `year` (fields fall back to
-// the latest known value so a sparse row doesn't blank the meta block).
-export function orgInfo(name, year) {
-  const history = orgRows(name);
+// Header/meta content for one organisation (by uniqueName), as of `year` (fields
+// fall back to the latest known value so a sparse row doesn't blank the meta block).
+export function orgInfo(id, year) {
+  const history = orgRows(id);
   if (history.length === 0) return null;
   const row = history.filter((d) => d.year <= year).at(-1) ?? history[0];
   const at = row.year;
@@ -42,15 +48,16 @@ export function orgInfo(name, year) {
     .filter(
       (d) =>
         d.year <= at &&
-        (hasContent(d.addressInfoboxDisplay) || hasContent(d.addressOSM)),
+        (hasAddress(d.addressInfoboxDisplay) || hasAddress(d.addressOSM)),
     )
     .at(-1);
   return {
-    name,
+    id,
+    name: row.nameEN, // the name carried in the described year
     nameFR: hasContent(row.nameFR) ? row.nameFR : null,
-    category: row.filterOrgCategory,
+    category: row.filterCategory,
     key: categoryKey(row),
-    prefix: PREFIXES[row.filterOrgCategory] ?? null,
+    prefix: PREFIXES[row.filterCategory] ?? null,
     region: hasContent(row.filterRegion) ? row.filterRegion : null,
     address: addressRow ? addressOf(addressRow) : null,
     building: latestWith(history, "locationBuilding", at),
@@ -83,12 +90,12 @@ const eventTitle = (row) => {
       return "French name changed";
     case "established":
       return "Established in Geneva";
+    case "reopened":
+      return "Reopened in Geneva";
     case "closed":
       return "Closed";
-    case "moved":
-      return "Moved away from Geneva";
-    case "vacant":
-      return "Representation vacant";
+    case "informationUnavailable":
+      return "No address in the sources for this year";
     default:
       return row.event;
   }
@@ -124,8 +131,8 @@ export function eventGroups(history) {
   for (const row of history) {
     const entry = {
       title: hasContent(row.event) ? eventTitle(row) : null,
-      note: hasContent(row.note1) ? row.note1 : null,
-      note2: hasContent(row.note2) ? row.note2 : null,
+      note: hasContent(row.notesEN) ? row.notesEN : null,
+      note2: null,
       sources: sourceRefs(row),
     };
     // yearly rows with nothing to TELL drop out — deliberately including the
@@ -146,21 +153,21 @@ export function eventGroups(history) {
 // the unfiltered set, so filters never orphan it. "same addr." under a
 // metre.
 /**
- * @param {string} name
+ * @param {string} id uniqueName
  * @param {number} year
  * @param {{cats?: string[], query?: string, radius?: number, min?: number}} [options]
  */
 export function nearestTo(
-  name,
+  id,
   year,
   { cats = [], query = "", radius = 500, min = 5 } = {},
 ) {
-  const self = pointsIn(year).find((d) => d.nameEN === name);
+  const self = pointsIn(year).find((d) => d.uniqueName === id);
   if (!self) return [];
   // distances from self only (O(n)) — io-data's nearestNeighbors builds the
   // full all-pairs map, too slow to run per render during a year drag
   const sorted = filteredPoints(year, cats, query)
-    .filter((d) => d.nameEN !== name)
+    .filter((d) => d.uniqueName !== id)
     .map((point) => ({
       point,
       meters: haversineMeters(self.lat, self.long, point.lat, point.long),
@@ -172,6 +179,7 @@ export function nearestTo(
   const within = sorted.filter((n) => n.meters <= radius);
   return (within.length >= min ? within : sorted.slice(0, min)).map(
     ({ point, meters }) => ({
+      id: point.uniqueName,
       name: point.nameEN,
       category: categoryKey(point),
       right: meters < 1 ? "same addr." : formatDistance(meters),

@@ -27,7 +27,7 @@ export default function Table({
     >
       {items.map((item) => (
         <TableItem
-          key={item.name}
+          key={item.id ?? item.name}
           {...item}
           onClick={onSelect != null ? () => onSelect(item) : undefined}
           onPointerEnter={onHover != null ? () => onHover(item) : undefined}

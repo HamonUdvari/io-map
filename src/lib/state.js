@@ -25,13 +25,13 @@ export const mapBbox = signal(null);
 /** @type {import("@preact/signals").Signal<string>} */
 export const query = signal("");
 
-// Selected organisation (nameEN, the dataset's stable identifier) — set by
+// Selected organisation (uniqueName, the dataset's stable identifier) — set by
 // clicking a marker dot, cleared by clicking the map background. Non-null
 // switches the drawer from the table to the infobox.
 /** @type {import("@preact/signals").Signal<string | null>} */
 export const selectedOrg = signal(null);
 
-// Organisation under the pointer in a table view (nameEN) — its marker (or
+// Organisation under the pointer in a table view (uniqueName) — its marker (or
 // the cluster containing it) echoes the hover on the map. Cleared when the
 // pointer leaves the list.
 /** @type {import("@preact/signals").Signal<string | null>} */
