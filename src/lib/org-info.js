@@ -81,6 +81,11 @@ export function orgInfo(id, year) {
 // line ("show if currently closed or not"). `kind` is for styling, `label`
 // the sentence. Follows the map's presence rule (orgs.js orgStateIn).
 // TODO(design): wording.
+/**
+ * @param {string} id uniqueName
+ * @param {number} year
+ * @returns {{kind: "present" | "present-no-address" | "not-yet" | "closed" | "no-information" | "gap", label: string, year: number, first: number, last: number} | null}
+ */
 export function orgStatus(id, year) {
   const history = orgRows(id);
   if (history.length === 0) return null;
