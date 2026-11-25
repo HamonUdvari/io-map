@@ -1,0 +1,463 @@
+---
+// The About page: the partners' text (sample of 24 Nov 2026) in an accordion —
+// one collapsible section each, with a section navigation. Other pages link
+// into a section with its anchor (about/#sources opens "Sources").
+import "../styles/global.css";
+import Button from "../components/Button";
+
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About — Mapping Multilateral Geneva</title>
+  </head>
+  <body>
+    <!-- TODO(design): interim layout — the page has no design yet -->
+    <main class="about">
+      <header class="about-header">
+        <Button href={home}>Mapping Multilateral Geneva</Button>
+        <h1>About</h1>
+      </header>
+
+      <nav class="about-nav" aria-label="Sections">
+        <ul role="list">
+          <li>
+            <a href="#overview">Overview</a>
+          </li>
+          <li>
+            <a href="#methodology">Methodology</a>
+          </li>
+          <li>
+            <a href="#sources">Sources</a>
+          </li>
+          <li>
+            <a href="#accuracy">A Note on Accuracy and Consistency</a>
+          </li>
+          <li>
+            <a href="#team">About the Team</a>
+          </li>
+        </ul>
+      </nav>
+
+      <details class="about-section" id="overview" name="about" open>
+        <summary>
+          <h2>Overview</h2>
+        </summary>
+        <p>
+          <strong>“Mapping Multilateral Geneva”</strong> is a digital humanities
+          project, conceptualised by a research team at the{" "}
+          <a href="https://www.graduateinstitute.ch/cdhm">
+            Centre for Digital Humanities and Multilateralism (CDHM)
+          </a>
+          , Geneva, Switzerland. It brings together spatial and temporal data
+          from diverse archival sources pertaining to the emergence of
+          multilateral institutions in Geneva over the last century.
+        </p>
+        <p>
+          The project makes a case for studying multilateralism, along with its
+          attendant actors and institutions, at a critical historical juncture
+          when institutions of international cooperation have increasingly come
+          under scrutiny.
+        </p>
+        <p>
+          The project is intended as a research tool for historians, research
+          scholars interested in ideas of international cooperation, and for
+          professionals in multilateral institutions. The focus on Geneva may
+          also be of interest to individuals in the Swiss Romande region who
+          wish to study the intersections between Genevan social history and
+          multilateral organisations.
+        </p>
+        <p>
+          Work on this project is ongoing and the database is being continuously
+          updated. The latest version was updated on dd/mm/yyyy. We welcome
+          suggestions, resources, and contacts that will help add new layers of
+          details to this project. We are also keen to collaborate with
+          researchers who may be interested in using data from this project for
+          related realisations.
+        </p>
+        <p>
+          <a href="mailto:cdhm@graduateinstitute.ch">
+            cdhm@graduateinstitute.ch
+          </a>
+        </p>
+      </details>
+      <details class="about-section" id="methodology" name="about">
+        <summary>
+          <h2>Methodology</h2>
+        </summary>
+        <h3>Categories</h3>
+        <p>
+          This project includes a selection of three categories of
+          organisational entities that comprise “Multilateral Geneva”. These
+          are:
+        </p>
+        <h4>Permanent Representations</h4>
+        <p>
+          Permanent representations are diplomatic missions in charge of
+          following and participating in the work and facilitating the contacts
+          between the respective national governments, representations, and
+          between organizations. This map includes permanent representations at
+          the League of Nations and at the United Nations.
+        </p>
+        <p>
+          Although the term “permanent representation” was not used at the time
+          of the League of Nations, the entries included under this category are
+          representations of member states or observers that were officially
+          accredited to the League as well as other permanent offices in direct
+          contact with the Secretariat. These representations could have been
+          headed by an ambassador or secretary. In some cases, the listed
+          addresses were personal addresses of the representatives or were
+          located in consulates.
+        </p>
+        <p>
+          In the period after the establishment of the United Nations, based on
+          the available Blue Books, the project includes:
+        </p>
+        <ol type="a">
+          <li>
+            <p>Permanent missions of Member states to the UN</p>
+          </li>
+          <li>
+            <p>
+              Non member states that have permanent observer status to the UN in
+              Geneva
+            </p>
+          </li>
+          <li>
+            <p>
+              Intergovernmental organisations that have established observer
+              offices to the UN in Geneva
+            </p>
+          </li>
+          <li>
+            <p>
+              Other organisations that have established observer offices to the
+              UN in Geneva
+            </p>
+          </li>
+        </ol>
+        <h4>International Organisations</h4>
+        <p>
+          There is no universally accepted definition of what constitutes an
+          international organisation. There are some “indicators” to be found in
+          related legislation. These include organizations that are a) founded
+          on an international agreement; b) consist of States and other
+          entities; c) possess their own international legal personality; d)
+          disposing of “at least one organ capable of expressing a will distinct
+          from member states”.
+        </p>
+        <p>
+          In this project, we have included intergovernmental organizations, UN
+          system organizations, bodies and entities related to the UN system,
+          secretariats, international treaties, and historically significant
+          organisations and International organizations recognized by
+          Switzerland (quasi governmental) under Article 60 of the Swiss Civil
+          Code.
+        </p>
+        <p>
+          We have also included organisations and bodies (e.g. international
+          secretariats) with Special Status that do not match the all criteria
+          to be defined as an international organisation, but play an important
+          role in the International Geneva ecosystem and are granted special
+          legal status by Swiss authorities.
+        </p>
+        <h4>Non-governmental Organisation</h4>
+        <p>
+          The category of non-governmental organisations (NGOs) includes
+          private, non-profit organisations that operate independently of
+          governments, typically with a humanitarian, advocacy, or social
+          mission of international relevance, including religious relief
+          organizations and international federations of civil society.
+        </p>
+        <p>
+          We sought to identify organisations that were
+          “internationally-oriented” and whose activities were of international
+          relevance, ie, whose interest, activities, and management reflect
+          participation across multiple countries. To a large extent, we have
+          excluded organisations that represent specific professional interests,
+          or focus on niche technical or medical issues.
+        </p>
+        <h4>
+          <mark>Special Cases</mark>
+        </h4>
+        <p>
+          <strong>The International Committee of the Red Cross</strong>
+        </p>
+        <p>
+          The International Committee of the Red Cross (ICRC), established in
+          1863, is a neutral, independent humanitarian organisation that
+          predates the establishment of multilateral organisations in Geneva by
+          over half a century. While the ICRC simultaneously fits and does not
+          fit the criteria used in our methodology to be categorised as an
+          International Organisation or a Non-governmental Organisation, its
+          significance to the shaping of Geneva’s humanitarian traditions
+          remains indisputable, and hence “special” in our categorisation.
+        </p>
+        <p>
+          <strong>The Geneva Graduate Institute</strong>
+        </p>
+        <p>
+          The Geneva Graduate Institute, where this project is based, is
+          included as a special case on the map. The Institute’s establishment
+          and history is linked directly to the establishment of the League of
+          Nations and the need for experts trained in international affairs.
+          Given the relevance of the institute and its predecessors, the
+          Graduate Institute of International Studies (IUHEI) (1927-2007), and
+          the Graduate Institute of Development Studies (IUED), (1977-2007) to
+          the growth and development of internationalism over the years and the
+          exchange of expertise between these institutions, we have located
+          these three entities on our map.
+        </p>
+      </details>
+      <details class="about-section" id="sources" name="about">
+        <summary>
+          <h2>Sources</h2>
+        </summary>
+        <p>
+          The sources for this project can broadly be divided into two
+          categories: those collections used systematically across multiple
+          editions to form the base dataset, and those used primarily to fill
+          specific gaps. The latter category of sources were consulted for
+          recent decades where many organisations possessed online archival
+          collections of various documents. Here, we only provide a full list of
+          the former.
+        </p>
+        <h4>Archives</h4>
+        <ul>
+          <li>
+            <p>League of Nations Archives, United Nations Geneva, Geneva</p>
+          </li>
+          <li>
+            <p>
+              UNOG Registry Fonds (1946-1973), United Nations Geneva, Geneva
+            </p>
+          </li>
+          <li>
+            <p>
+              United Nations Archives, Archives and Records Management Section
+              (ARMS), New York
+            </p>
+          </li>
+          <li>
+            <p>
+              International Institute of Intellectual Co-operation, UNESCO
+              Archives, Paris
+            </p>
+          </li>
+        </ul>
+        <h4>Published material</h4>
+        <ul>
+          <li>
+            <p>
+              <strong>
+                The Union of International Associations’{" "}
+                <em>Yearbook of International Organizations</em>
+              </strong>
+              . Available in the Geneva Graduate Institute Library, we relied
+              most heavily on this corpus to collate the initial dataset,
+              particularly of NGOs and IOs. Beginning in the 1940s and ending in
+              2009, we extracted all of the information pertaining to
+              organisation names, addresses, and representation in Geneva,
+              proceeding periodically in intervals of 3-5 sources per decade.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>
+                The Centre for Research on International Institutions’{" "}
+                <em>International Geneva Yearbook</em>
+              </strong>
+              . Available in the <em>Bibliothèque de Genève</em> and published
+              between 1988-2009, this collection was conceived as a practical
+              handbook for navigating International Geneva, and therefore
+              provides a detailed account of many of its important institutions.
+              Here too, the organisation names, addresses, and representative
+              information was systematically extracted.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>
+                The <em>Annuaire Genevois</em>.
+              </strong>
+              <br />
+              Available at the <em>Archives Cantonales de Genève</em> and
+              published between 1828-1999, these were compiled by private
+              publishing houses and provide granular, street-by-street
+              information about the city. These were primarily utilised to
+              complete missing information in our initial database. Editions
+              between 1952-1970 also included lists of Geneva’s principal
+              non-governmental organisations.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>
+                The United Nations{" "}
+                <em>
+                  Blue Books
+                  <br />
+                </em>
+              </strong>
+              Published from the early days of the UN, a full digital collection
+              exists online from 1953 and official lists are available on-site
+              at the UN archives for preceding years. We initially accessed
+              these at 2-3-year intervals to extract all available address and
+              representative information. We then returned to the interim years
+              to complete any missing information and thus build a highly
+              accurate picture of the permanent representations in Geneva across
+              the period.
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>
+                The League of Nations{" "}
+                <em>
+                  Handbook of International Organizations
+                  <br />
+                </em>
+              </strong>
+              Periodically published by the League of Nations from 1921 to 1938
+              and digitally available on the UN Geneva Archives platform, these
+              provide information about “unions, associations, institutions,
+              commissions, bureaux” that are international “in their
+              constitution and in their sources of financial support.” The
+              handbooks were not published yearly and were based on information
+              shared by the organisations themselves. The gaps were mitigated
+              through information triangulation with archives.
+            </p>
+          </li>
+          <li>
+            <p>
+              <em>
+                <strong>
+                  Annuaire international genevois
+                  <br />
+                </strong>
+              </em>
+              First published in 1926<em>,</em> this contains a list of
+              international organisations, non-governmental organisations and
+              permanent representatives based in Geneva. It was published by the
+              Permanent Centre of International Information (Centre permanent
+              d’informations internationales) until the end of the 1930s.
+            </p>
+          </li>
+          <li>
+            <p>
+              <em>
+                <strong>
+                  Who’s Who
+                  <br />
+                </strong>
+              </em>
+              A digital repository maintained by the International Geneva
+              Portal, this provides the current Geneva addresses of NGOs and
+              IOs. We utilised this to complete our base dataset for the most
+              recent period between 2010-2026.
+            </p>
+          </li>
+        </ul>
+      </details>
+      <details class="about-section" id="accuracy" name="about">
+        <summary>
+          <h2>A Note on Accuracy and Consistency</h2>
+        </summary>
+        <p>
+          Despite our best efforts, there are a number of ways in which data
+          inaccuracies may persist on the map.
+        </p>
+        <h4>Source Gaps</h4>
+        <p>
+          Firstly, the data accuracy is dependent on information listed in the
+          sources used. We have noted conflicting addresses and organisation
+          information for the same year across multiple sources. This can be
+          partially explained by the fact that in published material, there may
+          be a time gap between a change of address or name, the effective
+          notification, and publication of the source. Importantly, this means
+          that the first appearance of an organisation in a source and therefore
+          our map, does not necessarily correspond to the actual year when it
+          was established in Geneva. The same applies for instances of
+          dissolution, transfer or movement for other reasons and disappearance
+          from the map. When this information is known, it has been specified in
+          the information box. More frequently, especially in the case of larger
+          organisations, conflicting address information can be explained by
+          organisations possessing multiple addresses, typically a separate
+          postal and office address. Where possible, the map has privileged the
+          effective address of these entities.
+        </p>
+        <h4>Maps</h4>
+        <p>
+          <mark>
+            We use{" "}
+            <a href="https://map.geo.admin.ch/#/map?lang=en&amp;center=2500449.94,1117307.66&amp;z=7.538&amp;topic=swisstopo&amp;layers=ch.swisstopo.landeskarte-grau-10;ch.swisstopo.swissimage-product@year=2010;ch.swisstopo.hiks-siegfried@year=1939&amp;bgLayer=ch.swisstopo.pixelkarte-farbe&amp;featureInfo=default&amp;catalogNodes=swisstopo,1392">
+              this dataset
+            </a>{" "}
+            from <em>swisstopo</em> as the base map to represent organisations
+            present in this Geneva canton. The representation of data time
+            stamps—called «journey through time» —in this dataset allows users
+            to interactively explore the evolution of the landscape from 1926 to
+            the present day along with the superimposed organisation dots.
+          </mark>
+        </p>
+        <p>
+          We use{" "}
+          <a href="https://www.openstreetmap.org/#map=17/46.188027/6.154173">
+            Open Street Maps
+          </a>{" "}
+          in the backend to verify and mark addresses as dots on the map. In the
+          case of changed streets, buildings and landscape modification, we have
+          marked the most proximate location within &lt;50 metres. In addresses
+          that showed more than one result, exact map pins have also been
+          triangulated with Google Maps (including street view).
+        </p>
+      </details>
+      <details class="about-section" id="team" name="about">
+        <summary>
+          <h2>About the Team</h2>
+        </summary>
+        <p>
+          <strong>Jacob Thornton</strong> is a PhD candidate in the Department
+          of International History and Politics and a research affiliate with
+          the Centre for Digital Humanities and Multilateralism. His recently
+          concluded master’s thesis focused on Geneva’s ‘Association Maçonnique
+          Internationale’, examining its contested position within the emerging
+          institutional structures of interwar internationalism.
+        </p>
+        <p>
+          <strong>Dr. Pierre-Etienne Bourneuf</strong> is Head of Strategic
+          Partnerships at Centre for Digital Humanities and Multilateralism. He
+          had previously worked as Scientific Advisor at the United Nations
+          Library and Archives Geneva where he contributed to the Centenary of
+          Multilateralism Project and the LONTAD Project.
+        </p>
+        <p>
+          <strong>Sohnee Harshey</strong> is a PhD candidate in the Department
+          of Anthropology and Sociology and a research affiliate with the Centre
+          for Digital Humanities and Multilateralism. Earlier in her career in
+          India, she was part of the founding team of Economic and Political
+          Weekly’s digital initiative, Engage and led communications and
+          advocacy for a feminist think tank, The Third Eye portal.
+        </p>
+      </details>
+    </main>
+
+    <script>
+      // A link to a section (about/#sources, or the navigation above) opens
+      // that section: a closed <details> does not open on its own anchor.
+      const openTarget = () => {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target instanceof HTMLDetailsElement) {
+          target.open = true;
+          target.scrollIntoView();
+        }
+      };
+      addEventListener("hashchange", openTarget);
+      openTarget();
+    </script>
+  </body>
+</html>
