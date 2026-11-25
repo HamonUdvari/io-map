@@ -73,7 +73,8 @@ export function createGenevaMap({
   minZoom = 7,
   maxZoom = 18,      // the swisstopo layers' tile matrices end at 18
   bw = false,
-  extent = null,     // optional lon/lat bbox clamping panning (e.g. GENEVA_BBOX)
+  extent = null,     // optional lon/lat bbox clamping the view (e.g. GENEVA_BBOX): no panning
+                     // past its edges, and no zoom-out past the point where it covers the viewport
   transform = null,  // optional initial transform (pass a zoomState holder's value)
   tileHref = null,   // optional async url -> displayed href (e.g. tone baked into tiles)
   tileFade = TILE_FADE // ms fade-in per tile; 0 = paint the instant a tile is ready
@@ -268,16 +269,39 @@ export function createGenevaMap({
     if (renderCb) renderCb(helpers());
   }
 
+  // The zoom-out floor: minZoom, raised with an extent to the scale at which the
+  // extent still covers the whole viewport (it depends on the canvas size).
+  function minScale() {
+    const base = 256 * 2 ** minZoom;
+    if (!extent) return base;
+    const [[x0, y0], [x1, y1]] = unitTranslateExtent(extent);
+    return Math.max(base, width / (x1 - x0), height / (y1 - y0));
+  }
+
   const zoomBehavior = d3.zoom()
       .clickDistance(4) // hand drift on a click must not suppress overlay click handlers
-      .scaleExtent([256 * 2 ** minZoom, 256 * 2 ** maxZoom])
+      .scaleExtent([minScale(), 256 * 2 ** maxZoom])
       .extent([[0, 0], [width, height]])
       .on("start", () => { zooming = true; })
       .on("zoom", ({transform: t}) => render(t))
       .on("end", () => { zooming = false; render(current); }); // settle: the covered level prunes the stack
   if (extent) zoomBehavior.translateExtent(unitTranslateExtent(extent));
 
-  svg.call(zoomBehavior).call(zoomBehavior.transform, current);
+  // d3 applies the scale/translate extents to gestures only. Programmatic
+  // transforms (flyTo, resize, the initial view) go through this, so they obey
+  // the same limits: scale clamped around the viewport centre, then panned back in.
+  function clamp(t) {
+    const [k0, k1] = zoomBehavior.scaleExtent();
+    const k = Math.max(k0, Math.min(k1, t.k));
+    if (k !== t.k) {
+      const cx = (width / 2 - t.x) / t.k;
+      const cy = (height / 2 - t.y) / t.k;
+      t = d3.zoomIdentity.translate(width / 2 - cx * k, height / 2 - cy * k).scale(k);
+    }
+    return zoomBehavior.constrain()(t, [[0, 0], [width, height]], zoomBehavior.translateExtent());
+  }
+
+  svg.call(zoomBehavior).call(zoomBehavior.transform, clamp(current));
 
   return {
     node,
@@ -304,8 +328,8 @@ export function createGenevaMap({
       height = h;
       svg.attr("viewBox", [0, 0, width, height]);
       tile.extent([[0, 0], [width, height]]);
-      zoomBehavior.extent([[0, 0], [width, height]]);
-      svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(t.x + dx, t.y + dy).scale(t.k));
+      zoomBehavior.extent([[0, 0], [width, height]]).scaleExtent([minScale(), 256 * 2 ** maxZoom]);
+      svg.call(zoomBehavior.transform, clamp(d3.zoomIdentity.translate(t.x + dx, t.y + dy).scale(t.k)));
     },
     setOverlay(drawFn) {
       overlayDraw = drawFn;
@@ -327,15 +351,16 @@ export function createGenevaMap({
       svg.transition().duration(duration).call(zoomBehavior.scaleBy, factor);
     },
     flyTo(target, {duration = 1500} = {}) {
-      const t = target.bbox
+      const t = clamp(target.bbox
         ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height})
-        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height});
+        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height}));
       ensureTiles(t); // prefetch: the destination's tiles cover every frame of the fly
       svg.transition().duration(duration).call(zoomBehavior.transform, t);
     },
     project: ll => current.apply(unit(ll)),
     invert,
     zoomLevel: () => Math.log2(current.k / 256),
+    minZoomLevel: () => Math.log2(zoomBehavior.scaleExtent()[0] / 256),
     bbox: () => helpers().bbox,
     transform: () => current,
     levels: () => [...tileLevels.values()].map(lv => ({

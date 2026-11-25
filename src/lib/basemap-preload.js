@@ -24,6 +24,7 @@ import { tile as d3tile, tileWrap } from "npm:d3-tile";
 import { basemapForYear } from "../../docs/lib/geneva-map.js";
 import { tonedTileHref } from "./tile-tone.js";
 import { geoRows } from "./orgs.js";
+import { BOUNDS_PARAMS } from "./map-bounds.js";
 
 // The tuning knobs — how much to warm and how long to wait after activity.
 export const PRELOAD_PARAMS = {
@@ -36,7 +37,7 @@ export const PRELOAD_PARAMS = {
   // tiles the map currently displays must survive it (evicting an in-use
   // tile leaks its blob URL and undoes the warming this run just did)
   prebakeMax: 300,
-  minZoom: 7, // the swisstopo tile matrices the map uses
+  minZoom: BOUNDS_PARAMS.minZoom, // the map cannot zoom out past this level
   maxZoom: 18,
   // tier 3 sweeps the whole points area for ALL editions up to this zoom
   // (~115 tiles/edition ≈ 0.5–1.5GB total); each step deeper roughly
