@@ -32,6 +32,7 @@ const TINTS: Record<string, string> = {
   pr: "bg-io-pr-500",
   ngo: "bg-io-ngo-500",
   io: "bg-io-io-500",
+  special: "bg-io-special-500",
 };
 
 // The real dataset end to end: pick any organisation + year. Afghanistan

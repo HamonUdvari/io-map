@@ -8,7 +8,7 @@
 import Supercluster from "supercluster";
 import { h, render } from "preact";
 import { effect } from "./state.js";
-import { filteredPoints, categoryKey } from "./orgs.js";
+import { filteredPoints, categoryKey, CATEGORY_ORDER } from "./orgs.js";
 import MarkerTip from "../components/MarkerTip";
 import {
   groupByCoordinate,
@@ -134,7 +134,7 @@ const nearestMarker = (svgNode, event, radius) => {
 
 // single-category clusters keep the category color; mixed ones go neutral
 const clusterClass = (p) => {
-  const present = ["pr", "io", "ngo"].filter((k) => p[k] > 0);
+  const present = CATEGORY_ORDER.filter((k) => p[k] > 0);
   return markerClass(present.length === 1 ? present[0] : "cluster");
 };
 
@@ -388,16 +388,12 @@ export function attachMarkers(
       minPoints: 2,
       map: (p) => {
         const k = categoryKey(p);
-        return {
-          pr: k === "pr" ? 1 : 0,
-          io: k === "io" ? 1 : 0,
-          ngo: k === "ngo" ? 1 : 0,
-        };
+        return Object.fromEntries(
+          CATEGORY_ORDER.map((c) => [c, k === c ? 1 : 0]),
+        );
       },
       reduce: (acc, p) => {
-        acc.pr += p.pr;
-        acc.io += p.io;
-        acc.ngo += p.ngo;
+        for (const c of CATEGORY_ORDER) acc[c] += p[c];
       },
     }).load(toFeatures(points));
 

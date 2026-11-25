@@ -92,7 +92,11 @@ const CATEGORY_KEYS = {
   "Permanent Representation": "pr",
   "International Organisation": "io",
   "Non-governmental Organisation": "ngo",
+  "Special Category": "special", // the Graduate Institute and its predecessors
 };
+
+// every category key, in display order — iterate this instead of listing keys
+export const CATEGORY_ORDER = ["pr", "ngo", "io", "special"];
 
 export function categoryKey(d) {
   return CATEGORY_KEYS[d.filterCategory] ?? null;
