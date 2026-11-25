@@ -15,17 +15,19 @@ export const PALAIS_DES_NATIONS = [6.1408064, 46.2257055];
 // Unit Web-Mercator projection: screen px = transform.apply(unit(lonlat)).
 const unit = d3.geoMercator().scale(1 / (2 * Math.PI)).translate([0, 0]);
 
-export function centerTransform({center, zoom, width = 928, height = 500}) {
+// `rect` ([x0, y0, x1, y1] in canvas px, default the whole canvas) is the part of
+// the canvas the target is framed in — e.g. the area a side panel leaves free.
+export function centerTransform({center, zoom, width = 928, height = 500, rect = [0, 0, width, height]}) {
   const k = 256 * 2 ** zoom;
   const [ux, uy] = unit(center);
-  return d3.zoomIdentity.translate(width / 2, height / 2).scale(k).translate(-ux, -uy);
+  return d3.zoomIdentity.translate((rect[0] + rect[2]) / 2, (rect[1] + rect[3]) / 2).scale(k).translate(-ux, -uy);
 }
 
-export function bboxTransform({bbox: [w, s, e, n], pad = 0.85, width = 928, height = 500}) {
+export function bboxTransform({bbox: [w, s, e, n], pad = 0.85, width = 928, height = 500, rect = [0, 0, width, height]}) {
   const [x0, y0] = unit([w, n]);
   const [x1, y1] = unit([e, s]);
-  const k = pad * Math.min(width / (x1 - x0), height / (y1 - y0));
-  return d3.zoomIdentity.translate(width / 2, height / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
+  const k = pad * Math.min((rect[2] - rect[0]) / (x1 - x0), (rect[3] - rect[1]) / (y1 - y0));
+  return d3.zoomIdentity.translate((rect[0] + rect[2]) / 2, (rect[1] + rect[3]) / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
 }
 
 // A lon/lat bbox as a d3.zoom translateExtent in unit-projection coordinates,
@@ -64,7 +66,7 @@ function wmtsLayer({label, id, ext, time, shownYear, times}) {
 /** @param {{width?: number, height?: number, center?: number[], zoom?: number,
  *  minZoom?: number, maxZoom?: number, bw?: boolean, extent?: number[] | null,
  *  transform?: any, tileHref?: ((url: string) => Promise<string>) | null,
- *  tileFade?: number}} [options] */
+ *  tileFade?: number, baseZoom?: number | null}} [options] */
 export function createGenevaMap({
   width = 928,
   height = 500,
@@ -77,7 +79,10 @@ export function createGenevaMap({
                      // past its edges, and no zoom-out past the point where it covers the viewport
   transform = null,  // optional initial transform (pass a zoomState holder's value)
   tileHref = null,   // optional async url -> displayed href (e.g. tone baked into tiles)
-  tileFade = TILE_FADE // ms fade-in per tile; 0 = paint the instant a tile is ready
+  tileFade = TILE_FADE, // ms fade-in per tile; 0 = paint the instant a tile is ready
+  baseZoom = null    // optional (needs `extent`): keep the whole extent loaded at this coarse
+                     // zoom under everything, so a view that grows (zoom-out, fly-to) never
+                     // shows an empty area while its own tiles load
 } = {}) {
   const node = document.createElement("div");
   node.style.position = "relative";
@@ -92,6 +97,7 @@ export function createGenevaMap({
   const gTiles = svg.append("g")
       .attr("pointer-events", "none")
       .style("filter", bw ? "grayscale(1)" : null);
+  const gBase = gTiles.append("g"); // first child: the base level paints under every level
   const overlay = svg.append("g");
 
   const tip = document.createElement("div");
@@ -244,6 +250,47 @@ export function createGenevaMap({
     return lv;
   }
 
+  // The base level: every tile of `extent` at `baseZoom`, for each basemap time shown.
+  // A new time's base fades in over the older ones; they go once it has settled.
+  const bases = []; // oldest first: {timeKey, g, pending}
+  function ensureBase() {
+    if (baseZoom == null || !extent || !layer) return;
+    if (bases.at(-1)?.timeKey === layer.timeKey) return;
+    const [[x0, y0], [x1, y1]] = unitTranslateExtent(extent);
+    const n = 2 ** baseZoom;
+    const tiles = [];
+    for (let x = Math.floor((x0 + 0.5) * n); x <= Math.floor((x1 + 0.5) * n); x++) {
+      for (let y = Math.floor((y0 + 0.5) * n); y <= Math.floor((y1 + 0.5) * n); y++) tiles.push([x, y, baseZoom]);
+    }
+    const base = {timeKey: layer.timeKey, g: gBase.append("g"), pending: tiles.length};
+    bases.push(base);
+    const url = layer.url;
+    const settled = () => {
+      if (--base.pending > 0) return;
+      // complete: every older base is covered now
+      while (bases.length && bases[0] !== base) bases.shift().g.transition().delay(tileFade).remove();
+    };
+    base.g.selectAll("image").data(tiles, d => d).join("image")
+        .style("opacity", 0)
+        .on("load", function() {
+          d3.select(this).transition().duration(tileFade).style("opacity", 1);
+          settled();
+        })
+        .on("error", settled) // outside coverage: stays invisible
+        .each(function(d) {
+          const href = url(...tileWrap(d));
+          if (!tileHref) { d3.select(this).attr("xlink:href", href); return; }
+          requestAnimationFrame(() => {
+            if (!this.isConnected) return;
+            tileHref(href).then(
+              baked => { if (this.isConnected) d3.select(this).attr("xlink:href", baked); },
+              () => { if (this.isConnected) d3.select(this).attr("xlink:href", href); }
+            );
+          });
+        })
+        .call(sel => placeTiles(sel, current));
+  }
+
   const invert = p => unit.invert([(p[0] - current.x) / current.k, (p[1] - current.y) / current.k]);
 
   function helpers() {
@@ -264,6 +311,7 @@ export function createGenevaMap({
     const lv = ensureTiles(t); // (flyTo prefetches via ensureTiles directly, so only render moves currentKey)
     if (lv) currentKey = lv.key;
     for (const l of tileLevels.values()) placeTiles(l.g.selectAll("image"), t);
+    for (const b of bases) placeTiles(b.g.selectAll("image"), t);
     if (lv) pruneLevels(lv.key);
     if (overlayDraw) overlayDraw(overlay, helpers());
     if (renderCb) renderCb(helpers());
@@ -312,6 +360,7 @@ export function createGenevaMap({
       if (layer && layer.timeKey === next.timeKey) { layer = next; return; } // e.g. a bw toggle re-ran the apply cell
       layerSeq++;
       layer = next;
+      ensureBase();
       render(current); // the new time's level fades in above the old stack, which prunes once covered
     },
     setBW(on) {
@@ -351,9 +400,10 @@ export function createGenevaMap({
       svg.transition().duration(duration).call(zoomBehavior.scaleBy, factor);
     },
     flyTo(target, {duration = 1500} = {}) {
+      const rect = target.rect ?? [0, 0, width, height];
       const t = clamp(target.bbox
-        ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height})
-        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height}));
+        ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height, rect})
+        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height, rect}));
       ensureTiles(t); // prefetch: the destination's tiles cover every frame of the fly
       svg.transition().duration(duration).call(zoomBehavior.transform, t);
     },
