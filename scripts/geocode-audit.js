@@ -36,13 +36,14 @@ function writeJson(path, value) {
 const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
 
 // "13bis, Avenue X, Quarter" -> {number: "13bis", street: "Avenue X"}; a range
-// ("8-14") asks for its first number. Addresses without a leading number
-// ("Place des Alpes", "Octogone 1A, Route Y") cannot be checked: null.
+// ("8-14") asks for its first number and is marked as a range. Addresses
+// without a leading number ("Place des Alpes", "Octogone 1A, Route Y") cannot
+// be checked: null.
 function parse(address) {
   const parts = address.split(",").map((s) => s.trim());
-  const m = parts[0].match(/^(\d+)\s?([a-zA-Z]{1,4})?(?:\s?[-–/]\s?\d+\s?[a-zA-Z]{0,4})?$/);
+  const m = parts[0].match(/^(\d+)\s?([a-zA-Z]{1,4})?(\s?[-–/]\s?\d+\s?[a-zA-Z]{0,4})?$/);
   if (!m || parts.length < 2) return null;
-  return {number: (m[1] + (m[2] ?? "")).toLowerCase(), street: parts[1]};
+  return {number: (m[1] + (m[2] ?? "")).toLowerCase(), street: parts[1], range: m[3] != null};
 }
 
 function haversineMeters(lat1, lon1, lat2, lon2) {
@@ -146,8 +147,11 @@ for (const [address, usage] of addresses) {
   else if (!match) flag = "not-in-register";
   else if (match.meters > FAR_METERS) {
     // both name the house but disagree: with one candidate in the canton the
-    // register is unambiguous; with several, a person must look
-    flag = candidates.length === 1 ? (apply ? useRegister("fixed-far-from-register") : "far") : "far-ambiguous";
+    // register is unambiguous; with several, a person must look. A range
+    // ("8-14") is a site with several entrances: the register only knows its
+    // first number, so the geocoder's answer for the whole site stays.
+    if (parsed.range) flag = "far-range";
+    else flag = candidates.length === 1 ? (apply ? useRegister("fixed-far-from-register") : "far") : "far-ambiguous";
   }
   else flag = "ok";
 
@@ -177,7 +181,7 @@ for (const [address, usage] of addresses) {
 if (apply && applied) writeJson(CACHE_PATH, cache);
 
 // worst first: what a person should look at is at the top
-const order = ["miss", "miss-ambiguous", "far-ambiguous", "street-level", "far", "register-has-house", "fixed-far-from-register", "not-in-register", "unnumbered", "fixed-from-register", "override", "ok"];
+const order = ["miss", "miss-ambiguous", "far-ambiguous", "street-level", "far", "far-range", "register-has-house", "fixed-far-from-register", "not-in-register", "unnumbered", "fixed-from-register", "override", "ok"];
 const rank = (flag) => { const i = order.indexOf(flag.split("+")[0]); return (flag.includes("+") ? -1 : 0) + (i < 0 ? order.length : i); };
 report.sort((a, b) => rank(a.flag) - rank(b.flag) || b.rows - a.rows);
 writeFileSync(AUDIT_PATH, csvFormat(report) + "\n");
