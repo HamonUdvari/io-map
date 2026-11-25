@@ -59,6 +59,15 @@ make geocode-audit                          # cross-check against the swisstopo 
 * `node scripts/geocode-audit.js --apply` writes the register position into the cache where Nominatim found only the street.
 * `docs/data/io-map-v2.csv` and `docs/data/geocode-v2.json` are frozen snapshots of the June 2026 dataset for the notebooks.
 
+### Print export
+
+`/print/` renders one still image of the map for a year (`?year=1927&frame=wide`): a layered SVG with an embedded basemap, one group of dots for each category and the Graduate Institute on top. The parameters are in `src/lib/print-map.js` (`PRINT_PARAMS`).
+
+```sh
+npm run dev                      # in one terminal
+node scripts/export-print.js     # in another: 1927, 1975, 2025 in both frames -> working/print/
+```
+
 Open data questions and assumptions to verify are tracked in [THINGS-TO-CHECK.md](THINGS-TO-CHECK.md).
 
 * `docs/io-map-v2.html` – previous main notebook: new dataset (1920–2025), category/sub-filters, year slider, historical overlays

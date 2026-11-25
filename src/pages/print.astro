@@ -1,0 +1,19 @@
+---
+// Utility page: renders the print image of one year (see src/lib/print-map.js).
+// Not linked from the site. Query: ?year=1927&frame=wide
+import "../styles/global.css";
+import PrintExport from "../components/PrintExport";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Print export — Mapping Multilateral Geneva</title>
+  </head>
+  <body>
+    <PrintExport client:only="preact" />
+  </body>
+</html>
