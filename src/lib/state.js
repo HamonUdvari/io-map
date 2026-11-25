@@ -9,6 +9,9 @@ import { signal } from "@preact/signals";
 
 export const year = signal(2025);
 
+// The years the timeline covers — the one place that sets the range.
+export const YEAR_RANGE = { min: 1920, max: 2026 };
+
 // Explicitly selected categories (filter chips). Empty = no filter = show
 // everything — there is deliberately no hide-all state. Consumers apply:
 // categories.value.length === 0 || categories.value.includes(c)

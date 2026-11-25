@@ -10,6 +10,10 @@ import clsx from "clsx";
 // inset by half the thumb width — like a native <input type=range>, it stops
 // flush at the track edges without the anchor sliding under the cursor, and
 // pointer math measures the same rail so press and render always agree.
+//
+// Decade marks: one tick on the rail for each full decade in the range, so the
+// position of the thumb reads as a time span (partners' wish, after the
+// oldmapsonline.org timeline).
 export default function Timeline({
   value,
   onChange,
@@ -80,10 +84,11 @@ export default function Timeline({
     set(next);
   };
 
-  const pct = Math.min(
-    100,
-    Math.max(0, ((value - min) / Math.max(1, max - min)) * 100),
-  );
+  const pctOf = (v: number) =>
+    Math.min(100, Math.max(0, ((v - min) / Math.max(1, max - min)) * 100));
+  const pct = pctOf(value);
+  const decades: number[] = [];
+  for (let d = Math.ceil(min / 10) * 10; d <= max; d += 10) decades.push(d);
 
   return (
     <div class={clsx("timeline", className)}>
@@ -96,6 +101,14 @@ export default function Timeline({
       >
         <div class="timeline-line" aria-hidden="true"></div>
         <div class="timeline-range" ref={rail}>
+          {decades.map((d) => (
+            <div
+              class="timeline-tick"
+              key={d}
+              style={{ left: `${pctOf(d)}%` }}
+              aria-hidden="true"
+            ></div>
+          ))}
           <div
             class="timeline-thumb"
             ref={thumb}
