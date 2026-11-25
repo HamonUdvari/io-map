@@ -15,17 +15,19 @@ export const PALAIS_DES_NATIONS = [6.1408064, 46.2257055];
 // Unit Web-Mercator projection: screen px = transform.apply(unit(lonlat)).
 const unit = d3.geoMercator().scale(1 / (2 * Math.PI)).translate([0, 0]);
 
-export function centerTransform({center, zoom, width = 928, height = 500}) {
+// `rect` ([x0, y0, x1, y1] in canvas px, default the whole canvas) is the part of
+// the canvas the target is framed in — e.g. the area a side panel leaves free.
+export function centerTransform({center, zoom, width = 928, height = 500, rect = [0, 0, width, height]}) {
   const k = 256 * 2 ** zoom;
   const [ux, uy] = unit(center);
-  return d3.zoomIdentity.translate(width / 2, height / 2).scale(k).translate(-ux, -uy);
+  return d3.zoomIdentity.translate((rect[0] + rect[2]) / 2, (rect[1] + rect[3]) / 2).scale(k).translate(-ux, -uy);
 }
 
-export function bboxTransform({bbox: [w, s, e, n], pad = 0.85, width = 928, height = 500}) {
+export function bboxTransform({bbox: [w, s, e, n], pad = 0.85, width = 928, height = 500, rect = [0, 0, width, height]}) {
   const [x0, y0] = unit([w, n]);
   const [x1, y1] = unit([e, s]);
-  const k = pad * Math.min(width / (x1 - x0), height / (y1 - y0));
-  return d3.zoomIdentity.translate(width / 2, height / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
+  const k = pad * Math.min((rect[2] - rect[0]) / (x1 - x0), (rect[3] - rect[1]) / (y1 - y0));
+  return d3.zoomIdentity.translate((rect[0] + rect[2]) / 2, (rect[1] + rect[3]) / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
 }
 
 // A lon/lat bbox as a d3.zoom translateExtent in unit-projection coordinates,
@@ -351,9 +353,10 @@ export function createGenevaMap({
       svg.transition().duration(duration).call(zoomBehavior.scaleBy, factor);
     },
     flyTo(target, {duration = 1500} = {}) {
+      const rect = target.rect ?? [0, 0, width, height];
       const t = clamp(target.bbox
-        ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height})
-        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height}));
+        ? bboxTransform({bbox: target.bbox, pad: target.pad ?? 0.85, width, height, rect})
+        : centerTransform({center: target.center, zoom: target.zoom ?? Math.log2(current.k / 256), width, height, rect}));
       ensureTiles(t); // prefetch: the destination's tiles cover every frame of the fly
       svg.transition().duration(duration).call(zoomBehavior.transform, t);
     },
