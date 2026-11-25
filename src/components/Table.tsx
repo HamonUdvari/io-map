@@ -6,16 +6,19 @@ export type { TableRow };
 // Pure presentational: the striped organisations table (Figma "Table -
 // Popover" body). Receives the already-filtered rows; with onSelect the
 // rows become clickable, with onHover they report the row under the
-// pointer (null once it leaves the list).
+// pointer (null once it leaves the list), with onTogglePin each row gets a
+// pin toggle.
 export default function Table({
   items,
   onSelect,
   onHover,
+  onTogglePin,
   class: className,
 }: {
   items: TableRow[];
   onSelect?: (item: TableRow) => void;
   onHover?: (item: TableRow | null) => void;
+  onTogglePin?: (item: TableRow) => void;
   class?: string;
 }) {
   return (
@@ -31,6 +34,9 @@ export default function Table({
           {...item}
           onClick={onSelect != null ? () => onSelect(item) : undefined}
           onPointerEnter={onHover != null ? () => onHover(item) : undefined}
+          onTogglePin={
+            onTogglePin != null ? () => onTogglePin(item) : undefined
+          }
         />
       ))}
     </ul>
