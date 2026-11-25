@@ -6,7 +6,7 @@ export type TableRow = {
   id?: string;
   /** display name (the organisation's name in the viewed year) */
   name: string;
-  /** pr | ngo | io; null/undefined = categoryless (dark dot) */
+  /** pr | ngo | io | special; null/undefined = categoryless (dark dot) */
   category?: string | null;
   /** optional right-side info (distance, relation, …) */
   right?: ComponentChildren;

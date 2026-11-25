@@ -32,6 +32,7 @@ const TINTS: Record<string, string> = {
   pr: "drawer-tinted-pr",
   ngo: "drawer-tinted-ngo",
   io: "drawer-tinted-io",
+  special: "drawer-tinted-special",
 };
 
 // Island: the organisations drawer. Two modes on one Drawer:

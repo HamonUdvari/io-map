@@ -11,7 +11,7 @@ const meta = {
   argTypes: {
     category: {
       control: "select",
-      options: ["pr", "ngo", "io", undefined],
+      options: ["pr", "ngo", "io", "special", undefined],
     },
   },
 } satisfies Meta<typeof TableItem>;

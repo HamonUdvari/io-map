@@ -36,6 +36,10 @@
   --color-io-pr-500: #fdc086; /* Permanent Representations */
   --color-io-ngo-500: #7fc97f; /* Non-governmental Organisations */
   --color-io-io-500: #beaed4; /* International Organisations */
+  /* TODO(design): placeholder for the fourth category (the Graduate Institute
+     and its predecessors) — the next colour of the same ColorBrewer "Accent"
+     palette the three above come from. The partners ask for a distinct colour. */
+  --color-io-special-500: #ffff99;
 
   --radius-io-panel: 0.75rem; /* 12px — infobox/panel corners */
   --radius-io-pill: 1.5rem; /* 24px — nav pills, search, buttons */
@@ -306,6 +310,10 @@
       &[data-category="io"] {
         @apply bg-io-io-500;
       }
+
+      &[data-category="special"] {
+        @apply bg-io-special-500;
+      }
     }
   }
 
@@ -408,6 +416,10 @@
 
   .drawer.drawer-tinted-io {
     --drawer-surface: var(--color-io-io-500);
+  }
+
+  .drawer.drawer-tinted-special {
+    --drawer-surface: var(--color-io-special-500);
   }
 
   /* the selected organisation's title in the drawer header (wraps) */
@@ -585,6 +597,11 @@
       @apply fill-io-io-500 hover:fill-io-io-500/75;
     }
 
+    &.marker-special {
+      @apply bg-io-special-500 hover:bg-io-special-500/75;
+      @apply fill-io-special-500 hover:fill-io-special-500/75;
+    }
+
     &.marker-cluster {
       @apply bg-io-neutral-500/75 hover:bg-io-neutral-500;
       @apply fill-io-neutral-500/75 hover:fill-io-neutral-500;
@@ -647,6 +664,10 @@
 
       &[data-category="io"] {
         @apply bg-io-io-500/75;
+      }
+
+      &[data-category="special"] {
+        @apply bg-io-special-500/75;
       }
     }
 

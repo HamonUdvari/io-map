@@ -2,11 +2,14 @@ import clsx from "clsx";
 
 export type Category = { id: string; label: string };
 
-// The three organisation categories (Figma "CategorySlider" labels).
+// The organisation categories (Figma "CategorySlider" labels). The ids are
+// the keys of orgs.js CATEGORY_ORDER.
 export const CATEGORIES: Category[] = [
   { id: "pr", label: "Permanent Representation" },
   { id: "ngo", label: "Non Governmental Organization" },
   { id: "io", label: "International Organization" },
+  // TODO(design): label of the fourth category — the dataset's own term for now
+  { id: "special", label: "Special Category" },
 ];
 
 // Marker-type filter: native checkboxes (kept accessible via sr-only) inside
