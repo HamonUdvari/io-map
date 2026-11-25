@@ -94,7 +94,7 @@ const activate = (el, { map, index, selected, tip }) => {
   tip.hide();
   if (datum?.properties != null) {
     if (!datum.properties.cluster) {
-      selectWithPop(el, datum.properties.nameEN, selected);
+      selectWithPop(el, datum.properties.uniqueName, selected);
       return;
     }
     map.flyTo(
@@ -108,7 +108,7 @@ const activate = (el, { map, index, selected, tip }) => {
       { duration: MARKER_PARAMS.clusterFlyMs },
     );
   } else if (datum?.d != null) {
-    selectWithPop(el, datum.d.nameEN, selected);
+    selectWithPop(el, datum.d.uniqueName, selected);
   }
 };
 
@@ -190,7 +190,11 @@ const raise = (event) => {
   if (el.parentNode.lastElementChild !== el) el.parentNode.appendChild(el);
 };
 
-const tipRow = (d) => ({ name: d.nameEN, category: categoryKey(d) });
+const tipRow = (d) => ({
+  id: d.uniqueName,
+  name: d.nameEN,
+  category: categoryKey(d),
+});
 
 // tip content for any marker element, from its d3 datum (cluster feature or
 // spread entry) — shared by mouse hover and the touch long-press peek
@@ -445,7 +449,7 @@ function containingClusterId(index, name, z) {
     if (
       index
         .getLeaves(c.properties.cluster_id, Infinity)
-        .some((l) => l.properties.nameEN === name)
+        .some((l) => l.properties.uniqueName === name)
     )
       return c.properties.cluster_id;
   }
@@ -491,7 +495,7 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
     .data(clusters, (c) =>
       c.properties.cluster
         ? `c${c.properties.cluster_id}`
-        : `s${c.properties.nameEN}`,
+        : `s${c.properties.uniqueName}`,
     )
     .join((enter) => {
       const gc = enter.append("g").attr("class", "cluster");
@@ -519,9 +523,9 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
                     : ""
               }`
             : `${markerClass(categoryKey(c.properties))} cursor-pointer ${
-                c.properties.nameEN === sel
+                c.properties.uniqueName === sel
                   ? "marker-selected"
-                  : c.properties.nameEN === hint
+                  : c.properties.uniqueName === hint
                     ? "marker-hint"
                     : ""
               }`,
@@ -553,15 +557,15 @@ function draw(g, { zoomLevel, bbox, project }, ctx) {
     });
 
   g.selectAll("circle.org")
-    .data(clustered ? [] : spread, (o) => o.d.nameEN)
+    .data(clustered ? [] : spread, (o) => o.d.uniqueName)
     .join("circle")
     .attr(
       "class",
       (o) =>
         `org ${markerClass(categoryKey(o.d))} cursor-pointer ${
-          o.d.nameEN === sel
+          o.d.uniqueName === sel
             ? "marker-selected"
-            : o.d.nameEN === hint
+            : o.d.uniqueName === hint
               ? "marker-hint"
               : ""
         }`,

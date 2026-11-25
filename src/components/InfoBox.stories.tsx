@@ -58,7 +58,7 @@ export const Interactive: StoryObj<{ name: string; year: number }> = {
           groups={eventGroups(info.history)}
           nearest={nearestTo(args.name, args.year)}
           absentYear={
-            pointsIn(args.year).some((d: any) => d.nameEN === args.name)
+            pointsIn(args.year).some((d: any) => d.uniqueName === args.name)
               ? null
               : args.year
           }
