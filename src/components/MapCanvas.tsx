@@ -68,6 +68,7 @@ export default function MapCanvas({
       tileHref: tonedTileHref,
       extent: MAP_BOUNDS,
       minZoom: BOUNDS_PARAMS.minZoom,
+      baseZoom: BOUNDS_PARAMS.baseZoom,
     });
     host.current!.append(map.node);
     map.node.style.height = "100%"; // factory wrapper div must fill .map so the svg's 100% resolves
