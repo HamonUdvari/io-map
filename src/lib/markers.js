@@ -16,10 +16,19 @@ import {
   toFeatures,
 } from "../../docs/lib/io-data.js";
 
-// The notebook's parameters — adapt the marker behaviour here.
+// The notebook's parameters — adapt the marker behaviour here. Every number
+// and switch can also be set from the URL for live tuning, e.g.
+// ?clusterRadius=60&spreadAtZoom=15&clusterByCategory=1 (see the end of the
+// object).
 export const MARKER_PARAMS = {
   spreadAtZoom: 16, // below: clusters; at/above: every organisation its own dot
   clusterRadius: 40, // supercluster radius (512-unit tiles ≈ half that in px)
+  clusterMaxZoom: 19, // supercluster stops merging above this zoom
+  clusterMinPoints: 2, // organisations needed to form a cluster
+  // EXPERIMENT (off): one cluster set for each category instead of one for
+  // all. No cluster is ever mixed (grey); clusters of different categories
+  // can then overlap at one place.
+  clusterByCategory: false,
   jitterRadius: 10, // px spread cloud for organisations sharing one address
   dotRadius: 5, // px radius of a single organisation dot (selection scales via CSS)
   selectDelay: 250, // ms: let the dot's scale-up play before the infobox opens
@@ -34,6 +43,17 @@ export const MARKER_PARAMS = {
   clusterFlyMs: 750, // cluster-tap fly-in (half the factory's 1500 — 2x speed)
   longPressMs: 450, // touch: hold this long on a marker to peek at its tip
 };
+
+// URL overrides: only keys that exist above, only numbers and switches.
+if (typeof location !== "undefined") {
+  for (const [key, raw] of new URLSearchParams(location.search)) {
+    const current = MARKER_PARAMS[key];
+    if (typeof current === "number" && raw !== "" && isFinite(+raw))
+      MARKER_PARAMS[key] = +raw;
+    if (typeof current === "boolean")
+      MARKER_PARAMS[key] = raw === "1" || raw === "true";
+  }
+}
 
 const markerClass = (key) => `marker marker-${key ?? "neutral"}`;
 
@@ -273,6 +293,43 @@ function tipProps(members, address) {
   };
 }
 
+// EXPERIMENT (MARKER_PARAMS.clusterByCategory): one supercluster index for
+// each category behind the three calls the overlay uses, so no cluster mixes
+// categories. Cluster ids are made unique across the indexes by folding the
+// index number into them.
+function perCategoryIndex(points, options) {
+  const groups = new Map();
+  for (const d of points) {
+    const k = categoryKey(d);
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(d);
+  }
+  const parts = [...groups.values()].map((members) =>
+    new Supercluster(options).load(toFeatures(members)),
+  );
+  const n = parts.length;
+  return {
+    getClusters: (bbox, zoom) =>
+      parts.flatMap((part, i) =>
+        part.getClusters(bbox, zoom).map((c) =>
+          c.properties.cluster
+            ? {
+                ...c,
+                properties: {
+                  ...c.properties,
+                  cluster_id: c.properties.cluster_id * n + i,
+                },
+              }
+            : c,
+        ),
+      ),
+    getLeaves: (id, ...rest) =>
+      parts[id % n].getLeaves(Math.floor(id / n), ...rest),
+    getClusterExpansionZoom: (id) =>
+      parts[id % n].getClusterExpansionZoom(Math.floor(id / n)),
+  };
+}
+
 // Subscribes the marker overlay to the signals; returns the dispose function.
 // Rebuilds the cluster index when year/categories change — the overlay then
 // redraws from it on every camera move.
@@ -382,10 +439,10 @@ export function attachMarkers(
     }
 
     // per-category counts ride up into the clusters for the color rule
-    const index = new Supercluster({
+    const allIndex = new Supercluster({
       radius: MARKER_PARAMS.clusterRadius,
-      maxZoom: 19,
-      minPoints: 2,
+      maxZoom: MARKER_PARAMS.clusterMaxZoom,
+      minPoints: MARKER_PARAMS.clusterMinPoints,
       map: (p) => {
         const k = categoryKey(p);
         return {
@@ -400,6 +457,9 @@ export function attachMarkers(
         acc.ngo += p.ngo;
       },
     }).load(toFeatures(points));
+    const index = MARKER_PARAMS.clusterByCategory
+      ? perCategoryIndex(points, allIndex.options)
+      : allIndex;
 
     // one context object per effect run: draw() runs per camera frame and
     // caches the selected org's containing cluster per integer zoom in it
