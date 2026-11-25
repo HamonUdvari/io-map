@@ -35,7 +35,7 @@ export default function TableItem({
   class?: string;
 }) {
   const button = onClick != null && {
-    role: "button",
+    role: "button" as const,
     tabIndex: 0,
     onClick,
     onKeyDown: (e: KeyboardEvent) => {

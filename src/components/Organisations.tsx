@@ -141,7 +141,7 @@ export default function Organisations({
       >
         <InfoBox
           info={info}
-          status={orgStatus(info.id, year.value)}
+          status={orgStatus(info.id, year.value)!}
           groups={groups}
           decades={decadeGroups(groups)}
           nearest={nearestTo(info.id, year.value, {

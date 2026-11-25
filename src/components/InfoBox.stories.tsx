@@ -16,11 +16,12 @@ const meta = {
     // derived from the real dataset via the year/name args below
     info: { table: { disable: true } },
     groups: { table: { disable: true } },
+    status: { table: { disable: true } },
+    decades: { table: { disable: true } },
     nearest: { table: { disable: true } },
-    about: { table: { disable: true } },
     photo: { table: { disable: true } },
     url: { table: { disable: true } },
-    absentYear: { table: { disable: true } },
+    sourcesHref: { table: { disable: true } },
     onSelectNearest: { table: { disable: true } },
   },
 } satisfies Meta<typeof InfoBox>;
