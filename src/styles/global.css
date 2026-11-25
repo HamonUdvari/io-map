@@ -666,6 +666,29 @@
   .table-header {
     @apply bg-io-neutral-50;
   }
+
+  /* TODO(design): interim — /print/ is a utility page without a design */
+  .print-export {
+    @apply flex flex-col gap-4 p-4 text-io-base;
+
+    .print-export-controls {
+      @apply flex flex-wrap items-center gap-4;
+
+      input,
+      select,
+      button {
+        @apply rounded-io-pill border border-io-neutral-500 px-3 py-1;
+      }
+    }
+
+    .print-export-downloads {
+      @apply flex flex-wrap gap-x-6 gap-y-1 underline;
+    }
+
+    .print-export-preview {
+      @apply aspect-square w-full max-w-[min(100%,calc(100dvh-2rem))] border border-io-neutral-500;
+    }
+  }
 }
 
 @layer base {
