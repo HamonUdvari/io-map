@@ -2,6 +2,9 @@ import type { ComponentChildren } from "preact";
 import clsx from "clsx";
 
 export type TableRow = {
+  /** stable identifier (uniqueName); rows without one are identified by name */
+  id?: string;
+  /** display name (the organisation's name in the viewed year) */
   name: string;
   /** pr | ngo | io; null/undefined = categoryless (dark dot) */
   category?: string | null;

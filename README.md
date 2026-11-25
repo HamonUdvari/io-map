@@ -44,15 +44,20 @@ Demo notebooks, one feature each:
 * `docs/v3-overlapping-points.html` – supercluster zoomed out, deterministic spread + grouped tips zoomed in, neutral color for mixed clusters (around the Palais des Nations)
 * `docs/v3-nearby-organisations.html` – K nearest organisations with distances per year (hover + click-to-pin)
 
-### v2 data pipeline
+### Data pipeline
 
-The v2 notebook uses the partners' formatted dataset (single-sheet xlsx). The pipeline runs offline; its outputs are committed:
+The site uses the partners' formatted dataset (single-sheet xlsx, sheet `ALL`). The pipeline runs offline; its outputs are committed:
 
 ```sh
-make data   # xlsx -> docs/data/io-map-v2.csv -> docs/data/geocode-v2.json (Nominatim, 1 req/s, cached)
+make clean-data XLSX=path/to/dataset.xlsx   # xlsx -> docs/data/io-map-v3.csv (the cleaning report goes to stderr)
+make geocode                                # addresses -> docs/data/geocode-v3.json (Nominatim, 1 req/s, cached)
+make geocode-audit                          # cross-check against the swisstopo address register -> geocode-audit.csv
 ```
 
-Set `XLSX=path/to/file.xlsx` to point at a newer dataset export. Unresolved addresses land in `geocode-misses.csv`; hand-corrections to `docs/data/geocode-v2.json` survive re-runs (cached keys are never re-fetched).
+* Unresolved addresses land in `geocode-misses.csv`.
+* To correct a wrong pin, add a line to `docs/data/geocode-overrides.csv` (`addressOSM,lat,lon,note`). The site applies it on top of the cache. Do not edit the cache by hand.
+* `node scripts/geocode-audit.js --apply` writes the register position into the cache where Nominatim found only the street.
+* `docs/data/io-map-v2.csv` and `docs/data/geocode-v2.json` are frozen snapshots of the June 2026 dataset for the notebooks.
 
 Open data questions and assumptions to verify are tracked in [THINGS-TO-CHECK.md](THINGS-TO-CHECK.md).
 

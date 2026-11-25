@@ -1,5 +1,8 @@
 # Things to check
 
+> The findings and open questions for the dataset of 24 Nov 2026 (`docs/data/io-map-v3.csv`) are in
+> issue #25. The list below is about the June 2026 dataset.
+
 Running list of data questions and assumptions to verify, mostly findings from integrating the
 10 June 2026 dataset (`docs/data/io-map-v2.csv`). Items for the partners are phrased as questions.
 

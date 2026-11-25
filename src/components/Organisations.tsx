@@ -63,7 +63,7 @@ export default function Organisations({
   // not pan; table clicks center via selectRow).
   const selPoint =
     selected != null
-      ? (points.find((d: any) => d.nameEN === selected) ?? null)
+      ? (points.find((d: any) => d.uniqueName === selected) ?? null)
       : null;
   const lastPos = useRef<{ name: string; lat: number; long: number } | null>(
     null,
@@ -79,37 +79,38 @@ export default function Organisations({
     const prev = lastPos.current;
     if (
       prev != null &&
-      prev.name === selPoint.nameEN &&
+      prev.name === selPoint.uniqueName &&
       (prev.lat !== selPoint.lat || prev.long !== selPoint.long)
     ) {
       centerOn([selPoint.long, selPoint.lat]);
     }
     lastPos.current = {
-      name: selPoint.nameEN,
+      name: selPoint.uniqueName,
       lat: selPoint.lat,
       long: selPoint.long,
     };
-  }, [selected, selPoint?.nameEN, selPoint?.lat, selPoint?.long]);
+  }, [selected, selPoint?.uniqueName, selPoint?.lat, selPoint?.long]);
 
   // selection does NOT move the sheet: it keeps its current detent and only
   // the content swaps (mobile wish — no sliding); desktop is always open
   const info = selected != null ? orgInfo(selected, year.value) : null;
 
   // row hover (both tables): echo the row's marker on the map
-  const hoverRow = (row: { name: string } | null) =>
-    (hoveredOrg.value = row?.name ?? null);
+  const hoverRow = (row: { id?: string; name: string } | null) =>
+    (hoveredOrg.value = row?.id ?? row?.name ?? null);
 
   // row click (main table and the infobox's nearest list): select the org
   // and pan the map to it at the current zoom
-  const selectRow = (row: { name: string }) => {
+  const selectRow = (row: { id?: string; name: string }) => {
+    const id = row.id ?? row.name;
     hoveredOrg.value = null; // the list is about to unmount — no stale echo
-    selectedOrg.value = row.name;
-    const point = points.find((d: any) => d.nameEN === row.name);
+    selectedOrg.value = id;
+    const point = points.find((d: any) => d.uniqueName === id);
     if (point) centerOn([point.long, point.lat]);
   };
 
   if (info != null) {
-    const demo = demoContent(info.name); // TODO remove: Afghanistan-only mock
+    const demo = demoContent(info.id); // TODO remove: Afghanistan-only mock
     return (
       <Drawer
         state={drawer.value}
@@ -126,7 +127,7 @@ export default function Organisations({
         <InfoBox
           info={info}
           groups={eventGroups(info.history)}
-          nearest={nearestTo(info.name, year.value, {
+          nearest={nearestTo(info.id, year.value, {
             cats: categories.value,
             query: query.value,
           })}
@@ -176,6 +177,7 @@ export default function Organisations({
       </div>
       <Table
         items={visible.map((d: any) => ({
+          id: d.uniqueName,
           name: d.nameEN,
           category: categoryKey(d),
         }))}
